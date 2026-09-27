@@ -1,0 +1,3 @@
+acquisition_channel,customers,repeat_customers,repeat_rate,orders_per_customer,avg_lifetime_value,repeat_customer_value
+Shopify,1174,346,0.2947,1.44,70.4,81.59
+eBay,884,139,0.1572,1.2,133.83,195.57

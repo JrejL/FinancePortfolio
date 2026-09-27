@@ -1,0 +1,6 @@
+segment,customers,share_of_customers,revenue,share_of_revenue,revenue_per_customer,orders_per_customer
+Hibernating,634,0.3081,63952.38,0.3182,100.87,1.0
+New,623,0.3027,53115.48,0.2643,85.26,1.0
+At risk,284,0.138,32391.54,0.1612,114.05,2.42
+Needs attention,316,0.1535,28473.63,0.1417,90.11,1.0
+Champions,201,0.0977,23022.59,0.1146,114.54,2.44
