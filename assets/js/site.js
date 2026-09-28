@@ -39,15 +39,6 @@
   }
   sync();
  });
- var board = q(".board");
- var boardToggle = board && q(".board__toggle", board);
- if (boardToggle) {
-  boardToggle.addEventListener("click", function () {
-   var paused = board.classList.toggle("is-paused");
-   boardToggle.setAttribute("aria-pressed", paused ? "true" : "false");
-   boardToggle.textContent = paused ? "Play" : "Pause";
-  });
- }
  // Phone menu. GSAP enhances the drop, but the class is the complete fallback.
  var menuToggle = q(".menu-toggle");
  var menu = q("#menu");
@@ -244,8 +235,8 @@
    var rise = function (els, vars) {
     if (!els.length) return;
     mark(els);
-    gsap.from(els, Object.assign({ y: 24, opacity: 0, duration: .58,
-     stagger: stagger(els.length, .05, .4), ease: "power3.out",
+    gsap.from(els, Object.assign({ y: 24, opacity: 0, duration: 1.15,
+     stagger: stagger(els.length, .1, .8), ease: "power3.out",
      onComplete: function () { clear(els); } }, vars || {}));
    };
    var draw = function (paths, duration, position, timeline) {
@@ -296,8 +287,8 @@
     el.replaceChildren(accessible, valueWrap);
     var roll = gsap.timeline({ onComplete: restore });
     strips.forEach(function (strip, index) {
-     roll.to(strip.el, { y: -(strip.steps * 1.15) + "em", duration: .76, ease: "power3.inOut" },
-      (strips.length - index - 1) * Math.min(.035, .3 / Math.max(1, strips.length - 1)));
+     roll.to(strip.el, { y: -(strip.steps * 1.15) + "em", duration: 1.4, ease: "power3.inOut" },
+      (strips.length - index - 1) * Math.min(.07, .5 / Math.max(1, strips.length - 1)));
     });
    };
    // Words retain their original nested emphasis and accessible heading text.
@@ -325,10 +316,10 @@
      var words = wordsIn(q("h1", hero), "word");
      mark(words);
      gsap.timeline({ onComplete: function () { clear(words); } })
-      .from(q(".kicker", hero), { opacity: 0, y: 12, duration: .7 }, 0)
-      .from(words, { y: -70, rotationX: -35, opacity: 0, duration: .85, stagger: .045, ease: "back.out(1.6)" }, .08)
-      .from(q(".intro", hero), { y: 20, opacity: 0, duration: .7 }, .55)
-      .from(q(".actions", hero), { y: 20, opacity: 0, duration: .65 }, .7);
+      .from(q(".kicker", hero), { opacity: 0, y: 12, duration: 1.1 }, 0)
+      .from(words, { y: -70, rotationX: -35, opacity: 0, duration: 1.5, stagger: .09, ease: "back.out(1.6)" }, .15)
+      .from(q(".intro", hero), { y: 20, opacity: 0, duration: 1.2 }, 1.05)
+      .from(q(".actions", hero), { y: 20, opacity: 0, duration: 1.1 }, 1.35);
     }
    }
    var sceneRoutes = [];
@@ -382,8 +373,8 @@
      // Fixed pixel deltas from each node's final spot back to the hub, for a ~600px ring (site.css .decision__node:nth-child(n)).
      // Precomputed, not measured at runtime, so a mid-scroll layout pass can never size this jump wrong.
      var ringDeltas = [[0, 258], [-198, 156], [-246, -54], [-108, -234], [108, -234], [246, -54], [198, 156]];
-     var assembly = gsap.timeline({ scrollTrigger: { trigger: hero, start: function () { return "top " + navHeight(); }, end: function () { return "+=" + innerHeight; },
-      pin: true, scrub: 1, anticipatePin: 1, invalidateOnRefresh: true, onToggle: toggleScene(hero) } });
+     var assembly = gsap.timeline({ scrollTrigger: { trigger: hero, start: function () { return "top " + navHeight(); }, end: function () { return "+=" + (innerHeight * 2); },
+      pin: true, scrub: 1.5, anticipatePin: 1, invalidateOnRefresh: true, onToggle: toggleScene(hero) } });
      assembly.set(cells, { x: 0, y: 0, xPercent: -50, yPercent: -50, scale: 1 }, 0)
       .set(nodes, { opacity: 0 }, 0)
       .fromTo(scene, { opacity: 0, y: 100, scale: .68 }, { opacity: 1, y: 0, scale: 1, duration: .65, ease: "power3.out" }, 1.2)
@@ -448,32 +439,32 @@
    });
    document.addEventListener("cp:layout", safely(function () { ScrollTrigger.refresh(); }));
    document.addEventListener("visibilitychange", function () { if (hero) hero.classList.toggle("drift-hidden", document.hidden); });
-   batch(".numbers-band .stat", "top 87%", function (stats) { rise(stats, { y: 45, duration: .9, stagger: .12 }); stats.forEach(function (stat) { odometer(q("b", stat)); }); });
+   batch(".numbers-band .stat", "top 88%", function (stats) { rise(stats, { y: 45, duration: 1.5, stagger: .24 }); stats.forEach(function (stat) { odometer(q("b", stat)); }); });
    qa(".shead").forEach(function (heading) {
     if (heading.closest(".process-scene")) return;
-    reveal(heading, "top 86%", function () {
-     gsap.from(q(".shead__rule", heading), { scaleX: 0, duration: .8, ease: "power2.out" });
-     rise(qa(".n,p", heading), { duration: .55 });
+    reveal(heading, "top 88%", function () {
+     gsap.from(q(".shead__rule", heading), { scaleX: 0, duration: 1.4, ease: "power2.out" });
+     rise(qa(".n,p", heading), { duration: 1.1 });
      var title = q("h2", heading);
      if (window.SplitText) {
       splits.push(window.SplitText.create(title, { type: "lines", mask: "lines", linesClass: "heading-line", autoSplit: true,
        onSplit: function (self) {
-        return gsap.from(self.lines, { yPercent: 110, duration: .7, stagger: .05, ease: "power3.out",
+        return gsap.from(self.lines, { yPercent: 110, duration: 1.3, stagger: .1, ease: "power3.out",
          onComplete: function () { self.revert(); } });
        } }));
      } else rise([title]);
     });
    });
-   batch(qa(".s-grid .s-card").filter(function (card) { return !card.closest(".gallery-scene"); }), "top 75%", function (cards) {
+   batch(qa(".s-grid .s-card").filter(function (card) { return !card.closest(".gallery-scene"); }), "top 88%", function (cards) {
     rise(cards, { y: window.innerWidth <= 680 ? -70 : -140, rotation: function (i) { return (i % 2 ? 1 : -1) * (4 + (i % 4) * 2); },
-     duration: .72, stagger: stagger(cards.length, .08, .48), ease: "back.out(1.3)" });
+     duration: 1.5, stagger: stagger(cards.length, .16, .96), ease: "elastic.out(1,0.75)" });
    });
-   batch(qa(".cases > li").filter(function (card) { return !card.closest(".deck-scene"); }), "top 86%", function (rows) {
-    rise(rows, { y: 0, x: function (i, row) { return Number(row.style.getPropertyValue("--i")) % 2 ? 40 : -40; }, duration: .55, stagger: stagger(rows.length, .09, .45) });
+   batch(qa(".cases > li").filter(function (card) { return !card.closest(".deck-scene"); }), "top 88%", function (rows) {
+    rise(rows, { y: 0, x: function (i, row) { return Number(row.style.getPropertyValue("--i")) % 2 ? 40 : -40; }, duration: 1.3, stagger: stagger(rows.length, .18, .9) });
     rows.forEach(function (row) {
-     draw(qa(".spark path", row), .8);
+     draw(qa(".spark path", row), 1.4);
      var bars = qa(".spark rect", row);
-     if (bars.length) gsap.from(bars, { scaleY: 0, duration: .7, stagger: { amount: .25 }, ease: "back.out(1.7)" });
+     if (bars.length) gsap.from(bars, { scaleY: 0, duration: 1.3, stagger: { amount: .5 }, ease: "back.out(1.7)" });
      odometer(q(".fig b", row));
     });
    });
@@ -483,9 +474,9 @@
     var regular = qa("tbody tr:not(.fin__subtotal):not(.fin__total)", table);
     var totals = qa("tbody tr.fin__subtotal,tbody tr.fin__total", table);
     var rows = regular.concat(totals);
-    rise(rows, { y: -12, duration: .34, stagger: stagger(rows.length, .025, .6), ease: "power2.out" });
+    rise(rows, { y: -12, duration: .68, stagger: stagger(rows.length, .05, 1.2), ease: "power2.out" });
     var totalCells = qa(".fin__total > *", table);
-    if (totalCells.length) gsap.fromTo(totalCells, { "--rule-scale": 0 }, { "--rule-scale": 1, duration: .45, delay: .65, ease: "power2.out" });
+    if (totalCells.length) gsap.fromTo(totalCells, { "--rule-scale": 0 }, { "--rule-scale": 1, duration: .9, delay: 1.3, ease: "power2.out" });
    };
    var animateChart = function (chart) {
     if (chart.dataset.animated || chart.closest("[hidden]")) return;
@@ -496,14 +487,14 @@
      var dots = qa(".chart__dot", svg);
      var timeline = gsap.timeline();
      if (chart.classList.contains("chart--waterfall")) {
-      if (bars.length) timeline.from(bars, { y: -42, opacity: 0, duration: .55, stagger: { amount: .45 }, ease: "back.out(1.7)" }, 0);
+      if (bars.length) timeline.from(bars, { y: -42, opacity: 0, duration: 1.0, stagger: { amount: .8 }, ease: "back.out(1.7)" }, 0);
       var links = qa(".chart__link", svg);
-      if (links.length) timeline.from(links, { opacity: 0, duration: .3, stagger: { amount: .5 } }, .2);
-     } else if (bars.length) timeline.from(bars, { scaleY: 0, duration: .72, stagger: { amount: .3 }, ease: "back.out(1.7)" }, 0);
-     draw(lines, .85, 0, timeline);
-     if (dots.length) timeline.from(dots, { opacity: 0, scale: .3, transformOrigin: "50% 50%", duration: .22, stagger: stagger(dots.length, .035, .1), ease: "back.out(1.7)" }, .82);
+      if (links.length) timeline.from(links, { opacity: 0, duration: .55, stagger: { amount: .9 } }, .35);
+     } else if (bars.length) timeline.from(bars, { scaleY: 0, duration: 1.3, stagger: { amount: .55 }, ease: "back.out(1.7)" }, 0);
+     draw(lines, 1.4, 0, timeline);
+     if (dots.length) timeline.from(dots, { opacity: 0, scale: .3, transformOrigin: "50% 50%", duration: .4, stagger: stagger(dots.length, .06, .2), ease: "back.out(1.7)" }, 1.3);
      var values = qa(".chart__val", svg);
-     if (values.length) timeline.from(values, { opacity: 0, duration: .2 }, 1);
+     if (values.length) timeline.from(values, { opacity: 0, duration: .4 }, 1.4);
     });
    };
    animatePanel = safely(function (panel) {
@@ -511,30 +502,30 @@
     qa(".chart", panel).forEach(animateChart);
     ScrollTrigger.refresh();
    });
-   qa(".fin-wrap").forEach(function (wrap) { reveal(wrap, "top 84%", function () { var table = q(".fin", wrap); if (table) animateTable(table); }); });
-   qa(".chart").forEach(function (chart) { reveal(chart, "top 82%", function () { animateChart(chart); }); });
-   batch(".kpi", "top 86%", function (tiles) {
-    rise(tiles, { y: 22, duration: .5, stagger: stagger(tiles.length, .08, .3) });
+   qa(".fin-wrap").forEach(function (wrap) { reveal(wrap, "top 88%", function () { var table = q(".fin", wrap); if (table) animateTable(table); }); });
+   qa(".chart").forEach(function (chart) { reveal(chart, "top 88%", function () { animateChart(chart); }); });
+   batch(".kpi", "top 88%", function (tiles) {
+    rise(tiles, { y: 22, duration: 1.0, stagger: stagger(tiles.length, .16, .6) });
     tiles.forEach(function (tile) { odometer(q("b", tile)); });
    });
-   batch(".skills-list li", "top 86%", function (chips) { rise(chips, { y: 0, scale: .6, duration: .38, stagger: stagger(chips.length, .04, .3), ease: "back.out(1.7)" }); });
-   batch(".work-card", "top 86%", function (cards) { rise(cards, { y: 34, duration: .55 }); });
-   qa(".store-cover .clip__frame").forEach(function (frame) { reveal(frame, "top 82%", function () { gsap.from(frame, { scale: .92, duration: .8 }); }); });
-   batch(".store-gallery .shot", "top 84%", function (shots) { rise(shots, { rotationX: 14, y: 60, scale: .94, duration: .78, stagger: stagger(shots.length, .1, .3) }); });
+   batch(".skills-list li", "top 88%", function (chips) { rise(chips, { y: 0, scale: .6, duration: .75, stagger: stagger(chips.length, .08, .6), ease: "back.out(1.7)" }); });
+   batch(".work-card", "top 88%", function (cards) { rise(cards, { y: 34, duration: 1.1 }); });
+   qa(".store-cover .clip__frame").forEach(function (frame) { reveal(frame, "top 88%", function () { gsap.from(frame, { scale: .92, duration: 1.4 }); }); });
+   batch(".store-gallery .shot", "top 88%", function (shots) { rise(shots, { rotationX: 14, y: 60, scale: .94, duration: 1.4, stagger: stagger(shots.length, .2, .6) }); });
    qa(".store-gallery .shot").forEach(function (shot, i) {
     gsap.fromTo(shot, { "--drift-y": i % 2 ? 15 : -15 }, { "--drift-y": i % 2 ? -15 : 15, ease: "none",
      scrollTrigger: { trigger: shot, start: "top bottom", end: "bottom top", scrub: .6 } });
    });
-   batch(".resume__sec", "top 86%", function (sections) { rise(sections, { y: 32, duration: .6 }); });
-   batch(".job", "top 88%", function (jobs) { rise(jobs, { y: -28, duration: .5, stagger: stagger(jobs.length, .09, .4), ease: "back.out(1.25)" }); });
+   batch(".resume__sec", "top 88%", function (sections) { rise(sections, { y: 32, duration: 1.2 }); });
+   batch(".job", "top 88%", function (jobs) { rise(jobs, { y: -28, duration: 1.0, stagger: stagger(jobs.length, .18, .8), ease: "back.out(1.25)" }); });
    qa(".cover").forEach(function (cover) {
     reveal(cover, "top 88%", function () {
-     gsap.fromTo(cover, { "--cover-rule": 0 }, { "--cover-rule": 1, duration: 1.2 });
-     rise(qa(".kicker,.strength-icon", cover), { duration: .8 });
+     gsap.fromTo(cover, { "--cover-rule": 0 }, { "--cover-rule": 1, duration: 1.6 });
+     rise(qa(".kicker,.strength-icon", cover), { duration: 1.4 });
      var title = q("h1", cover);
      if (window.SplitText) splits.push(window.SplitText.create(title, { type: "lines", mask: "lines", linesClass: "heading-line", autoSplit: true,
-      onSplit: function (self) { return gsap.from(self.lines, { yPercent: 110, duration: 1, stagger: .1, ease: "power3.out", onComplete: function () { self.revert(); } }); } }));
-     else rise([title], { y: 50, duration: 1 });
+      onSplit: function (self) { return gsap.from(self.lines, { yPercent: 110, duration: 1.6, stagger: .2, ease: "power3.out", onComplete: function () { self.revert(); } }); } }));
+     else rise([title], { y: 50, duration: 1.6 });
     });
    });
    qa(".contact,.foot").forEach(function (close) {
@@ -549,15 +540,15 @@
       heading.appendChild(group);
      });
      restorers.push(function () { heading.innerHTML = original; heading.removeAttribute("aria-label"); });
-     gsap.from(qa(".letter", heading), { yPercent: 110, opacity: 0, duration: .8, stagger: { amount: .55 }, ease: "power3.out" });
-     rise(qa(".intro,.magnetic-mail", close), { y: 24, duration: .8 });
-     var line = q(".contact__line", close); if (line) gsap.from(line, { scaleX: 0, duration: 1, delay: .4 });
+     gsap.from(qa(".letter", heading), { yPercent: 110, opacity: 0, duration: 1.3, stagger: { amount: 1.0 }, ease: "power3.out" });
+     rise(qa(".intro,.magnetic-mail", close), { y: 24, duration: 1.3 });
+     var line = q(".contact__line", close); if (line) gsap.from(line, { scaleX: 0, duration: 1.5, delay: .7 });
     });
    });
    var generic = qa("[data-reveal]").filter(function (el) {
     return !el.matches(".s-card,.shead,.chart,.shot,.clip,.contact,.resume__sec,.work-card,[data-tabs]") && !el.closest(".cases,.process-scene") && !q(".fin", el) && !el.matches(".pipe");
    });
-   batch(generic, "top 84%", function (els) { rise(els); });
+   batch(generic, "top 88%", function (els) { rise(els); });
    qa(".glow").forEach(function (glow, i) {
     gsap.to(glow, { y: i ? -40 : 40, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: .8 } });
    });
