@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Python for finance, George Murad</title>
+<title>Python for Finance, George Murad</title>
 <meta name="description" content="Python notebooks in progress: ratio analysis, variance flags and a cash forecast simulation.">
 <meta name="author" content="George Murad">
-<meta property="og:title" content="Python for finance, George Murad">
+<meta property="og:title" content="Python for Finance, George Murad">
 <meta property="og:description" content="Python notebooks in progress: ratio analysis, variance flags and a cash forecast simulation.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#faf9f5">
@@ -22,9 +22,9 @@
 <a class="skip" href="#main">Skip to content</a>
 <header class="top">
   <div class="wrap top__inner">
-    <a class="brand" href="../index.html"><b>George Murad</b><span>Financial analyst</span></a>
+    <a class="brand" href="../index.html"><b>George Murad</b><span>Financial Analyst</span></a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
-    <nav aria-label="Main"><ul class="menu" id="menu"><li><a href="../index.html#work">Case studies</a></li><li><a href="../store/">My store</a></li><li><a href="../python/" aria-current="page">Python</a></li><li><a href="../about/">About</a></li><li><a href="#contact">Contact</a></li></ul></nav>
+    <nav aria-label="Main"><ul class="menu" id="menu"><li><a href="../index.html#work">Case Studies</a></li><li><a href="../index.html#escentials">Escentials</a></li><li><a href="../python/" aria-current="page">Python</a></li><li><a href="../about/">About</a></li><li><a href="#contact">Contact</a></li></ul></nav>
   </div>
 </header>
 <main id="main">
@@ -32,8 +32,8 @@
   <p class="crumb"><a href="../index.html">Home</a> / Python</p>
   <header class="cover">
     <div>
-      <span class="kicker">Work in progress</span>
-      <h1>Python for finance</h1>
+      <span class="kicker">Work in Progress</span>
+      <h1>Python for Finance</h1>
       <span class="notice">In progress. These notebooks are unfinished.</span>
       <p class="intro">I am teaching myself to automate the checks and reports I build in Excel. These notebooks read the statements from my case studies and do the repetitive parts for me.</p>
     </div>
@@ -43,7 +43,7 @@
   <div class="nbs" style="margin-top:24px">
 <article class="nb" data-reveal>
   <span class="no">01</span>
-  <div><h3>Ratio analyzer</h3><p>Reads the statements from the case studies and computes the same ratios for every company, so a margin or working capital trend stands out without rebuilding a spreadsheet.</p><p class="units" style="margin-top:10px">Data: The case study statements, as CSV · Tools: pandas</p><span class="status">In progress</span></div>
+  <div><h3>Ratio Analyzer</h3><p>Reads the statements from the case studies and computes the same ratios for every company, so a margin or working capital trend stands out without rebuilding a spreadsheet.</p><p class="units" style="margin-top:10px">Data: The case study statements, as CSV · Tools: pandas</p><span class="status">In Progress</span></div>
   <pre class="code"><code><span class="c"># One table of ratios across every company</span>
 income = pd.read_csv(path, index_col=<span class="s">&quot;line_item&quot;</span>)
 rev = income.loc[<span class="s">&quot;Total revenue&quot;</span>]
@@ -53,7 +53,7 @@ ratios.T.round(3)</code></pre>
 </article>
 <article class="nb" data-reveal>
   <span class="no">02</span>
-  <div><h3>Variance report</h3><p>Takes a budget and the actuals, computes every variance, and flags only the lines that matter: more than 5% or more than $250K off. The flags go straight into an Excel summary.</p><p class="units" style="margin-top:10px">Data: Budget versus actual, two case studies · Tools: pandas, Excel output</p><span class="status">In progress</span></div>
+  <div><h3>Variance Report</h3><p>Takes a budget and the actuals, computes every variance, and flags only the lines that matter: more than 5% or more than $250K off. The flags go straight into an Excel summary.</p><p class="units" style="margin-top:10px">Data: Budget versus actual, two case studies · Tools: pandas, Excel output</p><span class="status">In Progress</span></div>
   <pre class="code"><code><span class="c"># Flag what a manager should look at first</span>
 bva[<span class="s">&quot;variance&quot;</span>] = bva[<span class="s">&quot;actual&quot;</span>] - bva[<span class="s">&quot;budget&quot;</span>]
 bva[<span class="s">&quot;variance_pct&quot;</span>] = bva[<span class="s">&quot;variance&quot;</span>] / bva[<span class="s">&quot;budget&quot;</span>]
@@ -62,7 +62,7 @@ bva[big].to_excel(<span class="s">&quot;variance_flags.xlsx&quot;</span>, index=
 </article>
 <article class="nb" data-reveal>
   <span class="no">03</span>
-  <div><h3>Cash forecast simulation</h3><p>Runs the 13 week cash forecast ten thousand times with collections that vary week to week, then reports how often cash would dip below the minimum.</p><p class="units" style="margin-top:10px">Data: The Saltbrush 13 week forecast · Tools: NumPy, pandas</p><span class="status">In progress</span></div>
+  <div><h3>Cash Forecast Simulation</h3><p>Runs the 13 week cash forecast ten thousand times with collections that vary week to week, then reports how often cash would dip below the minimum.</p><p class="units" style="margin-top:10px">Data: The Saltbrush 13 week forecast · Tools: NumPy, pandas</p><span class="status">In Progress</span></div>
   <pre class="code"><code><span class="c"># 10,000 versions of the next 13 weeks</span>
 rng = np.random.default_rng(7)
 shock = rng.normal(1.0, 0.08, size=(10_000, 13))
@@ -71,30 +71,30 @@ ending = start + flows.cumsum(axis=1)
 (ending.min(axis=1) &lt; 1_500).mean()</code></pre>
 </article>
   </div>
-  <a class="next-case" href="../about/" style="margin-top:56px"><span>Next</span><b>About me &rarr;</b></a>
+  <a class="next-case" href="../about/" style="margin-top:56px"><span>Next</span><b>About Me &rarr;</b></a>
 </div>
 </main>
 <footer class="foot" id="contact">
   <div class="wrap">
     <div class="foot__grid">
       <div>
-        <h2>Looking for an analyst who shows the work?</h2>
+        <h2>Looking for an Analyst Who Shows the Work?</h2>
         <a class="mail" href="mailto:georgebasilmurad@gmail.com">georgebasilmurad@gmail.com</a>
         <p class="note">My resume is available on request.</p>
       </div>
       <ul>
         <li><a href="mailto:georgebasilmurad@gmail.com">Email <span aria-hidden="true">&rarr;</span></a></li>
         <li><a href="https://www.linkedin.com/in/georgemurad" rel="noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li>
-        <li><a href="https://github.com/JrejL/Finance-Projects" rel="noopener">GitHub <span aria-hidden="true">&#8599;</span></a></li>
-        <li><a href="../index.html#work">Case studies <span aria-hidden="true">&rarr;</span></a></li>
-        <li><a href="../store/">My store <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="https://github.com/JrejL" rel="noopener">GitHub <span aria-hidden="true">&#8599;</span></a></li>
+        <li><a href="../index.html#work">Case Studies <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="../index.html#escentials">Escentials <span aria-hidden="true">&rarr;</span></a></li>
         <li><a href="../python/">Python <span aria-hidden="true">&rarr;</span></a></li>
         <li><a href="../about/">About <span aria-hidden="true">&rarr;</span></a></li>
       </ul>
     </div>
     <div class="foot__small">
       <span>&copy; <span data-year>2026</span> George Murad</span>
-      <span>The five case study companies are fictional and their figures were built for this portfolio. Escentials is my own business; its figures are illustrative for privacy.</span>
+      <span>The five practice case study companies are fictional and their figures were built for this portfolio. Escentials is my own business; its figures are illustrative for privacy.</span>
     </div>
   </div>
 </footer>
