@@ -6,11 +6,12 @@
 
 **See it as a website: [jrejl.github.io/FinancePortfolio](https://jrejl.github.io/FinancePortfolio/)**
 
-Work samples in financial reporting, FP&A and data analysis. Five practice case studies, each built from scratch for
-a kind of finance role I am applying for, plus the books of Escentials, my own e-commerce business. Every model is an
-Excel workbook with live formulas and a Checks sheet that proves it ties.
+Work samples in financial reporting, FP&A, accounting and data analysis. Six practice case studies, each built from
+scratch for a kind of finance role I am applying for, four Python analyses that run on their data, and the books of
+Escentials, my own e-commerce business. Every model is an Excel workbook with live formulas and a Checks sheet that
+proves it ties.
 
-> **Illustrative figures.** The five practice companies are fictional. Escentials is a real business; its figures are
+> **Illustrative figures.** The practice companies are fictional. Escentials is a real business; its figures are
 > illustrative for privacy, modeled on its size, sales channels and products, not its actual results.
 
 ## Practice Case Studies
@@ -22,6 +23,19 @@ Excel workbook with live formulas and a Checks sheet that proves it ties.
 | [Saltbrush Beverage](https://jrejl.github.io/FinancePortfolio/saltbrush-beverage/) | Standard Costing and Variance Analysis | Cost analyst and manufacturing finance roles | [Excel](saltbrush-beverage/Saltbrush_FY2025_Financial_Model.xlsx) · [PDF](saltbrush-beverage/Saltbrush_FY2025_Financial_Model.pdf) |
 | [Sunfield Kitchen Group](https://jrejl.github.io/FinancePortfolio/sunfield-kitchen/) | Unit Economics and Cohort Analysis | FP&A and operations finance roles in restaurants and retail | [Excel](sunfield-kitchen/Sunfield_FY2025_Financial_Model.xlsx) · [PDF](sunfield-kitchen/Sunfield_FY2025_Financial_Model.pdf) |
 | [City of Palomar Vista](https://jrejl.github.io/FinancePortfolio/palomar-vista/) | Government Budgeting and Fund Accounting | Budget analyst roles in city and county government | [Excel](palomar-vista/Palomar_Vista_FY2025_Financial_Model.xlsx) · [PDF](palomar-vista/Palomar_Vista_FY2025_Financial_Model.pdf) |
+| [Saltbrush Beverage: December Close](https://jrejl.github.io/FinancePortfolio/saltbrush-close/) | Month End Close | Staff accountant and financial reporting roles | [Excel](saltbrush-close/Saltbrush_December_2025_Close.xlsx) · [PDF](saltbrush-close/Saltbrush_December_2025_Close.pdf) |
+
+## Python for Finance
+
+Four pandas scripts that run on the case study data. Each one writes the tables, charts and workbook shown on
+[its page on the website](https://jrejl.github.io/FinancePortfolio/strengths/python/).
+
+| Script | The Question It Answers |
+|---|---|
+| [ratio_analyzer.py](python/ratio_analyzer.py) | How do profitability, liquidity and leverage compare across Aldercrest, Lumenpath, Saltbrush and Sunfield in FY2025? |
+| [variance_flags.py](python/variance_flags.py) | Which budget lines at Sunfield Kitchen, Palomar Vista and Escentials moved enough from budget to need a look? |
+| [cash_simulation.py](python/cash_simulation.py) | How much of its 8,000 revolver could Saltbrush need over the next 13 weeks if customer receipts vary? |
+| [evm_forecast.py](python/evm_forecast.py) | Given the cost and schedule performance on ALX-7 through December 2025, where does the program end up? |
 
 ## Escentials: My Business
 
@@ -47,7 +61,7 @@ rearview mirror in live 3D on [shopescentials.com](https://shopescentials.com). 
 
 ## Tools
 
-Excel · SQL (SQLite) · Tableau · Power BI · PowerPoint
+Excel · Python (pandas, NumPy, matplotlib) · SQL (SQLite) · Tableau · Power BI · PowerPoint
 
 ## Contact
 

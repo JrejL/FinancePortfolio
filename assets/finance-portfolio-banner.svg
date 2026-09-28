@@ -1,49 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-label="Finance Portfolio, George Murad, Financial Analyst">
   <title>Finance Portfolio, George Murad, Financial Analyst</title>
   <style>
-    .bg { fill: #faf9f5; }
-    .grid { stroke: #e8e6dc; stroke-width: 1; }
-    .h { font: 700 60px Poppins, "Helvetica Neue", Arial, sans-serif; fill: #141413; letter-spacing: -1px; }
-    .s { font: italic 400 22px Lora, Georgia, "Times New Roman", serif; fill: #5f5e5a; }
-    .t { font: 400 18px Lora, Georgia, "Times New Roman", serif; fill: #3b3b39; }
-    .axis { stroke: #141413; stroke-width: 2; }
+    .bg { fill: #141413; }
+    .grid { stroke: #faf9f5; stroke-opacity: .07; stroke-width: 1; }
+    .eyebrow { font: 600 15px Poppins, "Helvetica Neue", Arial, sans-serif; fill: #d97757; letter-spacing: 3px; }
+    .h { font: 700 64px Poppins, "Helvetica Neue", Arial, sans-serif; fill: #faf9f5; letter-spacing: -1.5px; }
+    .s { font: italic 400 22px Lora, Georgia, "Times New Roman", serif; fill: #b0aea5; }
+    .t { font: 400 18px Lora, Georgia, "Times New Roman", serif; fill: #b0aea5; }
+    .axis { stroke: #faf9f5; stroke-opacity: .5; stroke-width: 2; }
     .bar { transform-box: fill-box; transform-origin: 50% 100%; animation: grow 8s cubic-bezier(.22,.61,.36,1) infinite both; }
     .b2 { animation-delay: .12s } .b3 { animation-delay: .24s } .b4 { animation-delay: .36s } .b5 { animation-delay: .48s } .b6 { animation-delay: .6s }
-    .line { fill: none; stroke: #141413; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 520; stroke-dashoffset: 520; animation: draw 8s ease infinite both; }
-    .stamp { transform-box: fill-box; transform-origin: 50% 50%; animation: pop 8s ease infinite both; }
-    .stamp circle { fill: none; stroke: #788c5d; stroke-width: 3; }
-    .stamp text { font: 700 15px Poppins, "Helvetica Neue", Arial, sans-serif; fill: #788c5d; letter-spacing: 1px; }
+    .line { fill: none; stroke: #faf9f5; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 520; stroke-dashoffset: 520; animation: draw 8s ease infinite both; }
+    .dot { fill: #d97757; transform-box: fill-box; transform-origin: 50% 50%; animation: pop 8s ease infinite both; }
     @keyframes grow { 0% { transform: scaleY(0); opacity: 1 } 16% { transform: scaleY(1) } 88% { transform: scaleY(1); opacity: 1 } 96% { opacity: 0 } 100% { transform: scaleY(0); opacity: 0 } }
     @keyframes draw { 0%, 14% { stroke-dashoffset: 520; opacity: 1 } 36% { stroke-dashoffset: 0 } 88% { stroke-dashoffset: 0; opacity: 1 } 96%, 100% { stroke-dashoffset: 0; opacity: 0 } }
-    @keyframes pop { 0%, 36% { transform: rotate(-12deg) scale(0); opacity: 0 } 41% { transform: rotate(-12deg) scale(1.12); opacity: 1 } 45%, 88% { transform: rotate(-12deg) scale(1); opacity: 1 } 96%, 100% { transform: rotate(-12deg) scale(1); opacity: 0 } }
+    @keyframes pop { 0%, 34% { transform: scale(0); opacity: 0 } 40% { transform: scale(1.3); opacity: 1 } 45%, 88% { transform: scale(1); opacity: 1 } 96%, 100% { transform: scale(1); opacity: 0 } }
     @media (prefers-reduced-motion: reduce) {
-      .bar, .line, .stamp { animation: none; }
+      .bar, .line, .dot { animation: none; }
       .line { stroke-dashoffset: 0; }
-      .stamp { transform: rotate(-12deg); }
     }
   </style>
   <rect class="bg" width="1200" height="300"/>
   <g class="grid">
-    <path d="M700 40V260M760 40V260M820 40V260M880 40V260M940 40V260M1000 40V260M1060 40V260"/>
-    <path d="M680 60H1080M680 110H1080M680 160H1080M680 210H1080"/>
+    <path d="M740 40V260M800 40V260M860 40V260M920 40V260M980 40V260M1040 40V260M1100 40V260"/>
+    <path d="M720 60H1120M720 110H1120M720 160H1120M720 210H1120"/>
   </g>
-  <text class="h" x="60" y="128">Finance Portfolio</text>
-  <text class="s" x="62" y="172">George Murad &#183; Financial Analyst</text>
-  <text class="t" x="62" y="222">Five practice case studies and the books of my own business,</text>
-  <text class="t" x="62" y="250">each with its Excel model, formulas and all.</text>
+  <text class="eyebrow" x="62" y="86">FINANCE PORTFOLIO</text>
+  <text class="h" x="58" y="152">George Murad</text>
+  <text class="s" x="62" y="192">Financial Analyst</text>
+  <text class="t" x="62" y="236">Six practice case studies, four Python analyses</text>
+  <text class="t" x="62" y="262">and the books of my own business.</text>
   <g>
-    <rect class="bar b1" x="700" y="180" width="40" height="80" fill="#d97757"/>
-    <rect class="bar b2" x="764" y="150" width="40" height="110" fill="#6a9bcc"/>
-    <rect class="bar b3" x="828" y="164" width="40" height="96" fill="#788c5d"/>
-    <rect class="bar b4" x="892" y="120" width="40" height="140" fill="#d97757"/>
-    <rect class="bar b5" x="956" y="98" width="40" height="162" fill="#6a9bcc"/>
-    <rect class="bar b6" x="1020" y="70" width="40" height="190" fill="#788c5d"/>
+    <rect class="bar b1" x="740" y="190" width="40" height="70" fill="#6a9bcc"/>
+    <rect class="bar b2" x="804" y="164" width="40" height="96" fill="#788c5d"/>
+    <rect class="bar b3" x="868" y="150" width="40" height="110" fill="#6a9bcc"/>
+    <rect class="bar b4" x="932" y="124" width="40" height="136" fill="#788c5d"/>
+    <rect class="bar b5" x="996" y="100" width="40" height="160" fill="#6a9bcc"/>
+    <rect class="bar b6" x="1060" y="66" width="40" height="194" fill="#d97757"/>
   </g>
-  <line class="axis" x1="690" y1="260" x2="1080" y2="260"/>
-  <path class="line" d="M720 170 L784 140 L848 152 L912 108 L976 86 L1040 58"/>
-  <g class="stamp">
-    <circle cx="1140" cy="212" r="34"/>
-    <text x="1140" y="208" text-anchor="middle">TIES</text>
-    <text x="1140" y="226" text-anchor="middle">OUT</text>
-  </g>
+  <line class="axis" x1="730" y1="260" x2="1120" y2="260"/>
+  <path class="line" d="M760 176 L824 150 L888 136 L952 110 L1016 86 L1080 52"/>
+  <circle class="dot" cx="1080" cy="52" r="7"/>
 </svg>
