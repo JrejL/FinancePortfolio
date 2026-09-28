@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>html{background:#141413;color-scheme:dark}</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>About George Murad</title>
 <meta name="description" content="George Murad: financial analyst and finance graduate studying for the CPA, open to roles anywhere in the US or remote.">
@@ -9,25 +10,29 @@
 <meta property="og:title" content="About George Murad">
 <meta property="og:description" content="George Murad: financial analyst and finance graduate studying for the CPA, open to roles anywhere in the US or remote.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#faf9f5">
-<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#141413">
+<meta name="color-scheme" content="dark">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-<script>document.documentElement.classList.add("js");setTimeout(function(){if(!window.__site)document.documentElement.classList.remove("js")},4000);</script>
+<script>(function(d){d.classList.add("js");if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches)d.classList.add("motion");setTimeout(function(){if(!window.__site)d.classList.remove("js","motion")},3000)})(document.documentElement);</script>
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js">
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&amp;family=Poppins:wght@700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&amp;family=Poppins:wght@400;500;600;700&amp;display=swap">
 <link rel="stylesheet" href="../assets/css/site.css">
+
 </head>
-<body>
+<body class="page-about">
+<div class="scroll-progress" aria-hidden="true"></div>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top">
   <div class="wrap top__inner">
     <a class="brand" href="../index.html"><b>George Murad</b><span>Financial Analyst</span></a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
-    <nav aria-label="Main"><ul class="menu" id="menu"><li><a href="../index.html#work">Case Studies</a></li><li><a href="../index.html#escentials">Escentials</a></li><li><a href="../python/">Python</a></li><li><a href="../about/" aria-current="page">About</a></li><li><a href="#contact">Contact</a></li></ul></nav>
+    <nav aria-label="Main"><ul class="menu" id="menu"><li class="has-sub"><a href="../strengths/">My Strengths</a><ul class="submenu"><li><a href="../strengths/financial-analysis/">Financial Analysis and FP&amp;A</a></li><li><a href="../strengths/accounting/">Accounting</a></li><li><a href="../strengths/evm/">Earned Value Management (EVM)</a></li><li><a href="../strengths/cost-analysis/">Cost and Variance Analysis</a></li><li><a href="../strengths/government-budgeting/">Government Budgeting</a></li><li><a href="../strengths/python/">Python for Finance</a></li><li><a href="../strengths/data-sql/">Data and SQL</a></li><li class="submenu__all"><a href="../case-studies/">All Case Studies</a></li></ul></li><li><a href="../case-studies/">Case Studies</a></li><li><a href="../store/">Escentials</a></li><li><a href="../about/" aria-current="page">About</a></li><li><a class="nav-contact" href="../contact/">Contact</a></li></ul></nav>
   </div>
 </header>
-<main id="main">
+<main id="main" tabindex="-1">
 <div class="wrap">
   <p class="crumb"><a href="../index.html">Home</a> / About</p>
   <article class="resume">
@@ -101,26 +106,29 @@
   <div class="wrap">
     <div class="foot__grid">
       <div>
-        <h2>Looking for an Analyst Who Shows the Work?</h2>
-        <a class="mail" href="mailto:georgebasilmurad@gmail.com">georgebasilmurad@gmail.com</a>
+        <h2>Get in Touch</h2>
+        <a class="mail email-pill" href="mailto:georgebasilmurad@gmail.com">georgebasilmurad@gmail.com</a>
         <p class="note">My resume is available on request.</p>
       </div>
       <ul>
         <li><a href="mailto:georgebasilmurad@gmail.com">Email <span aria-hidden="true">&rarr;</span></a></li>
         <li><a href="https://www.linkedin.com/in/georgemurad" rel="noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li>
         <li><a href="https://github.com/JrejL" rel="noopener">GitHub <span aria-hidden="true">&#8599;</span></a></li>
-        <li><a href="../index.html#work">Case Studies <span aria-hidden="true">&rarr;</span></a></li>
-        <li><a href="../index.html#escentials">Escentials <span aria-hidden="true">&rarr;</span></a></li>
-        <li><a href="../python/">Python <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="../strengths/">My Strengths <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="../case-studies/">Case Studies <span aria-hidden="true">&rarr;</span></a></li>
         <li><a href="../about/">About <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="../contact/">Contact <span aria-hidden="true">&rarr;</span></a></li>
       </ul>
     </div>
+    <ol class="footnotes"><li id="portfolio-note">The practice case study companies are fictional and their figures were built for this portfolio. Escentials is my own business; its figures are illustrative for privacy.</li></ol>
     <div class="foot__small">
       <span>&copy; <span data-year>2026</span> George Murad</span>
-      <span>The five practice case study companies are fictional and their figures were built for this portfolio. Escentials is my own business; its figures are illustrative for privacy.</span>
+      <a href="#portfolio-note" aria-label="Portfolio footnote">&#8593;</a>
     </div>
   </div>
 </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" defer></script>
 <script src="../assets/js/site.js" defer></script>
 </body>
 </html>

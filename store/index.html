@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<style>html{background:#141413;color-scheme:dark}</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>shopescentials.com: The Website, by George Murad</title>
 <meta name="description" content="The best parts of shopescentials.com, George Murad&#x27;s online store: the live 3D Car Perfume, pricing below retail, the trust panel and refills.">
@@ -9,62 +10,73 @@
 <meta property="og:title" content="shopescentials.com: The Website, by George Murad">
 <meta property="og:description" content="The best parts of shopescentials.com, George Murad&#x27;s online store: the live 3D Car Perfume, pricing below retail, the trust panel and refills.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#faf9f5">
-<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#141413">
+<meta name="color-scheme" content="dark">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-<script>document.documentElement.classList.add("js");setTimeout(function(){if(!window.__site)document.documentElement.classList.remove("js")},4000);</script>
+<script>(function(d){d.classList.add("js");if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches)d.classList.add("motion");setTimeout(function(){if(!window.__site)d.classList.remove("js","motion")},3000)})(document.documentElement);</script>
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js">
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&amp;family=Poppins:wght@700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&amp;family=Poppins:wght@400;500;600;700&amp;display=swap">
 <link rel="stylesheet" href="../assets/css/site.css">
+<script type="importmap">{"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.min.js", "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.core.js": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.core.min.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/", "cp-bottle-model": "./../assets/js/cp/cp-bottle-model.js", "cp-road-mirror": "./../assets/js/cp/cp-road-mirror.js"}}</script>
+<script type="module" src="../assets/js/cp/cp-init.js"></script>
 </head>
-<body>
+<body class="page-business">
+<div class="scroll-progress" aria-hidden="true"></div>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top">
   <div class="wrap top__inner">
     <a class="brand" href="../index.html"><b>George Murad</b><span>Financial Analyst</span></a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
-    <nav aria-label="Main"><ul class="menu" id="menu"><li><a href="../index.html#work">Case Studies</a></li><li><a href="../index.html#escentials" aria-current="true">Escentials</a></li><li><a href="../python/">Python</a></li><li><a href="../about/">About</a></li><li><a href="#contact">Contact</a></li></ul></nav>
+    <nav aria-label="Main"><ul class="menu" id="menu"><li class="has-sub"><a href="../strengths/">My Strengths</a><ul class="submenu"><li><a href="../strengths/financial-analysis/">Financial Analysis and FP&amp;A</a></li><li><a href="../strengths/accounting/">Accounting</a></li><li><a href="../strengths/evm/">Earned Value Management (EVM)</a></li><li><a href="../strengths/cost-analysis/">Cost and Variance Analysis</a></li><li><a href="../strengths/government-budgeting/">Government Budgeting</a></li><li><a href="../strengths/python/">Python for Finance</a></li><li><a href="../strengths/data-sql/">Data and SQL</a></li><li class="submenu__all"><a href="../case-studies/">All Case Studies</a></li></ul></li><li><a href="../case-studies/">Case Studies</a></li><li><a href="../store/" aria-current="true">Escentials</a></li><li><a href="../about/">About</a></li><li><a class="nav-contact" href="../contact/">Contact</a></li></ul></nav>
   </div>
 </header>
-<main id="main">
+<main id="main" tabindex="-1">
 <div class="wrap">
   <p class="crumb"><a href="../index.html#escentials">Escentials</a> / The Website</p>
-  <header class="cover">
+  <header class="cover store-cover">
     <div>
       <span class="kicker">Escentials · The Website</span>
       <h1>shopescentials<wbr>.com</h1>
       <span class="notice">My business.</span>
       <p class="intro">Escentials is my e-commerce business: designer fragrance, plus its own Car Perfume line. These are the best parts of its website, which I direct and am rebuilding now.</p>
     </div>
+    <figure class="screen clip bottle-showcase" data-cp-state="fallback" data-reveal>
+        <div class="clip__frame">
+          <div class="ec-hero__rig">
+            <div class="ec-mirror-wrap" aria-hidden="true"><div class="ec-mirror-stem"></div><div class="ec-mirror"><div class="ec-mirror-glass"></div></div></div>
+            <div class="cp-stage" data-cp-stage data-mode="hero" data-bottle="cognac" aria-hidden="true"></div>
+          </div>
+          <video src="../assets/media/car-perfume-swing.mp4" poster="../assets/media/car-perfume-swing-poster.jpg" width="800" height="800" controls muted playsinline preload="metadata" aria-label="A Car Perfume bottle hanging from a rearview mirror, swinging as the car changes lanes and turning to show each color"></video>
+          <button class="clip__toggle" type="button">Pause</button>
+          <button class="cp-pause" type="button" aria-pressed="false">Pause</button>
+        </div>
+        <div class="cp-controls" role="group" aria-label="Bottle color"><button class="cp-swatch swatch-0" type="button" data-bottle="amethyst" aria-pressed="false"><i aria-hidden="true"></i><span>Amethyst</span></button><button class="cp-swatch swatch-1" type="button" data-bottle="rose" aria-pressed="false"><i aria-hidden="true"></i><span>Rose</span></button><button class="cp-swatch swatch-2" type="button" data-bottle="citrine" aria-pressed="false"><i aria-hidden="true"></i><span>Citrine</span></button><button class="cp-swatch swatch-3" type="button" data-bottle="sapphire" aria-pressed="false"><i aria-hidden="true"></i><span>Sapphire</span></button><button class="cp-swatch swatch-4" type="button" data-bottle="ruby" aria-pressed="false"><i aria-hidden="true"></i><span>Ruby</span></button><button class="cp-swatch swatch-5" type="button" data-bottle="aqua" aria-pressed="false"><i aria-hidden="true"></i><span>Aqua</span></button><button class="cp-swatch swatch-6" type="button" data-bottle="cognac" aria-pressed="true"><i aria-hidden="true"></i><span>Cognac</span></button><button class="cp-swatch swatch-7" type="button" data-bottle="clear-black" aria-pressed="false"><i aria-hidden="true"></i><span>Onyx</span></button><button class="cp-swatch swatch-8" type="button" data-bottle="clear-gold" aria-pressed="false"><i aria-hidden="true"></i><span>Gold</span></button><button class="cp-swatch swatch-9" type="button" data-bottle="clear-silver" aria-pressed="false"><i aria-hidden="true"></i><span>Chrome</span></button></div>
+        <figcaption>Car Perfume, the store's own line, live in 3D on shopescentials.com: it hangs from the rearview mirror and swings as the car changes lanes.</figcaption>
+      </figure>
     <dl class="facts"><div><dt>Platform</dt><dd>Shopify</dd></div><div><dt>Catalog</dt><dd>5,678 Active Products from 446 Brands</dd></div><div><dt>Own Line</dt><dd>Car Perfume by Escentials, 14 Scents</dd></div><div><dt>Channels</dt><dd>Shopify and eBay</dd></div><div><dt>My Role</dt><dd>Pricing, Catalog, Supplier Stock, Site Direction</dd></div></dl>
   </header>
   <div class="kpis"><div class="kpi"><b>55</b><span>Variants Repriced from Below Cost</span></div><div class="kpi"><b>0.16 s</b><span>Brands Page Build in the Next Release, Down from 2.9 s</span></div><div class="kpi"><b>446</b><span>Brands in the Catalog</span></div><div class="kpi"><b>14</b><span>Car Perfume Scents</span></div></div>
   <div class="report" style="grid-template-columns:minmax(0,1fr)">
     <div class="content">
-      <section class="chapter"><div class="shead" data-reveal><span class="n">1</span><h2>Car Perfume, Live in 3D</h2></div>
+      <section class="chapter store-clip"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">1</span><h2>Car Perfume, Live in 3D</h2></div>
         <p class="lead">Car Perfume is the store's own line. On its page the bottle is a live 3D scene: it hangs from the
         rearview mirror, swings as the car changes lanes, and turns to show each color.</p>
-        <figure class="screen clip" data-reveal>
-        <div class="clip__frame">
-          <video src="../assets/media/car-perfume-swing.mp4" poster="../assets/media/car-perfume-swing-poster.jpg" width="800" height="800" autoplay muted playsinline preload="metadata" aria-label="A Car Perfume bottle hanging from a rearview mirror, swinging as the car changes lanes and turning to show each color"></video>
-          <button class="clip__toggle" type="button">Pause</button>
-        </div>
-        <figcaption>Car Perfume, the store's own line, live in 3D on shopescentials.com: it hangs from the rearview mirror and swings as the car changes lanes.</figcaption>
-      </figure>
       </section>
-      <section class="chapter"><div class="shead" data-reveal><span class="n">2</span><h2>The Best Parts of the Store</h2></div>
+      <section class="chapter store-gallery"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">2</span><h2>The Best Parts of the Store</h2></div>
         <p class="lead">Screenshots from the live site, as customers see it.</p>
         <div class="shots-grid"><figure class="shot" data-reveal><a href="../assets/media/store-banner.jpg"><img src="../assets/media/store-banner.jpg" alt="The Escentials home banner: designer fragrance below retail, with a product and its price" width="1400" height="488" loading="lazy"></a><figcaption><b>The Home Banner.</b> Designer fragrance below retail, with real products and prices from the catalog.</figcaption></figure><figure class="shot" data-reveal><a href="../assets/media/store-trending.jpg"><img src="../assets/media/store-trending.jpg" alt="A row of trending fragrances, each priced below retail" width="1400" height="475" loading="lazy"></a><figcaption><b>Trending Fragrances.</b> Every card shows the retail price struck through next to ours.</figcaption></figure><figure class="shot" data-reveal><a href="../assets/media/store-trust.jpg"><img src="../assets/media/store-trust.jpg" alt="The trust panel: authenticity, fast shipping, returns and better prices" width="1400" height="576" loading="lazy"></a><figcaption><b>The Trust Panel.</b> Authenticity, fast shipping, 7 day returns and better prices, in one place.</figcaption></figure><figure class="shot" data-reveal><a href="../assets/media/store-refills.jpg"><img src="../assets/media/store-refills.jpg" alt="The Car Perfume refill picker with scent, size and price" width="1400" height="709" loading="lazy"></a><figcaption><b>Car Perfume Refills.</b> Pick a scent and a size; refills start at $5.99.</figcaption></figure></div>
       </section>
-      <section class="chapter"><div class="shead" data-reveal><span class="n">3</span><h2>What Changed</h2></div>
+      <section class="chapter"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">3</span><h2>What Changed</h2></div>
         <ol class="findings" data-reveal>
           <li><span><b>Prices that cover cost.</b> I set a tiered markup on supplier cost, found 55 variants selling below cost, and repriced them to it, capped at the supplier's retail price.</span></li>
           <li><span><b>A faster store.</b> The Brands page looked up every one of 446 brands one at a time and took up to 2.9 seconds to build. The rebuilt page, in the next release, takes about 0.16 seconds.</span></li>
           <li><span><b>A calmer front page.</b> The current banner cycles through panels on its own. The new one, in the next release, is a single animated scene that plays once and then rests.</span></li>
         </ol>
       </section>
-      <section class="chapter"><div class="shead" data-reveal><span class="n">4</span><h2>The Numbers Side</h2></div>
+      <section class="chapter"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">4</span><h2>The Numbers Side</h2></div>
         <p class="lead">The store's books are their own page: statements, budget versus actual, a customer database and a Tableau dashboard.</p>
         <div class="actions" style="display:flex;flex-wrap:wrap;gap:18px 28px;align-items:center" data-reveal>
           <a class="button" href="../escentials-llc/">The Books <span class="arr" aria-hidden="true">&rarr;</span></a>
@@ -73,33 +85,37 @@
       </section>
     </div>
   </div>
-  <a class="next-case" href="../python/"><span>Next</span><b>Python for Finance &rarr;</b></a>
+  <a class="next-case" href="../strengths/"><span>Next</span><b>My Strengths &rarr;</b></a>
 </div>
 </main>
 <footer class="foot" id="contact">
   <div class="wrap">
     <div class="foot__grid">
       <div>
-        <h2>Looking for an Analyst Who Shows the Work?</h2>
-        <a class="mail" href="mailto:georgebasilmurad@gmail.com">georgebasilmurad@gmail.com</a>
+        <h2>Get in Touch</h2>
+        <a class="mail email-pill" href="mailto:georgebasilmurad@gmail.com">georgebasilmurad@gmail.com</a>
         <p class="note">My resume is available on request.</p>
       </div>
       <ul>
         <li><a href="mailto:georgebasilmurad@gmail.com">Email <span aria-hidden="true">&rarr;</span></a></li>
         <li><a href="https://www.linkedin.com/in/georgemurad" rel="noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li>
         <li><a href="https://github.com/JrejL" rel="noopener">GitHub <span aria-hidden="true">&#8599;</span></a></li>
-        <li><a href="../index.html#work">Case Studies <span aria-hidden="true">&rarr;</span></a></li>
-        <li><a href="../index.html#escentials">Escentials <span aria-hidden="true">&rarr;</span></a></li>
-        <li><a href="../python/">Python <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="../strengths/">My Strengths <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="../case-studies/">Case Studies <span aria-hidden="true">&rarr;</span></a></li>
         <li><a href="../about/">About <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="../contact/">Contact <span aria-hidden="true">&rarr;</span></a></li>
       </ul>
     </div>
+    <ol class="footnotes"><li id="portfolio-note">The practice case study companies are fictional and their figures were built for this portfolio. Escentials is my own business; its figures are illustrative for privacy.</li></ol>
     <div class="foot__small">
       <span>&copy; <span data-year>2026</span> George Murad</span>
-      <span>The five practice case study companies are fictional and their figures were built for this portfolio. Escentials is my own business; its figures are illustrative for privacy.</span>
+      <a href="#portfolio-note" aria-label="Portfolio footnote">&#8593;</a>
     </div>
   </div>
 </footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/SplitText.min.js" defer></script>
 <script src="../assets/js/site.js" defer></script>
 </body>
 </html>
