@@ -65,4 +65,4 @@ Excel · Python (pandas, NumPy, matplotlib) · SQL (SQLite) · Tableau · Power 
 
 ## Contact
 
-[georgebasilmurad@gmail.com](mailto:georgebasilmurad@gmail.com) · [LinkedIn](https://www.linkedin.com/in/georgemurad)
+[georgebasilmurad@gmail.com](mailto:georgebasilmurad@gmail.com)
