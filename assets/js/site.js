@@ -334,7 +334,7 @@
     var id; try { id = decodeURIComponent(location.hash.slice(1)); } catch (_) { return; }
     sceneRoutes.some(function (route) {
      if (route.el.id !== id) return false;
-     seek(route.trigger, route.trigger.start); return true;
+     seek(route.trigger, route.at === "end" ? route.trigger.end : route.trigger.start); return true;
     });
    };
    window.addEventListener("hashchange", function () { if (motionEnabled) routeHash(); });
@@ -358,8 +358,8 @@
    var media = gsap.matchMedia();
    media.add({ desktop: "(min-width: 768px)", tall: "(min-height: 700px)", cinema: "(min-width: 1100px) and (min-height: 800px)", gallery: "(min-width: 768px) and (min-height: 760px)", all: "all" }, function (mm) {
     var cleanups = [], owned = [];
-    var register = function (el, trigger, focus) {
-     var route = { el: el, trigger: trigger }; sceneRoutes.push(route); owned.push(route);
+    var register = function (el, trigger, focus, at) {
+     var route = { el: el, trigger: trigger, at: at }; sceneRoutes.push(route); owned.push(route);
      var onFocus = function (event) {
       if (!motionEnabled || !event.target.closest("a,button") || event.target.closest(".scene-pause")) return;
       focus(event.target, trigger);
@@ -378,43 +378,127 @@
      sizeExtra();
      ScrollTrigger.addEventListener("refreshInit", sizeExtra);
      cleanups.push(function () { ScrollTrigger.removeEventListener("refreshInit", sizeExtra); extra.style.height = "0px"; });
-     var cells = qa(".number-cell", hero), scene = q(".decision", hero), hub = q(".decision__hub", scene);
-     // Each card's flight is a delta from the hub's center back to the card's own laid out slot in the grid
+     var cells = qa(".number-cell", hero), scene = q(".decision", hero), point = q(".decision__point", scene), flash = q(".decision__flash", scene);
+     // Each card's flight is a delta from the point of light back to the card's own laid out slot in the grid
      // (it never moves in the DOM: .stage-scene already positions the grid over the hero). Measured fresh
      // whenever the timeline crosses time 0 or GSAP invalidates on resize, never resolved on every scrub frame.
      var cardDelta = function (i, axis) {
-      var hubRect = hub.getBoundingClientRect(), cardRect = cards[i].getBoundingClientRect();
-      return axis === "x" ? (hubRect.left + hubRect.width / 2) - (cardRect.left + cardRect.width / 2)
-                           : (hubRect.top + hubRect.height / 2) - (cardRect.top + cardRect.height / 2);
+      var pointRect = point.getBoundingClientRect(), cardRect = cards[i].getBoundingClientRect();
+      return axis === "x" ? (pointRect.left + pointRect.width / 2) - (cardRect.left + cardRect.width / 2)
+                           : (pointRect.top + pointRect.height / 2) - (cardRect.top + cardRect.height / 2);
+     };
+     // Idle wander: each figure drifts on custom properties that its inner span turns into a transform, so it adds
+     // to the cell's own position. --k damps it to nothing as the figure joins the spiral.
+     var wanders = [], drift = { on: false };
+     var syncWander = function () {
+      var stop = hero.classList.contains("drift-paused") || document.hidden || !hero.classList.contains("scene-active");
+      wanders.forEach(function (tween) { tween.paused(stop); });
+     };
+     var range = function (vw, vh) {
+      return { "--wx": function (_, el) { return (Math.random() * 2 - 1) * innerWidth * (vw[0] + Math.random() * (vw[1] - vw[0])) / 100 * parseFloat(el.style.getPropertyValue("--near")); },
+               "--wy": function (_, el) { return (Math.random() * 2 - 1) * innerHeight * (vh[0] + Math.random() * (vh[1] - vh[0])) / 100 * parseFloat(el.style.getPropertyValue("--near")); },
+               "--wr": function () { return (Math.random() * 2 - 1) * 6; } };
+     };
+     cells.forEach(function (cell) {
+      var vars = range([8, 14], [6, 10]);
+      vars.duration = 7 + Math.random() * 5; vars.ease = "sine.inOut"; vars.repeat = -1; vars.repeatRefresh = true; vars.paused = true;
+      var tween = gsap.to(cell, vars); tween.progress(Math.random() * .5);
+      wanders.push(tween);
+     });
+     var onVisible = function () { syncWander(); };
+     document.addEventListener("visibilitychange", onVisible);
+     var cellState = cells.map(function (cell, i) {
+      return { el: cell, alpha: parseFloat(cell.style.getPropertyValue("--alpha")), off: (i * 37 % 100) / 100 * .12, hx: 0, hy: 0, r0: 0, a0: 0 };
+     });
+     // One proxy tween drives every figure in polar terms around S, the center of the future grid: a whirlpool, radius
+     // (1 - q)^1.6, all turning the same way, each figure on its own progress so they arrive as a stream.
+     var swirl = { p: 0 };
+     var homes = function () {
+      var w = hero.clientWidth, h = hero.clientHeight;
+      cellState.forEach(function (c) {
+       c.hx = parseFloat(c.el.style.getPropertyValue("--x")) / 100 * w - w / 2; c.hy = parseFloat(c.el.style.getPropertyValue("--y")) / 100 * h - h / 2;
+       c.r0 = Math.hypot(c.hx, c.hy); c.a0 = Math.atan2(c.hy, c.hx);
+      });
+     };
+     var clamp01 = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+     var spiral = function () {
+      var p = swirl.p, fade = clamp01((p - 1) / .08), lead = Math.min(p, 1);
+      cellState.forEach(function (c) {
+       var qq = clamp01((lead - c.off) / (1 - .12)), r = c.r0 * Math.pow(1 - qq, 1.6), a = c.a0 + 1.35 * Math.PI * qq;
+       var dx = r * Math.cos(a) - c.hx, dy = r * Math.sin(a) - c.hy;
+       c.el.style.setProperty("--k", (1 - clamp01(qq / .35)).toFixed(3));
+       c.el.style.transform = "translate3d(" + dx.toFixed(1) + "px," + dy.toFixed(1) + "px,0) translate(-50%,-50%) scale(" + (1 - .75 * qq).toFixed(3) + ")";
+       c.el.style.opacity = ((c.alpha + (.95 - c.alpha) * qq) * (1 - fade)).toFixed(3);
+      });
      };
      var assembly = gsap.timeline({ scrollTrigger: { trigger: stage, start: function () { return "top " + navHeight(); }, end: function () { return "+=" + (innerHeight * 2); },
-      pin: true, scrub: 1.5, anticipatePin: 1, invalidateOnRefresh: true, onToggle: toggleScene(hero) } });
-     assembly.set(cells, { x: 0, y: 0, xPercent: function (_, el) { var tx = parseFloat(el.style.getPropertyValue("--tx")); return isNaN(tx) ? -50 : tx; }, yPercent: -50, scale: 1 }, 0)
-      .set(cards, { opacity: 0, scale: .18, pointerEvents: "none",
+      pin: true, scrub: 1.5, anticipatePin: 1, invalidateOnRefresh: true, onRefreshInit: homes,
+      onToggle: function (self) { toggleScene(hero)(self); syncWander(); } } });
+     homes();
+     assembly.set(cards, { opacity: 0, scale: .05, pointerEvents: "none",
        x: function (i) { return cardDelta(i, "x"); }, y: function (i) { return cardDelta(i, "y"); } }, 0)
       .set(sHead, { opacity: 0, y: 20 }, 0)
-      .fromTo(scene, { opacity: 0, y: 100, scale: .68 }, { opacity: 1, y: 0, scale: 1, duration: .65, ease: "power3.out" }, 1.2)
+      .set([point, flash], { opacity: 0 }, 0)
       .to(q(".hero__copy", hero), { scale: .57, y: -10, duration: .9, ease: "power2.inOut" }, .1)
       .to(q(".hero__copy", hero), { opacity: 0, duration: .3, ease: "power2.in" }, 1.05)
       .to(qa(".hero__support,.hero__eyebrow", hero), { opacity: 0, y: -15, duration: .45 }, .08)
       .set(q(".actions", hero), { pointerEvents: "none" }, .45)
-      .to(cells, { x: function (_, el) { return hero.clientWidth * .5 - el.offsetLeft; }, y: function (_, el) { return hero.clientHeight * .56 - el.offsetTop; },
-       scale: .2, rotation: function (i) { return i % 2 ? 18 : -18; }, opacity: .9, duration: .85, stagger: .004, ease: "power4.in" }, .12)
-      .to(cells, { scale: .45, duration: .08, ease: "power4.out" }, 1.1)
-      .to(cells, { scale: .03, opacity: 0, duration: .16 }, 1.18)
-      .fromTo(hub, { scale: .2, opacity: 0 }, { scale: 1, opacity: 1, duration: .5, ease: "power2.out" }, 1.15)
-      .fromTo(q(".shock-ring", hero), { scale: .2, opacity: .9 }, { scale: 13, opacity: 0, duration: .65, ease: "power2.out" }, 1.08)
-      .to(sHead, { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, 1.5)
-      .to(cards, { opacity: 1, scale: 1, x: 0, y: 0, duration: .9, stagger: { each: .09, from: "start" }, ease: "power3.out" }, 1.5)
-      .to(hub, { opacity: 0, duration: .7, ease: "power1.in" }, 1.9)
-      .to(q(".scene-pause", hero), { autoAlpha: 0, duration: .15 }, 1.35)
-      .set(cards, { pointerEvents: "auto" }, ">")
-      .to({}, { duration: .3 });
-     register(stage, assembly.scrollTrigger, function (target, trigger) {
-      if (target.closest(".s-card")) seek(trigger, trigger.end); else seek(trigger, trigger.start);
+      .to(swirl, { p: 1.08, duration: .93, ease: "none", onUpdate: spiral }, .12)
+      .fromTo(point, { opacity: 0, scale: .2 }, { opacity: 1, scale: 1, duration: .25, ease: "power2.in" }, .88)
+      .to(point, { scale: 1.9, duration: .1, ease: "power2.out" }, 1.08)
+      .to(point, { scale: 1, duration: .1, ease: "power2.in" }, 1.18)
+      .fromTo(flash, { opacity: 0, scale: .25 }, { opacity: 1, scale: 1.1, duration: .1, ease: "power2.out" }, 1.14)
+      .to(flash, { opacity: 0, scale: 3.2, duration: .18, ease: "power2.out" }, 1.24)
+      .to(point, { opacity: 0, duration: .15 }, 1.28)
+      .to(sHead, { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, 1.45)
+      .to(cards, { opacity: 1, scale: 1, x: 0, y: 0, duration: 1.2, stagger: { each: .07, from: "start" }, ease: "power3.out" }, 1.2)
+      .to(q(".scene-pause", hero), { autoAlpha: 0, duration: .15 }, .8)
+      .set(cards, { pointerEvents: "auto" }, 2.9)
+      .to({}, { duration: .3 }, 2.94);
+     var trigger = assembly.scrollTrigger;
+     syncWander();
+     register(stage, trigger, function (target, trig) {
+      if (target.closest(".s-card")) seek(trig, trig.end); else seek(trig, trig.start);
+     }, "end");
+     // The hero buttons glide the page: See My Strengths through the scene to its end, Contact Me to the footer.
+     var glide = null;
+     // While a glide runs, <html> carries is-gliding, so the 3D bottle waits (cp-init.js) instead of stalling it.
+     var endGlide = function () { document.documentElement.classList.remove("is-gliding"); document.dispatchEvent(new CustomEvent("cp:glideend")); };
+     var stopGlide = function () { if (glide) { glide.kill(); glide = null; endGlide(); } };
+     var glideTo = function (target, done) {
+      stopGlide();
+      document.documentElement.classList.add("is-gliding");
+      var y = { v: window.pageYOffset };
+      var max = document.documentElement.scrollHeight - innerHeight;
+      glide = gsap.to(y, { v: Math.max(0, Math.min(target, max)), duration: 2.4, ease: "power2.inOut",
+       // "instant": the page has scroll-behavior: smooth, which turned every frame's step into its own smooth scroll,
+       // restarted each frame, so the page sat still for the whole tween and then jumped at the end.
+       onUpdate: function () { window.scrollTo({ top: y.v, left: 0, behavior: "instant" }); }, onComplete: function () { glide = null; endGlide(); if (done) done(); } });
+     };
+     var onGlideClick = function (event) {
+      if (!motionEnabled || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      var link = event.target.closest(".hero .actions a[href^='#']");
+      if (!link) return;
+      var id = link.getAttribute("href").slice(1), dest = document.getElementById(id);
+      if (!dest) return;
+      event.preventDefault();
+      if (id === "strengths") {
+       glideTo(trigger.end, function () {
+        gsap.delayedCall(1.7, function () { var first = cards[0] && q("a", cards[0]); if (first && window.pageYOffset >= trigger.end - 4) first.focus({ preventScroll: true }); });
+       });
+      } else glideTo(dest.getBoundingClientRect().top + window.pageYOffset);
+     };
+     document.addEventListener("click", onGlideClick, true);
+     ["wheel", "touchstart", "keydown"].forEach(function (name) { window.addEventListener(name, stopGlide, { passive: true }); });
+     cleanups.push(function () {
+      stopGlide(); document.removeEventListener("click", onGlideClick, true);
+      ["wheel", "touchstart", "keydown"].forEach(function (name) { window.removeEventListener(name, stopGlide); });
+      document.removeEventListener("visibilitychange", onVisible);
+      wanders.forEach(function (tween) { tween.kill(); });
+      cells.forEach(function (cell) { ["transform", "opacity", "--k", "--wx", "--wy", "--wr"].forEach(function (name) { cell.style.removeProperty(name); }); });
      });
      var pause = q(".scene-pause", hero);
-     var pauseDrift = function () { var off = hero.classList.toggle("drift-paused"); pause.textContent = off ? "Play" : "Pause"; pause.setAttribute("aria-pressed", String(off)); };
+     var pauseDrift = function () { var off = hero.classList.toggle("drift-paused"); syncWander(); pause.textContent = off ? "Play" : "Pause"; pause.setAttribute("aria-pressed", String(off)); };
      pause.addEventListener("click", pauseDrift);
      cleanups.push(function () { pause.removeEventListener("click", pauseDrift); pause.textContent = "Pause"; pause.setAttribute("aria-pressed", "false"); });
     }
@@ -454,7 +538,6 @@
      onUpdate: function (self) { stage.dispatchEvent(new CustomEvent("cp:velocity", { detail: { velocity: Math.max(-3600, Math.min(3600, self.getVelocity())) } })); } });
    });
    document.addEventListener("cp:layout", safely(function () { ScrollTrigger.refresh(); }));
-   document.addEventListener("visibilitychange", function () { if (hero) hero.classList.toggle("drift-hidden", document.hidden); });
    qa(".shead").forEach(function (heading) {
     if (heading.closest(".process-scene")) return;
     reveal(heading, "top 88%", function () {
@@ -479,7 +562,8 @@
     });
    }
    batch(qa(".cases > li").filter(function (card) { return !card.closest(".deck-scene"); }), "top 88%", function (rows) {
-    rise(rows, { y: 0, x: function (i, row) { return Number(row.style.getPropertyValue("--i")) % 2 ? 40 : -40; }, duration: 1.3, stagger: stagger(rows.length, .18, .9) });
+    // One direction for every card, a short rise with a slight settle; they used to slide in from alternating sides.
+    rise(rows, { y: 44, scale: .97, duration: .9, stagger: stagger(rows.length, .08, .4), ease: "power3.out" });
     rows.forEach(function (row) {
      draw(qa(".spark path", row), 1.4);
      var bars = qa(".spark rect", row);

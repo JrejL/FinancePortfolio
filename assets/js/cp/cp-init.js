@@ -23,7 +23,8 @@ document.querySelectorAll(".bottle-showcase").forEach((figure) => {
     pause.textContent = "Pause"; pause.setAttribute("aria-pressed", "false");
   };
   const start = async () => {
-    if (!allowed() || !near || failed || pending || controller) return;
+    // A hero button glide flies past this section; building the scene mid glide would stall it, so wait for its end.
+    if (!allowed() || !near || failed || pending || controller || document.documentElement.classList.contains("is-gliding")) return;
     pending = true; figure.dataset.cpState = "loading"; const ticket = ++generation;
     try {
       const module = await load();
@@ -73,5 +74,6 @@ document.querySelectorAll(".bottle-showcase").forEach((figure) => {
   window.addEventListener("pagehide", stop);
   window.addEventListener("pageshow", () => { if (allowed()) start(); });
   if (!allowed()) figure.dataset.cpReason = preference.matches ? "reduced-motion" : !desktop.matches ? "phone" : "static";
+  document.addEventListener("cp:glideend", () => { if (near) start(); });
   if ("IntersectionObserver" in window) new IntersectionObserver(([entry]) => { near = entry.isIntersecting; if (near) start(); }, { rootMargin: "400px 0px" }).observe(figure);
 });

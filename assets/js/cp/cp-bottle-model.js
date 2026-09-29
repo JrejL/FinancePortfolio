@@ -48,23 +48,12 @@ function voronoi(size, cells, seed, jitter = 0.8) {
       pts.push([(gx + j + rand() * jitter) / cells, (gy + j + rand() * jitter) / cells]);
     }
   }
-  const n = size * size;
-  const edge = new Float32Array(n);
-  const near = new Float32Array(n);
-  const cell = new Int32Array(n);
-  const dx = new Float32Array(n);
-  const dy = new Float32Array(n);
-  for (let y = 0; y < size; y++) {
-    const v = (y + 0.5) / size;
-    for (let x = 0; x < size; x++) {
-      const u = (x + 0.5) / size;
-      const cx = Math.floor(u * cells);
-      const cy = Math.floor(v * cells);
-      let d1 = 9;
-      let d2 = 9;
-      let best = 0;
-      let bx = 0;
-      let by = 0;
+  // Each grid cell's 25 wrapped neighbours (x, y, index), resolved once and searched in the same order as before.
+  const around = [];
+  for (let cy = 0; cy < cells; cy++) {
+    for (let cx = 0; cx < cells; cx++) {
+      const list = new Float64Array(75);
+      let k = 0;
       for (let oy = -2; oy <= 2; oy++) {
         for (let ox = -2; ox <= 2; ox++) {
           let gx = cx + ox;
@@ -74,22 +63,49 @@ function voronoi(size, cells, seed, jitter = 0.8) {
           gx -= wx * cells;
           gy -= wy * cells;
           const p = pts[gy * cells + gx];
-          const ddx = u - (p[0] + wx);
-          const ddy = v - (p[1] + wy);
-          const d = Math.hypot(ddx, ddy);
-          if (d < d1) {
-            d2 = d1;
-            d1 = d;
-            best = gy * cells + gx;
-            bx = ddx;
-            by = ddy;
-          } else if (d < d2) {
-            d2 = d;
-          }
+          list[k++] = p[0] + wx;
+          list[k++] = p[1] + wy;
+          list[k++] = gy * cells + gx;
+        }
+      }
+      around.push(list);
+    }
+  }
+  const n = size * size;
+  const edge = new Float32Array(n);
+  const near = new Float32Array(n);
+  const cell = new Int32Array(n);
+  const dx = new Float32Array(n);
+  const dy = new Float32Array(n);
+  for (let y = 0; y < size; y++) {
+    const v = (y + 0.5) / size;
+    const row = Math.floor(v * cells) * cells;
+    for (let x = 0; x < size; x++) {
+      const u = (x + 0.5) / size;
+      const list = around[row + Math.floor(u * cells)];
+      // Squared distances keep the same order; one square root per pixel at the end (81 is the old start of 9, squared).
+      let s1 = 81;
+      let s2 = 81;
+      let best = 0;
+      let bx = 0;
+      let by = 0;
+      for (let k = 0; k < 75; k += 3) {
+        const ddx = u - list[k];
+        const ddy = v - list[k + 1];
+        const s = ddx * ddx + ddy * ddy;
+        if (s < s1) {
+          s2 = s1;
+          s1 = s;
+          best = list[k + 2];
+          bx = ddx;
+          by = ddy;
+        } else if (s < s2) {
+          s2 = s;
         }
       }
       const i = y * size + x;
-      edge[i] = (d2 - d1) * cells;
+      const d1 = Math.sqrt(s1);
+      edge[i] = (Math.sqrt(s2) - d1) * cells;
       near[i] = d1 * cells;
       cell[i] = best;
       dx[i] = bx * cells;
