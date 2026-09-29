@@ -372,7 +372,7 @@
      hero.classList.add("is-scene", "scene-active");
      stage.classList.add("stage-scene");
      var strengthsSection = q(".section--strengths", stage), sHead = q(".shead", strengthsSection), cards = qa(".s-grid .s-card", strengthsSection);
-     var row1 = cards.slice(0, 4), row2 = cards.slice(4), extra = q(".stage-extra");
+     var extra = q(".stage-extra");
      // The full size grid runs below the stage; reserve that height so the next section starts after row 2.
      var sizeExtra = function () { extra.style.height = Math.max(0, strengthsSection.offsetHeight - stage.offsetHeight) + "px"; };
      sizeExtra();
@@ -405,13 +405,11 @@
       .fromTo(hub, { scale: .2, opacity: 0 }, { scale: 1, opacity: 1, duration: .5, ease: "power2.out" }, 1.15)
       .fromTo(q(".shock-ring", hero), { scale: .2, opacity: .9 }, { scale: 13, opacity: 0, duration: .65, ease: "power2.out" }, 1.08)
       .to(sHead, { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, 1.5)
-      .to(row1, { opacity: 1, scale: 1, x: 0, y: 0, duration: .9, stagger: { each: .09, from: "start" }, ease: "power3.out" }, 1.5)
-      .set(row1, { pointerEvents: "auto" }, ">")
+      .to(cards, { opacity: 1, scale: 1, x: 0, y: 0, duration: .9, stagger: { each: .09, from: "start" }, ease: "power3.out" }, 1.5)
+      .to(hub, { opacity: 0, duration: .7, ease: "power1.in" }, 1.9)
+      .to(q(".scene-pause", hero), { autoAlpha: 0, duration: .15 }, 1.35)
+      .set(cards, { pointerEvents: "auto" }, ">")
       .to({}, { duration: .3 });
-     // Row 2 lands below the fold: it rises in as the pin releases, and hides again if the reader scrolls back.
-     gsap.timeline({ scrollTrigger: { trigger: extra, start: "top bottom", toggleActions: "play none none reverse", invalidateOnRefresh: true } })
-      .fromTo(row2, { opacity: 0, y: 70, scale: 1, x: 0 }, { opacity: 1, y: 0, x: 0, scale: 1, duration: 1.1, stagger: .12, ease: "power3.out", immediateRender: false })
-      .set(row2, { pointerEvents: "auto" }, ">");
      register(stage, assembly.scrollTrigger, function (target, trigger) {
       if (target.closest(".s-card")) seek(trigger, trigger.end); else seek(trigger, trigger.start);
      });

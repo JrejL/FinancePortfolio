@@ -348,17 +348,12 @@ html.js.motion .hero-stage.stage-scene>.hero.is-scene{min-height:calc(100svh - 2
 /* Full size cards: the grid keeps its normal card sizes and is taller than the stage. The section overlays
    the stage from its top edge and overflows below it; .stage-extra (height set by JS) reserves that room. */
 .hero-stage.stage-scene .section--strengths{position:absolute;top:0;left:0;right:0;z-index:4;display:block;padding-block:0;background:transparent}
-.hero-stage.stage-scene .section--strengths>.wrap{max-width:none;padding-block:clamp(16px,2.4vh,26px) 60px}
-.hero-stage.stage-scene .section--strengths .shead{margin-bottom:clamp(14px,2.4vh,26px)}
+.hero-stage.stage-scene .section--strengths>.wrap{max-width:none;padding-block:clamp(10px,1.6vh,20px) 16px}
+.hero-stage.stage-scene .section--strengths .shead{margin-bottom:clamp(10px,1.6vh,18px);padding-top:10px}
 .hero-stage.stage-scene .section--strengths .shead h2{font-size:clamp(26px,2.4vw,34px)}
 .hero-stage.stage-scene .section--strengths .shead p{margin-top:4px;font-size:15px;line-height:1.4}
 .hero-stage.stage-scene .s-grid{max-width:1500px;margin-inline:auto}
 .stage-extra{height:0}
-.hero-stage.stage-scene .s-card a{display:block}.hero-stage.stage-scene .s-card__copy{width:100%}
-.hero-stage.stage-scene .s-card .detail-visual{position:relative;right:auto;bottom:auto;width:100%;margin-top:22px;padding-top:16px;display:flex;gap:14px;align-items:center}
-.hero-stage.stage-scene .s-card .detail-visual .spark{width:38%;height:50px;margin:0;flex:none}.hero-stage.stage-scene .s-card .detail-visual small{max-width:none}
-.hero-stage.stage-scene .s-card .detail-visual--ledger{display:grid;width:110px;margin:22px 0 0;padding:0}.hero-stage.stage-scene .s-card .detail-visual--ledger span,.hero-stage.stage-scene .s-card .detail-visual--ledger b{display:block}
-.hero-stage.stage-scene .s-card .detail-visual--code{display:block}.hero-stage.stage-scene .s-card .detail-visual--code code br{display:inline}.hero-stage.stage-scene .s-card .detail-visual--code code{font-size:13px}
 .s-card__skills li,.section--strengths .s-card__skills li{font-size:13px}.detail-visual small{font-size:13px!important}
 }
 /* Reserve the gallery counter's space even when its description wraps after fonts load. */
@@ -380,3 +375,18 @@ html.js.motion .hero-stage.stage-scene>.hero.is-scene{min-height:calc(100svh - 2
    where the intro runs nearly full width */
 .number-cell{font-size:min(var(--size),1.35vw)}
 @media(max-width:1199px){.number-cell--side{display:none}}
+
+/* Round 8: clean strength cards. Icon, title, one line, three tags, See the work; no figure, no numeral. */
+.s-grid .s-card{min-height:0}
+.s-grid .s-card a,.section--strengths .s-card a{display:flex;flex-direction:column;align-items:flex-start;gap:0;min-height:0;padding:22px 22px 20px;border-radius:26px}
+.s-grid .s-card .strength-icon{position:static;width:30px;height:30px;margin:0 0 12px}
+.s-grid .s-card__copy{width:100%;padding-top:0;display:flex;flex-direction:column;flex:1}
+.s-grid .s-card h3{font-size:22px;line-height:1.15;max-width:none}
+.s-grid .s-card p{margin-top:8px;font-size:14px;line-height:1.45;max-width:none;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.s-grid .s-card__skills{margin-top:12px;gap:6px}.s-grid .s-card__skills li,.section--strengths .s-grid .s-card__skills li{padding:4px 9px;font-size:12px}
+.s-grid .s-card__go{margin-top:auto;padding-top:14px;font-size:13px}
+@media(max-height:820px) and (min-width:768px){.hero-stage.stage-scene .s-grid{gap:14px}.s-grid .s-card a,.section--strengths .s-card a{padding:16px 18px 15px}.s-grid .s-card .strength-icon{width:26px;height:26px;margin-bottom:8px}.s-grid .s-card h3{font-size:21px}.s-grid .s-card p{margin-top:5px;font-size:14px;line-height:1.4}.s-grid .s-card__skills{margin-top:8px;gap:5px}.s-grid .s-card__go{padding-top:8px}}
+@media(min-width:768px){.hero-stage.stage-scene .s-grid{gap:16px}}
+/* Both rows of strength cards take the taller first row's height, so the grid reads as one even block */
+@media(min-width:1101px){#strengths .s-grid .s-card a{min-height:322px}}
+@media(min-width:1101px) and (max-height:820px){#strengths .s-grid .s-card a{min-height:276px}#strengths .s-grid{row-gap:12px}}
