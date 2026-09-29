@@ -31,25 +31,43 @@ class HangingView {
     stage.appendChild(this.canvas);
     this.ax = this.vx = this.vz = this.vtwist = this.age = 0;
     this.az = .08; this.twist = -.5; this.spin = null; this.swing = true;
-    this.swap(stage.dataset.bottle);
+    this.swap(stage.dataset.bottle); this.resize();
   }
   setBottle(id, animate = true) {
     if (!bottleById[id] || id === (this.spin ? this.spin.next : this.bottleId)) return;
+    this.prepare(id);
     if (animate) this.spin = { t: 0, next: id, swapped: false };
     else { this.spin = null; this.swap(id); }
   }
+  // The picked bottle is built at the click and its shaders compile off the frame loop, so the swap half way
+  // through the spin does not stall.
+  prepare(id) {
+    if (this.next?.id === id) return;
+    // A bottle passed over mid compile is freed once its compile settles; three.js still polls its materials.
+    if (this.next) { const { root, compiled } = this.next; compiled.then(() => disposeObject(root)); }
+    const root = buildBottle(bottleById[id], { cord: 10 });
+    const compiled = this.renderer.compileAsync ? this.renderer.compileAsync(root, this.camera, this.scene).catch(() => {}) : Promise.resolve();
+    this.next = { id, root, compiled };
+  }
   swap(id) {
     if (!bottleById[id]) return;
-    if (this.root) { this.scene.remove(this.root); disposeObject(this.root); }
+    const ready = this.next?.id === id ? this.next.root : null;
+    if (ready) this.next = null;
+    // The old bottle is disposed after the new one has drawn, so the shader programs they share stay compiled.
+    if (this.root) { this.scene.remove(this.root); this.retired = this.root; }
     this.bottleId = id;
-    this.root = buildBottle(bottleById[id], { cord: 10 });
-    this.scene.add(this.root); this.resize();
+    this.root = ready || buildBottle(bottleById[id], { cord: 10 });
+    this.scene.add(this.root); this.frame();
   }
   resize() {
     const w = this.container.clientWidth, h = this.container.clientHeight;
     if (!w || !h || !this.root) return;
     this.renderer.setSize(w, h, false);
-    frameHanging(this.camera, this.root, w / h, { fill: .58, bottom: .06, spread: 2.8 });
+    this.frame();
+  }
+  frame() {
+    const w = this.container.clientWidth, h = this.container.clientHeight;
+    if (w && h && this.root) frameHanging(this.camera, this.root, w / h, { fill: .58, bottom: .06, spread: 2.8 });
   }
   step(dt, t, scrollVel, sideways = 0) {
     // Scrolling is the car accelerating: the bottle leans back, then swings.
@@ -89,9 +107,15 @@ class HangingView {
   render(dt, time, velocity, sideways) {
     const k = Math.min(1, (this.age += dt) / 1.2);
     this.step(dt, time, velocity * k, sideways * k);
+    this.draw();
+  }
+  draw() {
     this.renderer.render(this.scene, this.camera);
+    if (this.retired) { disposeObject(this.retired); this.retired = null; }
   }
   dispose() {
+    if (this.retired) disposeObject(this.retired);
+    if (this.next) disposeObject(this.next.root);
     disposeObject(this.scene);
     this.scene.environment?.dispose();
     this.camera.userData.backdrop?.material?.map?.dispose();
@@ -120,11 +144,13 @@ export async function mountBottle(stage, { onReady, onFail, signal }) {
       mirror?.tick(dt);
       view.render(dt, time, velocity, mirror?.accel || 0);
       if (++frames === 3) { stage.classList.add("is-live"); onReady(); }
-      // After warm-up, sustained sub-32fps rendering gives way to the already present clip.
+      // After warm-up, only a device that cannot hold 20fps gives way to the already present clip. Browsers
+      // saving battery (Safari in Low Power Mode, Chrome's Energy Saver) cap every page at 30fps, and the
+      // bottle swings smoothly there, so a 30fps cap must never count as too slow.
       if (frames > 90 && interval < .2) {
         samples++; elapsed += interval;
         if (samples >= 120) {
-          if (elapsed / samples > .03125) { fail("performance"); return; }
+          if (elapsed / samples > .05) { fail("performance"); return; }
           samples = 0; elapsed = 0;
         }
       }
@@ -137,7 +163,7 @@ export async function mountBottle(stage, { onReady, onFail, signal }) {
     if (!bottleById[id] || disposed) return;
     try {
       stage.dataset.bottle = id; view.setBottle(id, !paused);
-      if (paused) for (let i = 0; i < 3; i++) view.renderer.render(view.scene, view.camera);
+      if (paused) for (let i = 0; i < 3; i++) view.draw();
       start();
     } catch (_) { fail(); }
   };
@@ -159,7 +185,7 @@ export async function mountBottle(stage, { onReady, onFail, signal }) {
     mirror = glass ? new RoadMirror(glass) : null;
     resize = new ResizeObserver(() => {
       if (disposed) return;
-      try { view.resize(); if (ready && paused) view.renderer.render(view.scene, view.camera); }
+      try { view.resize(); if (ready && paused) view.draw(); }
       catch (_) { fail(); }
     });
     resize.observe(stage);

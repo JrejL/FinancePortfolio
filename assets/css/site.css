@@ -390,3 +390,16 @@ html.js.motion .hero-stage.stage-scene>.hero.is-scene{min-height:calc(100svh - 2
 /* Both rows of strength cards take the taller first row's height, so the grid reads as one even block */
 @media(min-width:1101px){#strengths .s-grid .s-card a{min-height:322px}}
 @media(min-width:1101px) and (max-height:820px){#strengths .s-grid .s-card a{min-height:276px}#strengths .s-grid{row-gap:12px}}
+/* Hero text George asked for: a bigger Financial Analyst label, and the availability line and intro set lower,
+   centered and larger */
+.hero .kicker{font-size:13px;letter-spacing:.14em;font-weight:600}
+.hero__availability{margin-top:36px;font-size:14px;text-align:center}
+.hero .intro{text-align:center;margin-inline:auto}
+@media(min-width:768px){
+  .hero .kicker{font-size:16px}
+  .hero__availability{margin-top:46px;font-size:16px;letter-spacing:.1em}
+  .hero .intro{max-width:60ch;margin-top:26px;font-size:clamp(19px,1.45vw,22px);line-height:1.6}
+  .hero .actions{margin-top:36px}
+}
+/* Shorter screens: the hero text keeps its space above the skill word band, which drops its top row */
+@media(min-width:768px) and (max-height:820px){.hero__availability{margin-top:30px}.hero .intro{margin-top:18px}.hero .actions{margin-top:24px}.number-cell--r1{display:none}}
