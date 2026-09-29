@@ -455,7 +455,6 @@
    });
    document.addEventListener("cp:layout", safely(function () { ScrollTrigger.refresh(); }));
    document.addEventListener("visibilitychange", function () { if (hero) hero.classList.toggle("drift-hidden", document.hidden); });
-   batch(".numbers-band .stat", "top 88%", function (stats) { rise(stats, { y: 45, duration: 1.5, stagger: .24 }); stats.forEach(function (stat) { odometer(q("b", stat)); }); });
    qa(".shead").forEach(function (heading) {
     if (heading.closest(".process-scene")) return;
     reveal(heading, "top 88%", function () {
