@@ -47,14 +47,13 @@ html.js.motion .reveal-pending{opacity:0}html.js.motion .reveal-pending:focus-wi
 .hero .kicker{color:var(--ink-faint)}.hero h1{max-width:19ch;font-size:clamp(54px,5vw,72px);line-height:.98;letter-spacing:-.05em}.hero h1 .word{display:inline-block;transform-origin:50% 100%}
 .hero .intro{max-width:62ch;margin-top:24px;color:var(--ink-faint);font-size:clamp(17px,1.35vw,20px);line-height:1.62}.hero .actions{margin-top:28px}.hero .button{border-color:var(--light);background:var(--light);color:var(--ink)}.hero .button:hover{box-shadow:0 9px 28px rgba(250,249,245,.14)}.hero .link{color:var(--light)}
 /* The clean chart is the default. JavaScript briefly turns its bars into loose cells. */
-/* The hero ring: a real link per strength. Mobile default is a two column grid; the circle is a desktop enhancement. */
+/* The hero circle is decorative and desktop only: a convergence point the copy and skill words shrink into. */
 .decision{position:relative;width:100%;max-width:420px;margin:8px auto 0;align-self:center}
 .decision__hub{display:none}
-.decision__ring{position:static;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0;padding:0;list-style:none}
-.decision__node a{display:flex;flex-direction:column;align-items:center;gap:9px;padding:16px 8px;border:1px solid var(--rule-strong);border-radius:18px;background:var(--panel);color:var(--light);text-decoration:none;text-align:center;transition:transform .25s var(--ease),background .25s}
-.decision__node a:hover,.decision__node a:focus-visible{background:rgba(250,249,245,.08);transform:translateY(-3px)}
-.decision__node .strength-icon{width:24px;height:24px;color:var(--orange)}
-.decision__node span{font:500 11px/1.3 var(--head)}
+/* The hero stage holds the hero and My Strengths as one pinned unit; strengths overlays it on desktop
+   (JS adds .stage-scene once matchMedia confirms room), so cards can fly from the hub to their grid slot
+   without ever leaving the frozen viewport. Mobile keeps normal static flow: no wrapper styling needed there. */
+.hero-stage{position:relative}
 
 /* Sections, headings and cards */
 .section{padding-block:clamp(76px,9vw,132px)}.section--strengths{position:relative;background:var(--dark);color:var(--light)}.section--panel{border-block:1px solid var(--rule);background:var(--panel)}
@@ -194,9 +193,8 @@ body{font-size:18px;line-height:1.7}h1,h2,h3{letter-spacing:-.04em}h1,h2{font-we
 .number-cloud,.shock-ring,.scene-pause{display:none}
 html.js.motion .hero.is-scene{min-height:min(calc(100svh - var(--nav-height)),650px)}
 html.js.motion .hero.is-scene .hero__inner{padding-block:clamp(28px,4svh,48px);gap:0}
-html.js.motion .hero.is-scene .decision{margin-top:26px}
 html.js.motion .hero.is-scene .number-cloud{display:block;position:absolute;inset:0;z-index:1;pointer-events:none;perspective:1000px}
-.number-cell{position:absolute;left:var(--x);top:var(--y);font:500 var(--size)/1 var(--head);color:var(--light);opacity:var(--alpha);font-variant-numeric:tabular-nums;transform:translate(-50%,-50%);white-space:nowrap}
+.number-cell{position:absolute;left:var(--x);top:var(--y);font:500 var(--size)/1 var(--head);color:var(--light);opacity:var(--alpha);font-variant-numeric:tabular-nums;transform:translate(var(--tx,-50%),-50%);white-space:nowrap}
 .number-cell:nth-child(3n){color:var(--blue)}.number-cell:nth-child(5n){color:var(--orange)}.number-cell>span{display:block}
 html.js.motion .scene-active:not(.drift-paused) .number-cell>span{animation:number-float var(--float) ease-in-out var(--delay) infinite alternate}
 @keyframes number-float{from{transform:translate3d(-8px,12px,0) rotate(-3deg)}to{transform:translate3d(9px,-20px,0) rotate(3deg)}}
@@ -232,7 +230,19 @@ html.js.motion .hero.is-scene .scene-pause{display:block;position:absolute;right
 .case-row .spark{display:block;width:100%;height:56px;max-width:none;margin-top:4px;padding:8px 0;background:repeating-linear-gradient(90deg,rgba(20,20,19,.08) 0 1px,transparent 1px 10%);border-bottom:1px solid rgba(20,20,19,.15)}
 .case-row__go{display:flex;gap:12px;align-items:center;font:500 12px/1.4 var(--head);padding-top:2px}.case-row__go .arr{color:var(--dark)}
 /* Live product: CSS is a dark restyling of the supplied rig, with the original video underneath. */
-.product-scene{background:radial-gradient(ellipse at 74% 50%,rgba(217,119,87,.12),transparent 48%)}.feature{align-items:center;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:55px}.feature .lead{font-size:19px;line-height:1.75}.biz-card{padding:25px}.biz-card b{font-size:20px}.biz-card small{font-family:var(--reading)}.biz-card .t{font-size:13px;line-height:1.65}
+/* The whole section (heading through caption) is sized to hold inside one screen: a tighter shead, a
+   compact card stack on the left, and the bottle stage capped by viewport height (not just column width)
+   on the right, so nothing here is ever taller than the viewport it lives in. */
+.section.product-scene{padding-block:clamp(24px,3vw,36px)}
+.product-scene .shead{margin-bottom:clamp(14px,2vw,22px)}.product-scene .shead h2{font-size:clamp(24px,2.4vw,32px)}.product-scene .shead p{margin-top:7px;max-width:none;font-size:14px;line-height:1.5}
+.product-scene{background:radial-gradient(ellipse at 74% 50%,rgba(217,119,87,.12),transparent 48%)}.feature{align-items:start;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:36px}.feature .lead{font-size:15px;line-height:1.6}.biz-cards{gap:8px;margin-top:16px}.biz-card{padding:14px 16px;gap:2px 14px}.biz-card b{font-size:16px}.biz-card small{font-family:var(--reading);font-size:11px}.biz-card .t{font-size:12px;line-height:1.5}
+.product-scene .bottle-showcase{width:min(100%,46vh);margin-inline:auto;padding:14px 14px 16px}
+.product-scene .bottle-showcase figcaption{padding-top:8px;font-size:11px;line-height:1.4}
+.product-scene .cp-controls{gap:5px;padding:8px 4px 0;flex-wrap:wrap}
+.product-scene .cp-swatch{flex:0 0 auto;min-width:0;min-height:0;padding:3px;position:relative}
+.product-scene .cp-swatch i{width:16px;height:16px}
+.product-scene .cp-swatch span{position:absolute;bottom:100%;left:50%;z-index:5;transform:translate(-50%,-4px);margin:0;white-space:nowrap;padding:4px 8px;border-radius:6px;background:rgba(20,20,19,.92);color:#faf9f5;font-size:10px;opacity:0;pointer-events:none;transition:opacity .15s}
+.product-scene .cp-swatch:hover span,.product-scene .cp-swatch:focus-visible span{opacity:1}
 .bottle-showcase{position:relative;width:100%;max-width:760px;padding:22px 22px 26px;border:0;border-radius:32px;background:#faf9f5;color:var(--dark);justify-self:center;overflow:visible;box-shadow:0 24px 70px rgba(0,0,0,.4)}
 .bottle-showcase .clip__frame{aspect-ratio:1/1;isolation:isolate;border-radius:24px;border:1px solid rgba(20,20,19,.08);background:#faf9f5;box-shadow:inset 0 1px 14px rgba(20,20,19,.04)}
 .bottle-showcase video{position:relative;z-index:2;width:100%;height:100%;object-fit:contain;background:#faf9f5}.bottle-showcase .clip__toggle{z-index:4;border-radius:999px;background:rgba(20,20,19,.78);border-color:rgba(20,20,19,.3)}.bottle-showcase figcaption{padding:18px 4px 0;font:italic 12px/1.7 var(--reading);color:rgba(20,20,19,.62)}
@@ -279,15 +289,16 @@ html.js.motion .hero.is-scene .scene-pause{display:block;position:absolute;right
 .resume{max-width:none;margin-top:36px}.resume__head{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);padding-block:55px 80px;gap:80px;border-bottom:1px solid var(--rule)}.resume__head :is(h1,h2){font-size:clamp(80px,9vw,140px);font-weight:600;line-height:1}.resume__role{margin-top:24px}.resume__line{font-size:17px;line-height:1.8;margin-top:24px}.resume__meta{padding:28px;align-self:center}.resume__meta>div{padding-block:12px}.resume__meta>div:last-child{border:0}.resume__meta dt{font-family:var(--reading)}.resume__meta dd{font-size:13px;overflow-wrap:anywhere}
 .resume__sec{grid-template-columns:minmax(200px,.45fr) minmax(0,1fr);padding:55px 0;gap:60px}.resume__sec h2{font-size:34px}.job+.job{margin-top:40px}.job h3{font-size:22px}.job__when,.job__org{font-family:var(--reading)}.job ul{font-size:15px;line-height:1.9}.resume__list{font-size:16px}.skills>div{padding-block:16px}.skills dd{font-size:15px;line-height:1.8}
 /* George's portrait, when the file exists: a rounded photo, never an empty frame when it does not. */
-.resume__photo{display:block;width:clamp(280px,24vw,360px);aspect-ratio:3/4;object-fit:cover;border-radius:var(--radius,24px);margin:0 0 24px}
-@media(max-width:767px){.resume__photo{width:100%;max-width:320px;margin-inline:auto}}
+.resume__photo{display:block;width:clamp(200px,16vw,240px);aspect-ratio:1;object-fit:cover;border-radius:50%;border:1px solid rgba(250,249,245,.5);box-shadow:0 0 0 3px var(--dark),0 8px 26px rgba(20,20,19,.35);margin:0 0 24px}
+@media(max-width:767px){.resume__photo{width:clamp(160px,42vw,180px);margin-inline:auto}}
+.resume__download{margin-top:22px}
 /* The home About section: left column stays in view while the resume sections scroll past it on the right. */
 @media(min-width:900px){
 .resume--home{display:grid;grid-template-columns:minmax(240px,320px) minmax(0,1fr);align-items:start;gap:0 60px}
-.resume--home .resume__head{grid-column:1;position:sticky;top:calc(var(--nav-height) + 24px);display:block;padding:0;border:0}
+.resume--home .resume__head{grid-column:1;position:sticky;top:calc(var(--nav-height) + 12px);display:block;padding:0;border:0}
 .resume--home .resume__head .resume__id{max-width:320px}
 .resume--home .resume__head :is(h1,h2){font-size:clamp(28px,3.2vw,40px);overflow-wrap:anywhere}
-.resume--home .resume__meta{margin-top:28px}
+.resume--home .resume__meta{margin-top:16px;padding:12px 18px}.resume--home .resume__meta>div{padding-block:6px}.resume--home .resume__photo{width:200px;margin-bottom:14px}.resume--home .resume__line{font-size:14px;line-height:1.5;margin-top:10px}.resume--home .resume__role{margin-top:4px}.resume--home .resume__download{margin-top:14px;padding:11px 18px}
 .resume--home .resume__body{grid-column:2;min-width:0}
 }
 .contact{max-width:none;min-height:75svh;text-align:center;padding-block:120px}.contact h1{font-size:clamp(110px,16vw,220px);font-weight:600;letter-spacing:-.065em}.contact .intro{margin:40px auto 0;font-size:18px}.magnetic-mail{display:inline-block;padding:20px 28px;border:1px solid var(--rule-strong);background:rgba(250,249,245,.065);backdrop-filter:blur(20px);font:500 clamp(14px,2.4vw,32px)/1.5 var(--head);text-decoration:none;overflow-wrap:anywhere}.contact__mail{margin-top:40px}.contact__line{left:28px;right:28px;bottom:12px;height:1px}.contact__list{max-width:760px;margin:50px auto 0;text-align:left;font-size:14px}
@@ -309,7 +320,7 @@ html.js.motion .hero.is-scene{min-height:0}html.js.motion .hero.is-scene .hero__
 .local-nav>.wrap{min-height:60px;gap:14px;padding-inline:16px}.local-nav ul{gap:16px}.local-nav .button{max-width:110px;padding:10px 12px;font-size:10px}.local-nav li a{font-size:10px}.case-detail .chapter{scroll-margin-top:150px}.cover{padding-block:56px 42px;gap:32px}.cover h1{font-size:clamp(50px,13vw,82px);max-width:15ch;overflow-wrap:anywhere}.cover .intro{font-size:16px;line-height:1.8;margin-top:26px}.facts{padding:24px;gap:22px}.facts>div{flex-basis:100%}.facts dd{font-size:13px}.kpis{--kpi-basis:calc((100% - 12px)/2);gap:12px;padding-block:28px}.kpi{padding:18px 0}.kpi b{font-size:clamp(32px,9vw,50px)}.kpi>span{font-size:11px;margin-top:12px}.report{padding-top:50px}.chapter{padding-bottom:70px}.chapter .shead h2{font-size:34px}.chapter>.lead{font-size:15px}.fin-wrap{padding:16px 12px;border-radius:24px}.fin{font-size:12px}.fin th[scope='row'],.fin .fin__label{min-width:132px;max-width:170px}.chart{padding:22px 12px}.chart__title{font-size:13px}.chart__legend{font-size:10px}.findings{font-size:16px;gap:20px}.uses li{flex-basis:100%;font-size:16px;padding:28px;gap:24px}.work-cards>.work-card{flex-basis:100%}.work-card{padding:28px;gap:10px}.work-card>b{font-size:27px}.work-card .fig b{font-size:46px}.work-card .t{font-size:14px}.s-hero .strength-icon{width:48px;height:48px}.editor__bar{padding:13px 16px}.code{font-size:11px;padding:20px 12px}.nb h3{font-size:24px}.nb{gap:16px}.nb p{font-size:14px}.py-code{padding:16px}.py-summary{font-size:16px}
 .store-gallery .shots-grid{display:flex;gap:24px;padding-block:0}.store-gallery .shot:nth-child(n){flex-basis:100%;margin:0;padding:8px}.store-gallery .shot a{border-radius:18px}.shot figcaption{font-size:12px}.resume__head{padding-block:28px 45px;gap:35px}.resume__head :is(h1,h2){font-size:clamp(65px,18vw,100px)}.resume__line{font-size:16px}.resume__sec{grid-template-columns:1fr;padding-block:38px;gap:25px}.resume__sec h2{font-size:31px}.job h3{font-size:21px}.job__top{flex-direction:column;align-items:flex-start;gap:8px}.job ul{font-size:14px}.skills>div{grid-template-columns:1fr;gap:8px}.skills dd{font-size:14px}.contact{padding-block:90px}.contact h1{font-size:clamp(80px,23vw,135px);line-height:1}.contact .intro{font-size:16px;margin-top:30px}.magnetic-mail{padding:17px 15px;font-size:clamp(11px,3.55vw,23px);max-width:100%}.contact__list{font-size:13px}.contact__list li{grid-template-columns:1fr}.contact__line{left:18px;right:18px;bottom:10px}.next-case{padding:27px;margin-bottom:70px;flex-direction:column;align-items:flex-start}.next-case b{text-align:left;font-size:28px}.foot{padding-top:90px}.foot h2{font-size:clamp(43px,12vw,70px);max-width:17ch}.foot .mail{font-size:clamp(11px,3.55vw,23px);margin-top:30px}.foot__grid{gap:45px}.foot__grid>ul{gap:8px 22px}.foot__grid>ul a{font-size:11px}.footnotes{margin-top:40px;font-size:11px}.foot__small{font-size:10px}.foot .note{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.number-cloud,.scene-pause,.shock-ring{display:none!important}.ec-hero__rig,.cp-controls,.cp-pause{display:none!important}.bottle-showcase.is-live video{display:block}.bottle-showcase.is-live .clip__toggle{display:block}.scene-active *{will-change:auto!important}.process-word{color:var(--ink)}.grain{opacity:.025}}
-@media(forced-colors:active){.gradient-text,.stat>b,.kpi>b,.figures>div:first-child dd{background:none;-webkit-text-fill-color:currentColor}.s-card a,.case-row,.decision__node a{border:1px solid CanvasText}.cp-swatch[aria-pressed='true']{outline:2px solid Highlight}}
+@media(forced-colors:active){.gradient-text,.stat>b,.kpi>b,.figures>div:first-child dd{background:none;-webkit-text-fill-color:currentColor}.s-card a,.case-row{border:1px solid CanvasText}.cp-swatch[aria-pressed='true']{outline:2px solid Highlight}}
 /* Pin geometry is measured in layout coordinates; only GSAP owns scene transforms. */
 .s-grid,.cases{position:relative}
 html.js.motion .scene-active.drift-hidden .number-cell>span{animation-play-state:paused}
@@ -323,13 +334,41 @@ html:not(.js) .top{position:relative}html:not(.js) .top__inner{align-items:flex-
 .store-cover{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:center;padding-top:55px}.store-cover h1{font-size:clamp(54px,5.4vw,86px);max-width:100%}.store-cover .intro{font-size:17px}.store-cover>.facts{grid-column:1/-1}.store-cover .clip__frame{height:clamp(350px,54svh,620px);aspect-ratio:auto}
 @media(max-width:900px){.store-cover{grid-template-columns:1fr}.store-cover>.bottle-showcase{max-width:640px}.store-cover .clip__frame{aspect-ratio:1/1;height:auto}.store-cover h1{font-size:clamp(50px,10vw,84px)}}
 @media(min-width:768px){
-.decision{margin-top:34px;max-width:none;width:min(58vw,620px)}
+/* Only the hub lives here now (the ring is gone). It sits outside the copy's flex flow, centered on the
+   hero box itself (not hero__inner's padded content box) so it lands on the exact point the strengths
+   grid also centers on: the two never drift apart even though they're laid out through different paths. */
+.decision{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);max-width:none;width:120px;margin:0}
 .decision__hub{display:block;position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;border:2px solid var(--orange);border-radius:50%;box-shadow:0 0 40px rgba(217,119,87,.22);pointer-events:none}
 .decision{isolation:isolate;aspect-ratio:1}
-.decision__ring{position:absolute;inset:0;display:block}
-.decision__node{position:absolute;left:var(--x);top:var(--y);width:150px;transform:translate(-50%,-50%)}
-.decision__node:nth-child(1){--x:50%;--y:7%}.decision__node:nth-child(2){--x:83%;--y:24%}.decision__node:nth-child(3){--x:91%;--y:59%}
-.decision__node:nth-child(4){--x:68%;--y:89%}.decision__node:nth-child(5){--x:32%;--y:89%}.decision__node:nth-child(6){--x:9%;--y:59%}.decision__node:nth-child(7){--x:17%;--y:24%}
+/* JS adds .stage-scene once it confirms desktop room (matchMedia "desktop"). The strengths section then
+   overlays the hero inside the shared stage box, so the pinned scene and the settled grid share one frame;
+   mobile never gets this class and keeps the strengths section in normal flow below the hero. */
+.hero-stage.stage-scene{isolation:isolate;min-height:calc(100svh - 2*var(--nav-height,73px))}
+html.js.motion .hero-stage.stage-scene>.hero.is-scene{min-height:calc(100svh - 2*var(--nav-height,73px))}
+.hero-stage.stage-scene .section--strengths{position:absolute;inset:0;z-index:4;display:block;padding-block:0;overflow:hidden;background:transparent}
+/* The heading sits fixed near the top; the grid alone is centered on the box, on the same point as the
+   hub (both measured from .hero's own edges), so the two land on one line instead of the heading's height
+   pulling the grid's middle down. */
+.hero-stage.stage-scene .section--strengths>.wrap{position:absolute;inset:0;padding-block:0}
+.hero-stage.stage-scene .section--strengths .shead{position:absolute;top:clamp(16px,2.6vh,28px);left:var(--gutter);right:var(--gutter);margin:0}
+.hero-stage.stage-scene .section--strengths .shead h2{font-size:clamp(26px,2.4vw,34px)}
+.hero-stage.stage-scene .section--strengths .shead p{margin-top:4px;font-size:13px;line-height:1.4}
+.hero-stage.stage-scene .s-grid{position:absolute;left:var(--gutter);right:var(--gutter);top:50%;transform:translateY(-50%)}
+/* A compact strength card, sized to settle within one viewport instead of the full-length card used elsewhere. */
+.hero-stage.stage-scene .s-grid{gap:16px}
+.hero-stage.stage-scene .s-card{min-height:0}
+.hero-stage.stage-scene .s-card a{padding:18px 16px;min-height:clamp(170px,21vh,230px);gap:8px}
+.hero-stage.stage-scene .s-card .strength-icon{top:16px;left:16px;width:24px;height:24px}
+.hero-stage.stage-scene .s-card__no{font-size:56px;top:0;right:14px}
+.hero-stage.stage-scene .s-card__copy{padding-top:40px}
+.hero-stage.stage-scene .s-card h3{font-size:clamp(14px,1.2vw,17px);line-height:1.15}
+.hero-stage.stage-scene .s-card p{margin-top:6px;font-size:11px;line-height:1.4;max-width:none;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hero-stage.stage-scene .s-card__skills{margin-top:6px;gap:4px}
+.hero-stage.stage-scene .s-card__skills li{padding:2px 6px;font-size:9px}
+.hero-stage.stage-scene .s-card__skills li:nth-child(n+3){display:none}
+.hero-stage.stage-scene .s-card__go{margin-top:6px;font-size:11px}
+.hero-stage.stage-scene .s-card .detail-visual{display:none}
+@media(max-height:820px){.hero-stage.stage-scene .s-card__skills{display:none}.hero-stage.stage-scene .section--strengths .shead{top:8px;padding-top:10px}}
 }
 /* Reserve the gallery counter's space even when its description wraps after fonts load. */
 /* Round 4 polish. Seven strength cards read as 4 then 3 on desktop, so all of them fit about one screen */
@@ -346,3 +385,7 @@ html:not(.js) .top{position:relative}html:not(.js) .top__inner{align-items:flex-
    Credit and fits the screen without a sideways scroll */
 @media(max-width:767px){.fin--journal :is(th,td):nth-child(2),.fin--journal :is(th,td):nth-child(3){display:none}.fin .fin__section th>span{max-width:calc(100vw - 2 * var(--gutter) - 24px)}}
 @media(max-width:767px){.fin--journal th[scope='row']{min-width:116px}}
+/* Skill words scale with the window so the bottom band never touches, and the side columns step aside below 1200px
+   where the intro runs nearly full width */
+.number-cell{font-size:min(var(--size),1.35vw)}
+@media(max-width:1199px){.number-cell--side{display:none}}

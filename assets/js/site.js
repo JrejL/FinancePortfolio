@@ -138,6 +138,7 @@
   } catch (error) { /* A malformed fragment should not block the static page. */ }
  }
  var hero = q(".hero");
+ var stage = q(".hero-stage");
  var top = q(".top");
  if (hero && top) {
   top.classList.add("is-scrolled");
@@ -367,18 +368,28 @@
      cleanups.push(function () { el.removeEventListener("focusin", onFocus); });
     };
     var toggleScene = function (el) { return function (self) { el.classList.toggle("scene-active", self.isActive); }; };
-    if (hero && mm.conditions.tall && mm.conditions.desktop) {
+    if (hero && stage && mm.conditions.desktop) {
      hero.classList.add("is-scene", "scene-active");
-     var cells = qa(".number-cell", hero), scene = q(".decision", hero), nodes = qa(".decision__node", scene), hub = q(".decision__hub", scene);
-     // Fixed pixel deltas from each node's final spot back to the hub, for a ~600px ring (site.css .decision__node:nth-child(n)).
-     // Precomputed, not measured at runtime, so a mid-scroll layout pass can never size this jump wrong.
-     var ringDeltas = [[0, 258], [-198, 156], [-246, -54], [-108, -234], [108, -234], [246, -54], [198, 156]];
-     var assembly = gsap.timeline({ scrollTrigger: { trigger: hero, start: function () { return "top " + navHeight(); }, end: function () { return "+=" + (innerHeight * 2); },
+     stage.classList.add("stage-scene");
+     var strengthsSection = q(".section--strengths", stage), sHead = q(".shead", strengthsSection), cards = qa(".s-grid .s-card", strengthsSection);
+     var cells = qa(".number-cell", hero), scene = q(".decision", hero), hub = q(".decision__hub", scene);
+     // Each card's flight is a delta from the hub's center back to the card's own laid out slot in the grid
+     // (it never moves in the DOM: .stage-scene already positions the grid over the hero). Measured fresh
+     // whenever the timeline crosses time 0 or GSAP invalidates on resize, never resolved on every scrub frame.
+     var cardDelta = function (i, axis) {
+      var hubRect = hub.getBoundingClientRect(), cardRect = cards[i].getBoundingClientRect();
+      return axis === "x" ? (hubRect.left + hubRect.width / 2) - (cardRect.left + cardRect.width / 2)
+                           : (hubRect.top + hubRect.height / 2) - (cardRect.top + cardRect.height / 2);
+     };
+     var assembly = gsap.timeline({ scrollTrigger: { trigger: stage, start: function () { return "top " + navHeight(); }, end: function () { return "+=" + (innerHeight * 2); },
       pin: true, scrub: 1.5, anticipatePin: 1, invalidateOnRefresh: true, onToggle: toggleScene(hero) } });
-     assembly.set(cells, { x: 0, y: 0, xPercent: -50, yPercent: -50, scale: 1 }, 0)
-      .set(nodes, { opacity: 0 }, 0)
+     assembly.set(cells, { x: 0, y: 0, xPercent: function (_, el) { var tx = parseFloat(el.style.getPropertyValue("--tx")); return isNaN(tx) ? -50 : tx; }, yPercent: -50, scale: 1 }, 0)
+      .set(cards, { opacity: 0, scale: .18, pointerEvents: "none",
+       x: function (i) { return cardDelta(i, "x"); }, y: function (i) { return cardDelta(i, "y"); } }, 0)
+      .set(sHead, { opacity: 0, y: 20 }, 0)
       .fromTo(scene, { opacity: 0, y: 100, scale: .68 }, { opacity: 1, y: 0, scale: 1, duration: .65, ease: "power3.out" }, 1.2)
       .to(q(".hero__copy", hero), { scale: .57, y: -10, duration: .9, ease: "power2.inOut" }, .1)
+      .to(q(".hero__copy", hero), { opacity: 0, duration: .3, ease: "power2.in" }, 1.05)
       .to(qa(".hero__support,.hero__eyebrow", hero), { opacity: 0, y: -15, duration: .45 }, .08)
       .set(q(".actions", hero), { pointerEvents: "none" }, .45)
       .to(cells, { x: function (_, el) { return hero.clientWidth * .5 - el.offsetLeft; }, y: function (_, el) { return hero.clientHeight * .56 - el.offsetTop; },
@@ -387,16 +398,12 @@
       .to(cells, { scale: .03, opacity: 0, duration: .16 }, 1.18)
       .fromTo(hub, { scale: .2, opacity: 0 }, { scale: 1, opacity: 1, duration: .5, ease: "power2.out" }, 1.15)
       .fromTo(q(".shock-ring", hero), { scale: .2, opacity: .9 }, { scale: 13, opacity: 0, duration: .65, ease: "power2.out" }, 1.08)
-      .to(nodes, {
-       opacity: 1,
-       x: function (i) { return ringDeltas[i][0]; },
-       y: function (i) { return ringDeltas[i][1]; },
-       scale: .25, duration: 0
-      }, 1.32)
-      .to(nodes, { x: 0, y: 0, scale: 1, duration: .8, stagger: .06, ease: "power3.out" }, 1.4)
+      .to(sHead, { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, 1.5)
+      .to(cards, { opacity: 1, scale: 1, x: 0, y: 0, duration: .9, stagger: { each: .09, from: "start" }, ease: "power3.out" }, 1.5)
+      .set(cards, { pointerEvents: "auto" }, ">")
       .to({}, { duration: .3 });
-     register(hero, assembly.scrollTrigger, function (target, trigger) {
-      if (target.closest(".decision")) seek(trigger, trigger.end); else seek(trigger, trigger.start);
+     register(stage, assembly.scrollTrigger, function (target, trigger) {
+      if (target.closest(".s-card")) seek(trigger, trigger.end); else seek(trigger, trigger.start);
      });
      var pause = q(".scene-pause", hero);
      var pauseDrift = function () { var off = hero.classList.toggle("drift-paused"); pause.textContent = off ? "Play" : "Pause"; pause.setAttribute("aria-pressed", String(off)); };
@@ -426,6 +433,7 @@
     return function () {
      cleanups.forEach(function (fn) { fn(); });
      sceneRoutes = sceneRoutes.filter(function (route) { return owned.indexOf(route) < 0; });
+     if (stage) stage.classList.remove("stage-scene");
      [hero, process].filter(Boolean).forEach(function (el) {
       el.classList.remove("is-scene", "scene-active", "drift-paused");
       qa(".reveal-pending,.is-animating,.is-lit", el).forEach(function (child) { child.classList.remove("reveal-pending", "is-animating", "is-lit"); });
@@ -455,10 +463,14 @@
      } else rise([title]);
     });
    });
-   batch(qa(".s-grid .s-card").filter(function (card) { return !card.closest(".gallery-scene"); }), "top 88%", function (cards) {
-    rise(cards, { y: window.innerWidth <= 680 ? -70 : -140, rotation: function (i) { return (i % 2 ? 1 : -1) * (4 + (i % 4) * 2); },
-     duration: 1.5, stagger: stagger(cards.length, .16, .96), ease: "elastic.out(1,0.75)" });
-   });
+   // On desktop the hero's pinned stage owns the strength cards' entrance (they fly from the hub); this plain
+   // fall-in only runs where that scene did not engage, i.e. phones, where the grid sits in normal flow.
+   if (!(stage && stage.classList.contains("stage-scene"))) {
+    batch(qa(".s-grid .s-card").filter(function (card) { return !card.closest(".gallery-scene"); }), "top 88%", function (cards) {
+     rise(cards, { y: window.innerWidth <= 680 ? -70 : -140, rotation: function (i) { return (i % 2 ? 1 : -1) * (4 + (i % 4) * 2); },
+      duration: 1.5, stagger: stagger(cards.length, .16, .96), ease: "elastic.out(1,0.75)" });
+    });
+   }
    batch(qa(".cases > li").filter(function (card) { return !card.closest(".deck-scene"); }), "top 88%", function (rows) {
     rise(rows, { y: 0, x: function (i, row) { return Number(row.style.getPropertyValue("--i")) % 2 ? 40 : -40; }, duration: 1.3, stagger: stagger(rows.length, .18, .9) });
     rows.forEach(function (row) {
