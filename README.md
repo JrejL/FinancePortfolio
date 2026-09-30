@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/finance-portfolio-banner.svg" alt="Finance Portfolio, George Murad, Financial Analyst" width="100%">
+  <img src="assets/finance-portfolio-banner.svg" alt="Portfolio, George Murad, Financial Analyst" width="100%">
 </p>
 
-# Finance Portfolio · George Murad
+# Portfolio · George Murad
 
 **See it as a website: [gbmurad.github.io/Portfolio](https://gbmurad.github.io/Portfolio/)**
 
@@ -58,6 +58,16 @@ rearview mirror in live 3D on [shopescentials.com](https://shopescentials.com). 
 | [8 PowerPoint](escentials-llc/8_PowerPoint/) | The FY2025 business review deck |
 
 <br clear="right">
+
+## All Projects
+
+Everything I have built outside the practice case studies, together on [one page](https://gbmurad.github.io/Portfolio/projects/).
+
+| Project | What It Is |
+|---|---|
+| [Escentials](https://gbmurad.github.io/Portfolio/escentials/) | My e-commerce business: designer fragrance and its own Car Perfume line |
+| [Claude Skills](https://gbmurad.github.io/Portfolio/claude-skills/) | Small tools I build for Claude Code, free for anyone to download and use ([the code](https://github.com/gbmurad/claude-skills)) |
+| [Greedy Gems](https://gbmurad.github.io/Portfolio/greedy-gems/) | A Roblox mining game I am building with a small team |
 
 ## Tools
 

@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-label="Finance Portfolio, George Murad, Financial Analyst">
-  <title>Finance Portfolio, George Murad, Financial Analyst</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-label="Portfolio, George Murad, Financial Analyst">
+  <title>Portfolio, George Murad, Financial Analyst</title>
   <style>
     .bg { fill: #141413; }
     .grid { stroke: #faf9f5; stroke-opacity: .07; stroke-width: 1; }
@@ -25,7 +25,7 @@
     <path d="M740 40V260M800 40V260M860 40V260M920 40V260M980 40V260M1040 40V260M1100 40V260"/>
     <path d="M720 60H1120M720 110H1120M720 160H1120M720 210H1120"/>
   </g>
-  <text class="eyebrow" x="62" y="86">FINANCE PORTFOLIO</text>
+  <text class="eyebrow" x="62" y="86">PORTFOLIO</text>
   <text class="h" x="58" y="152">George Murad</text>
   <text class="s" x="62" y="192">Financial Analyst</text>
   <text class="t" x="62" y="236">Six practice case studies, four Python analyses</text>
