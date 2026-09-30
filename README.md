@@ -4,7 +4,7 @@
 
 # Finance Portfolio · George Murad
 
-**See it as a website: [jrejl.github.io/FinancePortfolio](https://jrejl.github.io/FinancePortfolio/)**
+**See it as a website: [gbmurad.github.io/Portfolio](https://gbmurad.github.io/Portfolio/)**
 
 Work samples in financial reporting, FP&A, accounting and data analysis. Six practice case studies, each built from
 scratch for a kind of finance role I am applying for, four Python analyses that run on their data, and the books of
@@ -18,17 +18,17 @@ proves it ties.
 
 | Case | Practice Focus | Built For | Files |
 |---|---|---|---|
-| [Aldercrest Aerospace](https://jrejl.github.io/FinancePortfolio/aldercrest-aerospace/) | Earned Value Management (EVM) | Program finance and cost analyst roles in aerospace and defense | [Excel](aldercrest-aerospace/Aldercrest_FY2025_Financial_Model.xlsx) · [PDF](aldercrest-aerospace/Aldercrest_FY2025_Financial_Model.pdf) |
-| [Lumenpath Software](https://jrejl.github.io/FinancePortfolio/lumenpath-software/) | SaaS Metrics and DCF Valuation | FP&A and corporate finance roles at software companies | [Excel](lumenpath-software/Lumenpath_FY2025_Financial_Model.xlsx) · [PDF](lumenpath-software/Lumenpath_FY2025_Financial_Model.pdf) |
-| [Saltbrush Beverage](https://jrejl.github.io/FinancePortfolio/saltbrush-beverage/) | Standard Costing and Variance Analysis | Cost analyst and manufacturing finance roles | [Excel](saltbrush-beverage/Saltbrush_FY2025_Financial_Model.xlsx) · [PDF](saltbrush-beverage/Saltbrush_FY2025_Financial_Model.pdf) |
-| [Sunfield Kitchen Group](https://jrejl.github.io/FinancePortfolio/sunfield-kitchen/) | Unit Economics and Cohort Analysis | FP&A and operations finance roles in restaurants and retail | [Excel](sunfield-kitchen/Sunfield_FY2025_Financial_Model.xlsx) · [PDF](sunfield-kitchen/Sunfield_FY2025_Financial_Model.pdf) |
-| [City of Palomar Vista](https://jrejl.github.io/FinancePortfolio/palomar-vista/) | Government Budgeting and Fund Accounting | Budget analyst roles in city and county government | [Excel](palomar-vista/Palomar_Vista_FY2025_Financial_Model.xlsx) · [PDF](palomar-vista/Palomar_Vista_FY2025_Financial_Model.pdf) |
-| [Saltbrush Beverage: December Close](https://jrejl.github.io/FinancePortfolio/saltbrush-close/) | Month End Close | Staff accountant and financial reporting roles | [Excel](saltbrush-close/Saltbrush_December_2025_Close.xlsx) · [PDF](saltbrush-close/Saltbrush_December_2025_Close.pdf) |
+| [Aldercrest Aerospace](https://gbmurad.github.io/Portfolio/aldercrest-aerospace/) | Earned Value Management (EVM) | Program finance and cost analyst roles in aerospace and defense | [Excel](aldercrest-aerospace/Aldercrest_FY2025_Financial_Model.xlsx) · [PDF](aldercrest-aerospace/Aldercrest_FY2025_Financial_Model.pdf) |
+| [Lumenpath Software](https://gbmurad.github.io/Portfolio/lumenpath-software/) | SaaS Metrics and DCF Valuation | FP&A and corporate finance roles at software companies | [Excel](lumenpath-software/Lumenpath_FY2025_Financial_Model.xlsx) · [PDF](lumenpath-software/Lumenpath_FY2025_Financial_Model.pdf) |
+| [Saltbrush Beverage](https://gbmurad.github.io/Portfolio/saltbrush-beverage/) | Standard Costing and Variance Analysis | Cost analyst and manufacturing finance roles | [Excel](saltbrush-beverage/Saltbrush_FY2025_Financial_Model.xlsx) · [PDF](saltbrush-beverage/Saltbrush_FY2025_Financial_Model.pdf) |
+| [Sunfield Kitchen Group](https://gbmurad.github.io/Portfolio/sunfield-kitchen/) | Unit Economics and Cohort Analysis | FP&A and operations finance roles in restaurants and retail | [Excel](sunfield-kitchen/Sunfield_FY2025_Financial_Model.xlsx) · [PDF](sunfield-kitchen/Sunfield_FY2025_Financial_Model.pdf) |
+| [City of Palomar Vista](https://gbmurad.github.io/Portfolio/palomar-vista/) | Government Budgeting and Fund Accounting | Budget analyst roles in city and county government | [Excel](palomar-vista/Palomar_Vista_FY2025_Financial_Model.xlsx) · [PDF](palomar-vista/Palomar_Vista_FY2025_Financial_Model.pdf) |
+| [Saltbrush Beverage: December Close](https://gbmurad.github.io/Portfolio/saltbrush-close/) | Month End Close | Staff accountant and financial reporting roles | [Excel](saltbrush-close/Saltbrush_December_2025_Close.xlsx) · [PDF](saltbrush-close/Saltbrush_December_2025_Close.pdf) |
 
 ## Python for Finance
 
 Four pandas scripts that run on the case study data. Each one writes the tables, charts and workbook shown on
-[its page on the website](https://jrejl.github.io/FinancePortfolio/strengths/python/).
+[its page on the website](https://gbmurad.github.io/Portfolio/strengths/python/).
 
 | Script | The Question It Answers |
 |---|---|
@@ -43,8 +43,8 @@ Four pandas scripts that run on the case study data. Each one writes the tables,
 
 Escentials is my e-commerce business: designer fragrance, plus its own Car Perfume line, which hangs from the
 rearview mirror in live 3D on [shopescentials.com](https://shopescentials.com). Its FY2025 books are below, and
-[as a web page](https://jrejl.github.io/FinancePortfolio/escentials-llc/). The best parts of the store are on
-[the website page](https://jrejl.github.io/FinancePortfolio/store/).
+[as a web page](https://gbmurad.github.io/Portfolio/escentials-llc/). The best parts of the store are on
+[the website page](https://gbmurad.github.io/Portfolio/store/).
 
 | Folder | What It Holds |
 |---|---|
