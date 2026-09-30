@@ -39,6 +39,20 @@
   }
   sync();
  });
+ // Copy buttons: clipboard where allowed, a selection fallback otherwise.
+ qa("[data-copy]").forEach(function (button) {
+  var text = button.getAttribute("data-copy"), done = function () { button.textContent = "Copied"; setTimeout(function () { button.textContent = "Copy"; }, 1800); };
+  var fallback = function () {
+   var area = document.createElement("textarea"); area.value = text; area.setAttribute("readonly", ""); area.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+   document.body.appendChild(area); area.select();
+   var ok = false; try { ok = document.execCommand("copy"); } catch (_) {}
+   area.remove();
+   if (ok) done(); else { button.textContent = "Select and copy"; var code = button.previousElementSibling; if (code) { var range = document.createRange(); range.selectNodeContents(code); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(range); } }
+  };
+  button.addEventListener("click", function () {
+   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+  });
+ });
  // Phone menu. GSAP enhances the drop, but the class is the complete fallback.
  var menuToggle = q(".menu-toggle");
  var menu = q("#menu");

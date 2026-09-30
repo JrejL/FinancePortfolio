@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>html{background:#141413;color-scheme:dark}</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Skills, George Murad</title>
+<meta name="description" content="Free tools George Murad builds for Claude Code: read the code, download it, or install it with one command.">
+<meta name="author" content="George Murad">
+<meta property="og:title" content="Claude Skills, George Murad">
+<meta property="og:description" content="Free tools George Murad builds for Claude Code: read the code, download it, or install it with one command.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://gbmurad.github.io/Portfolio/assets/media/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta property="og:image:alt" content="George Murad, Financial Analyst">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gbmurad.github.io/Portfolio/assets/media/og-card.jpg">
+<meta name="theme-color" content="#141413">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<script>(function(d){d.classList.add("js");if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches)d.classList.add("motion");setTimeout(function(){if(!window.__site)d.classList.remove("js","motion")},3000)})(document.documentElement);</script>
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js">
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;family=Poppins:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+
+</head>
+<body class="page-projects">
+<div class="scroll-progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap top__inner">
+    <a class="brand" href="../index.html"><b>George Murad</b><span>Financial Analyst</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+    <nav aria-label="Main"><ul class="menu" id="menu"><li class="has-sub"><a href="../strengths/">My Strengths</a><ul class="submenu"><li><a href="../strengths/financial-analysis/">Financial Analysis and FP&amp;A</a></li><li><a href="../strengths/accounting/">Accounting</a></li><li><a href="../strengths/evm/">Earned Value Management (EVM)</a></li><li><a href="../strengths/cost-analysis/">Cost and Variance Analysis</a></li><li><a href="../strengths/government-budgeting/">Government Budgeting</a></li><li><a href="../strengths/python/">Python for Finance</a></li><li><a href="../strengths/data-sql/">Data and SQL</a></li><li class="submenu__all"><a href="../case-studies/">All Case Studies</a></li></ul></li><li><a href="../case-studies/">Case Studies</a></li><li class="has-sub"><a href="../projects/" aria-current="true">All Projects</a><ul class="submenu"><li><a href="../escentials/">Escentials</a></li><li><a href="../claude-skills/">Claude Skills</a></li><li><a href="../greedy-gems/">Greedy Gems</a></li></ul></li><li><a href="../about/">About</a></li><li><a class="nav-contact" href="../contact/">Contact</a></li></ul></nav>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+<div class="wrap">
+  <p class="crumb"><a href="../projects/">All Projects</a> / Claude Skills</p>
+  <header class="cover cover--short">
+    <div>
+      <span class="kicker">Claude Skills</span>
+      <h1>Claude Skills</h1>
+      <p class="intro">Tools I build for Claude Code, Anthropic's coding assistant. Each one is free: read the code, download it, or install it with one command.</p>
+    </div>
+  </header>
+  <div class="skills-stack"><article class="skill" data-reveal>
+  <h2>day-to-calendar</h2>
+  <p class="skill__text">Writes a short summary of each day you worked with Claude into its own Apple Calendar, so you can look back and see what happened on any date. Use when the user says log today, add my day to the calendar, backfill my calendar, or what did we do on a past day. macOS only.</p>
+  <h3>Install</h3>
+  <div class="install"><code>git clone https://github.com/gbmurad/claude-skills.git &amp;&amp; cd claude-skills &amp;&amp; sh install.sh day-to-calendar</code><button class="copy" type="button" data-copy="git clone https://github.com/gbmurad/claude-skills.git &amp;&amp; cd claude-skills &amp;&amp; sh install.sh day-to-calendar">Copy</button></div>
+  <p class="skill__links"><a class="button" href="https://github.com/gbmurad/claude-skills/archive/refs/heads/main.zip" rel="noopener">Download ZIP</a>
+  <a class="link" href="https://github.com/gbmurad/claude-skills/tree/main/skills/day-to-calendar" rel="noopener">View on GitHub <span class="arr" aria-hidden="true">&rarr;</span></a></p>
+  <h3>How it is made</h3>
+  <details class="skill__fold" open><summary>Show SKILL.md</summary><pre class="skill-code" tabindex="0"><code>---
+name: day-to-calendar
+description: Writes a short summary of each day you worked with Claude into its own Apple Calendar, so you can look back and see what happened on any date. Use when the user says log today, add my day to the calendar, backfill my calendar, or what did we do on a past day. macOS only.
+---
+
+# day-to-calendar: one calendar event per worked day
+
+**Done =** each requested day has one all day event in the configured calendar, and the tool&#x27;s output line confirms how many were added.
+
+## Procedure
+0. Settings live in `~/.config/day-to-calendar/config.json`. If that file is missing, run setup first: ask the user these six things (offer the default in brackets), then write the file with the keys shown, or tell them they can run `sh scripts/setup.sh` themselves.
+   - Calendar name [&quot;Workday Log&quot;] → `calendar`
+   - Color [teal]: red, orange, yellow, green, teal, blue, purple, pink, brown, gray, or a hex → `color`
+   - Event length [all day] or a number of minutes → `all_day` (true/false), `duration_minutes`, and `start_time` like &quot;17:00&quot; if timed
+   - Longest title [8 words] → `title_max_words`
+   - Longest note [4 sentences] → `notes_max_sentences`
+   Read the file on every run and obey the length limits when drafting.
+1. Pick the days. Default is today. For a backfill, ask which dates, or use the days that have git commits or session history.
+2. Gather what happened per day. Use, in this order: the current conversation, `git log --since=&quot;&lt;date&gt; 00:00&quot; --until=&quot;&lt;date&gt; 23:59&quot; --oneline` in the working repo, and any notes the user points to. Do not invent work you cannot see.
+3. Write one event per day: a title within `title_max_words` (default 8) naming the main outcome, and notes within `notes_max_sentences` (default 4) in plain language on what was done, decided, and left open.
+4. Leave out secrets, keys, passwords, balances, and private details of other people. The calendar syncs to iCloud.
+5. Show the user the events and wait for a yes. The calendar is theirs.
+6. Save them as `/tmp/day-events.json` in this shape:
+   `[{&quot;date&quot;:&quot;2026-09-24&quot;,&quot;title&quot;:&quot;Shipped the login fix&quot;,&quot;notes&quot;:&quot;...&quot;}]`
+7. Check access: `sh scripts/daycal.sh status`. If it says `notDetermined`, run `sh scripts/daycal.sh request` and tell the user to click Allow in the macOS dialog. If it says `denied`, point them to System Settings, Privacy and Security, Calendars.
+8. Write: `sh scripts/daycal.sh add /tmp/day-events.json`. Report the output line as printed.
+
+## Guardrails
+- Events go only into the dedicated calendar (the `calendar` setting, default &quot;Workday Log&quot;). Never touch the user&#x27;s other calendars.
+- Running twice is safe: an event with the same title on the same day is skipped.
+- To undo everything, the user deletes that one calendar in the Calendar app.
+- The first run compiles the helper and needs Xcode Command Line Tools (`xcode-select --install`). macOS 14 or newer.
+
+## Related
+The helper source is `scripts/daycal.swift`. Rebuild with `sh scripts/make-app.sh` after editing it.
+</code></pre></details>
+  <details class="skill__fold"><summary>Show daycal.sh</summary><pre class="skill-code" tabindex="0"><code>#!/bin/sh
+# daycal.sh &lt;status|request|add events.json&gt;: runs DayCal.app as its own process (so macOS asks and
+# remembers calendar access for it, not for whoever called it) and prints what it said.
+# Set DAYCAL_CALENDAR to change the calendar name (default &quot;Workday Log&quot;).
+here=$(cd &quot;$(dirname &quot;$0&quot;)&quot; &amp;&amp; pwd)
+[ -d &quot;$here/DayCal.app&quot; ] || sh &quot;$here/make-app.sh&quot; &gt;/dev/null
+out=$(mktemp); err=$(mktemp)
+file=&quot;&quot;; [ -n &quot;$2&quot; ] &amp;&amp; file=$(cd &quot;$(dirname &quot;$2&quot;)&quot; &amp;&amp; pwd)/$(basename &quot;$2&quot;)
+open -W -n --stdout &quot;$out&quot; --stderr &quot;$err&quot; ${DAYCAL_CALENDAR:+--env &quot;DAYCAL_CALENDAR=$DAYCAL_CALENDAR&quot;} &quot;$here/DayCal.app&quot; --args &quot;${1:-status}&quot; $file 2&gt;/dev/null
+# open -W cannot always track a background app, so also wait for the process to finish (up to 15 minutes)
+i=0; while pgrep -qf &quot;DayCal.app/Contents/MacOS/DayCal&quot; &amp;&amp; [ $i -lt 4500 ]; do sleep 0.2; i=$((i+1)); done
+cat &quot;$out&quot; &quot;$err&quot;; rm -f &quot;$out&quot; &quot;$err&quot;
+</code></pre></details><details class="skill__fold"><summary>Show daycal.swift</summary><pre class="skill-code" tabindex="0"><code>// daycal.swift: writes one all day event per worked day into a dedicated Apple Calendar, through EventKit.
+//   daycal status              -&gt; the calendar access macOS has granted
+//   daycal request             -&gt; asks macOS for full calendar access (click Allow once)
+//   daycal add &lt;events.json&gt;   -&gt; writes the events, skipping any with the same title on the same day
+// events.json: [{&quot;date&quot;: &quot;2026-09-24&quot;, &quot;title&quot;: &quot;...&quot;, &quot;notes&quot;: &quot;...&quot;}]
+// Everything goes into one calendar (default name &quot;Workday Log&quot;), so you can
+// hide or delete it in one go and it never mixes with your own events.
+import EventKit
+import Foundation
+
+let store = EKEventStore()
+let args = CommandLine.arguments
+
+// Settings live in ~/.config/day-to-calendar/config.json (written by setup.sh); DAYCAL_* env vars override.
+let cfgPath = NSHomeDirectory() + &quot;/.config/day-to-calendar/config.json&quot;
+let cfg = (FileManager.default.contents(atPath: cfgPath).flatMap { try? JSONSerialization.jsonObject(with: $0) as? [String: Any] }) ?? [:]
+let env = ProcessInfo.processInfo.environment
+let calendarName = env[&quot;DAYCAL_CALENDAR&quot;] ?? (cfg[&quot;calendar&quot;] as? String) ?? &quot;Workday Log&quot;
+let colorSetting = env[&quot;DAYCAL_COLOR&quot;] ?? (cfg[&quot;color&quot;] as? String) ?? &quot;teal&quot;
+let allDay = (cfg[&quot;all_day&quot;] as? Bool) ?? true
+let startTime = (cfg[&quot;start_time&quot;] as? String) ?? &quot;17:00&quot;      // used when all_day is false
+let minutes = (cfg[&quot;duration_minutes&quot;] as? Int) ?? 60          // used when all_day is false
+
+func parseColor(_ s: String) -&gt; CGColor {
+    let named: [String: String] = [&quot;red&quot;: &quot;E5484D&quot;, &quot;orange&quot;: &quot;F76B15&quot;, &quot;yellow&quot;: &quot;F5C400&quot;, &quot;green&quot;: &quot;30A46C&quot;,
+        &quot;teal&quot;: &quot;21A08C&quot;, &quot;blue&quot;: &quot;0090FF&quot;, &quot;purple&quot;: &quot;8E4EC6&quot;, &quot;pink&quot;: &quot;E93D82&quot;, &quot;brown&quot;: &quot;A18072&quot;, &quot;gray&quot;: &quot;8B8D98&quot;]
+    var hex = (named[s.lowercased()] ?? s).replacingOccurrences(of: &quot;#&quot;, with: &quot;&quot;)
+    if hex.count != 6 { hex = &quot;21A08C&quot; }
+    let v = UInt32(hex, radix: 16) ?? 0x21A08C
+    return CGColor(red: CGFloat((v &gt;&gt; 16) &amp; 255) / 255, green: CGFloat((v &gt;&gt; 8) &amp; 255) / 255, blue: CGFloat(v &amp; 255) / 255, alpha: 1)
+}
+
+func statusWord() -&gt; String {
+    switch EKEventStore.authorizationStatus(for: .event) {
+    case .notDetermined: return &quot;notDetermined&quot;
+    case .restricted: return &quot;restricted&quot;
+    case .denied: return &quot;denied&quot;
+    case .fullAccess: return &quot;fullAccess&quot;
+    case .writeOnly: return &quot;writeOnly&quot;
+    case .authorized: return &quot;authorized&quot;
+    @unknown default: return &quot;unknown&quot;
+    }
+}
+
+func workCalendar() -&gt; EKCalendar? {
+    if let found = store.calendars(for: .event).first(where: { $0.title == calendarName }) {
+        let want = parseColor(colorSetting)
+        if found.cgColor != want &amp;&amp; found.allowsContentModifications { found.cgColor = want; try? store.saveCalendar(found, commit: true) }
+        return found
+    }
+    let cal = EKCalendar(for: .event, eventStore: store)
+    cal.title = calendarName
+    cal.cgColor = parseColor(colorSetting)
+    let sources = store.sources
+    cal.source = sources.first(where: { $0.sourceType == .calDAV &amp;&amp; $0.title.lowercased().contains(&quot;icloud&quot;) })
+        ?? store.defaultCalendarForNewEvents?.source
+        ?? sources.first(where: { $0.sourceType == .local })
+    do { try store.saveCalendar(cal, commit: true); return cal } catch { print(&quot;could not make the \(calendarName) calendar: \(error)&quot;); return nil }
+}
+
+let cmd = args.count &gt; 1 ? args[1] : &quot;status&quot;
+if cmd == &quot;status&quot; {
+    print(statusWord())
+} else if cmd == &quot;request&quot; {
+    let sem = DispatchSemaphore(value: 0)
+    store.requestFullAccessToEvents { granted, error in
+        print(granted ? &quot;granted&quot; : &quot;not granted \(String(describing: error))&quot;)
+        sem.signal()
+    }
+    _ = sem.wait(timeout: .now() + 900)
+} else if cmd == &quot;add&quot; {
+    guard args.count &gt; 2, let data = FileManager.default.contents(atPath: args[2]),
+          let list = try? JSONSerialization.jsonObject(with: data) as? [[String: String]] else {
+        print(&quot;usage: add &lt;events.json&gt;&quot;); exit(1)
+    }
+    guard let cal = workCalendar() else { exit(1) }
+    let fmt = DateFormatter(); fmt.dateFormat = &quot;yyyy-MM-dd&quot;; fmt.timeZone = TimeZone.current
+    var added = 0, skipped = 0
+    for e in list {
+        guard let day = fmt.date(from: e[&quot;date&quot;] ?? &quot;&quot;), let title = e[&quot;title&quot;] else { continue }
+        let end = Calendar.current.date(byAdding: .day, value: 1, to: day)!
+        let existing = store.events(matching: store.predicateForEvents(withStart: day, end: end, calendars: [cal]))
+        if existing.contains(where: { $0.title == title }) { skipped += 1; continue }
+        let ev = EKEvent(eventStore: store)
+        ev.calendar = cal
+        ev.title = title
+        ev.notes = e[&quot;notes&quot;]
+        if allDay {
+            ev.isAllDay = true
+            ev.startDate = day
+            ev.endDate = day
+        } else {
+            let hm = startTime.split(separator: &quot;:&quot;).compactMap { Int($0) }
+            let start = Calendar.current.date(bySettingHour: hm.first ?? 17, minute: hm.count &gt; 1 ? hm[1] : 0, second: 0, of: day) ?? day
+            ev.startDate = start
+            ev.endDate = start.addingTimeInterval(TimeInterval(minutes * 60))
+        }
+        do { try store.save(ev, span: .thisEvent, commit: false); added += 1 } catch { print(&quot;failed \(e[&quot;date&quot;] ?? &quot;&quot;): \(error)&quot;) }
+    }
+    do { try store.commit() } catch { print(&quot;commit failed: \(error)&quot;) }
+    print(&quot;added \(added), already there \(skipped), calendar \(cal.title) on \(cal.source?.title ?? &quot;?&quot;)&quot;)
+} else {
+    print(&quot;unknown command \(cmd); use status, request or add &lt;events.json&gt;&quot;); exit(1)
+}
+</code></pre></details><details class="skill__fold"><summary>Show make-app.sh</summary><pre class="skill-code" tabindex="0"><code>#!/bin/sh
+# make-app.sh: builds DayCal.app from daycal.swift. Claude&#x27;s own app cannot ask macOS for calendar access
+# (no calendar usage line in its Info.plist, so macOS refuses without ever showing a prompt), so the tool
+# runs as its own tiny app that carries the line. Click Allow once; the grant is tied to this build&#x27;s
+# signature, so rebuild only when daycal.swift changes (and expect to click Allow again).
+set -e
+here=$(cd &quot;$(dirname &quot;$0&quot;)&quot; &amp;&amp; pwd)
+app=&quot;$here/DayCal.app&quot;
+rm -rf &quot;$app&quot;
+mkdir -p &quot;$app/Contents/MacOS&quot;
+swiftc -O -target &quot;$(uname -m)-apple-macos14&quot; &quot;$here/daycal.swift&quot; -o &quot;$app/Contents/MacOS/DayCal&quot;
+cat &gt; &quot;$app/Contents/Info.plist&quot; &lt;&lt;PLIST
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;&lt;dict&gt;
+&lt;key&gt;CFBundleIdentifier&lt;/key&gt;&lt;string&gt;com.gmurad.daycal&lt;/string&gt;
+&lt;key&gt;CFBundleName&lt;/key&gt;&lt;string&gt;DayCal&lt;/string&gt;
+&lt;key&gt;CFBundleExecutable&lt;/key&gt;&lt;string&gt;DayCal&lt;/string&gt;
+&lt;key&gt;CFBundlePackageType&lt;/key&gt;&lt;string&gt;APPL&lt;/string&gt;
+&lt;key&gt;CFBundleShortVersionString&lt;/key&gt;&lt;string&gt;1.0&lt;/string&gt;
+&lt;key&gt;LSUIElement&lt;/key&gt;&lt;true/&gt;
+&lt;key&gt;LSMinimumSystemVersion&lt;/key&gt;&lt;string&gt;14.0&lt;/string&gt;
+&lt;key&gt;NSCalendarsFullAccessUsageDescription&lt;/key&gt;&lt;string&gt;DayCal writes a short summary of each day you worked into its own calendar.&lt;/string&gt;
+&lt;key&gt;NSCalendarsUsageDescription&lt;/key&gt;&lt;string&gt;DayCal writes a short summary of each day you worked into its own calendar.&lt;/string&gt;
+&lt;/dict&gt;&lt;/plist&gt;
+PLIST
+codesign --force -s - &quot;$app&quot;
+echo &quot;built $app&quot;
+</code></pre></details><details class="skill__fold"><summary>Show setup.sh</summary><pre class="skill-code" tabindex="0"><code>#!/bin/sh
+# setup.sh: asks a few questions and saves your answers to ~/.config/day-to-calendar/config.json.
+# Press Enter to accept the value in [brackets]. Run it again any time to change your answers.
+dir=&quot;$HOME/.config/day-to-calendar&quot;; mkdir -p &quot;$dir&quot;
+ask() { printf &quot;%s [%s]: &quot; &quot;$1&quot; &quot;$2&quot; &gt;&amp;2; read -r a; a=&quot;${a:-$2}&quot;; printf &quot;%s&quot; &quot;$a&quot; | tr -d &quot;\&quot;\\\\&quot;; echo; }
+echo &quot;day-to-calendar setup&quot; &gt;&amp;2
+cal=$(ask &quot;Calendar name&quot; &quot;Workday Log&quot;)
+color=$(ask &quot;Calendar color (red, orange, yellow, green, teal, blue, purple, pink, brown, gray, or a hex like #1A73E8)&quot; &quot;teal&quot;)
+len=$(ask &quot;Event length: &#x27;allday&#x27; or a duration in minutes (for example 30 or 60)&quot; &quot;allday&quot;)
+start=&quot;17:00&quot;; mins=60; allday=true
+case &quot;$len&quot; in allday|&quot;&quot;) ;; *[!0-9]*) echo &quot;Not a number, using all day.&quot; &gt;&amp;2 ;; *) allday=false; mins=$len; start=$(ask &quot;What time should it start (24 hour, like 17:00)&quot; &quot;17:00&quot;) ;; esac
+words=$(ask &quot;Longest title, in words&quot; &quot;8&quot;)
+sent=$(ask &quot;Longest note, in sentences&quot; &quot;4&quot;)
+cat &gt; &quot;$dir/config.json&quot; &lt;&lt;JSON
+{
+  &quot;calendar&quot;: &quot;$cal&quot;,
+  &quot;color&quot;: &quot;$color&quot;,
+  &quot;all_day&quot;: $allday,
+  &quot;start_time&quot;: &quot;$start&quot;,
+  &quot;duration_minutes&quot;: $mins,
+  &quot;title_max_words&quot;: $words,
+  &quot;notes_max_sentences&quot;: $sent
+}
+JSON
+echo &quot;Saved to $dir/config.json&quot; &gt;&amp;2
+</code></pre></details>
+</article></div>
+  <a class="next-case" href="../greedy-gems/"><span>Next</span><b>Greedy Gems &rarr;</b></a>
+</div>
+</main>
+<footer class="foot" id="contact">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <h2>Get in Touch</h2>
+        <a class="mail email-pill" href="mailto:georgebasilmurad@gmail.com">georgebasilmurad@gmail.com</a>
+        <p class="note"><a href="../assets/media/George_Murad_Resume.pdf" download>Download Resume</a></p>
+      </div>
+      <ul>
+        <li><a href="mailto:georgebasilmurad@gmail.com">Email <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="https://www.linkedin.com/in/georgebmurad/" rel="noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a></li>
+        <li><a href="https://github.com/gbmurad" rel="noopener">GitHub <span aria-hidden="true">&#8599;</span></a></li>
+        <li><a href="../strengths/">My Strengths <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="../case-studies/">Case Studies <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="../projects/">All Projects <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="../about/">About <span aria-hidden="true">&rarr;</span></a></li>
+        <li><a href="../contact/">Contact <span aria-hidden="true">&rarr;</span></a></li>
+      </ul>
+    </div>
+    <ol class="footnotes"><li id="portfolio-note">The practice case study companies are fictional and their figures were built for this portfolio. Escentials is my own business; its figures are illustrative for privacy.</li></ol>
+    <div class="foot__small">
+      <span>&copy; <span data-year>2026</span> George Murad</span>
+      <a href="#portfolio-note" aria-label="Portfolio footnote">&#8593;</a>
+    </div>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/SplitText.min.js" defer></script>
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>
