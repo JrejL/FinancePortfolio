@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;family=Poppins:wght@400;500;600;700&amp;display=swap">
-<link rel="stylesheet" href="../assets/css/site.css?v=b54c5209">
+<link rel="stylesheet" href="../assets/css/site.css?v=a808625d">
 
 </head>
 <body class="page-projects">
@@ -100,7 +100,13 @@ description: Writes a short summary of each day you worked with Claude into its 
   </div>
 </li><li class="proj-row world-2" id="greedy-gems">
   <a class="proj-panel" href="../greedy-gems/">
-    <div class="proj-panel__visual"><img src="../assets/media/projects/greedy-gems/shop_icons.png" alt="The Greedy Gems shop icons: coins, a pickaxe, a cart of crystals, eggs, a ticket, a VIP pass and the prize wheel" width="1792" height="512" loading="lazy"></div>
+    <div class="proj-panel__visual"><pre class="proj-code" aria-hidden="true"><code>run.mult = math.exp(RATE * (os.clock() - run.started)) - <span class="t-n">1</span>
+<span class="t-c">-- ...</span>
+<span class="t-k">if</span> <span class="t-k">not</span> holding <span class="t-k">and</span> run.mult &gt;= run.crashAt <span class="t-k">then</span>
+	run.mult = run.crashAt
+	settle(run, <span class="t-k">false</span>)
+	<span class="t-k">continue</span>
+<span class="t-k">end</span></code></pre></div>
     <div class="proj-panel__copy">
       <h2>Greedy Gems</h2>
       <p>A Roblox mining game I am building with a small team.</p>

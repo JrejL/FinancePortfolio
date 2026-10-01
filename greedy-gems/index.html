@@ -5,10 +5,10 @@
 <style>html{background:#141413;color-scheme:dark}</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Greedy Gems, George Murad</title>
-<meta name="description" content="Greedy Gems, a Roblox mining game George Murad is building with a small team: the loop, the economy and the systems behind it. In development.">
+<meta name="description" content="Greedy Gems, a Roblox mining game George Murad is building with a small team: the loop, the economy and the systems behind it, with the Luau code that runs them. In development.">
 <meta name="author" content="George Murad">
 <meta property="og:title" content="Greedy Gems, George Murad">
-<meta property="og:description" content="Greedy Gems, a Roblox mining game George Murad is building with a small team: the loop, the economy and the systems behind it. In development.">
+<meta property="og:description" content="Greedy Gems, a Roblox mining game George Murad is building with a small team: the loop, the economy and the systems behind it, with the Luau code that runs them. In development.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://gbmurad.github.io/Portfolio/assets/media/og-card.jpg">
 <meta property="og:image:width" content="1200">
@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;family=Poppins:wght@400;500;600;700&amp;display=swap">
-<link rel="stylesheet" href="../assets/css/site.css?v=b54c5209">
+<link rel="stylesheet" href="../assets/css/site.css?v=a808625d">
 
 </head>
 <body class="page-projects">
@@ -53,25 +53,125 @@
     </div>
   </header>
   <div class="kpis"><div class="kpi"><b>28</b><span>Gems Across Twelve Rarity Tiers</span></div><div class="kpi"><b>5 s</b><span>Between Gems on the River</span></div><div class="kpi"><b>10</b><span>Mutations, up to 100x Value</span></div><div class="kpi"><b>142</b><span>Luau Scripts, About 88,000 Lines</span></div></div>
+  <p class="code-note">The code beside each section is copied from the game's scripts, word for word. A line reading <code>-- ...</code> marks lines left out.</p>
   <div class="report" style="grid-template-columns:minmax(0,1fr)">
     <div class="content">
       <section class="chapter"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">1</span><h2>The Loop</h2></div>
-        <p class="lead">The gamble is the only way to supply the mine. You cannot build a claim without winning bets.</p>
-        <ol class="findings" data-reveal><li><span><b>Buy a shard.</b> A new gem floats down the river every five seconds, each with a price tag.</span></li><li><span><b>Sink it.</b> Set it in the crash socket on your plot. The multiplier climbs from zero, and the crystal grows with it.</span></li><li><span><b>Cash out, or shatter.</b> Cash out in time and you keep a crystallized gem worth its price times the multiplier. Wait too long and the cave in shatters it, leaving 40% of its value.</span></li><li><span><b>Set it.</b> Only a crystallized gem can be set in your claim. Every gem standing there is a bet you won.</span></li><li><span><b>Mine it.</b> Set gems shed chips you walk over to collect, the passive income. Four chips make a ticket, and tickets buy pet eggs.</span></li></ol>
+        <div class="split">
+          <div class="split__text">
+            <p class="lead">The gamble is the only way to supply the mine. You cannot build a claim without winning bets.</p>
+            <ol class="findings" data-reveal><li><span><b>Buy a shard.</b> A new gem floats down the river every five seconds, each with a price tag.</span></li><li><span><b>Sink it.</b> Set it in the crash socket on your plot. The multiplier climbs from zero, and the crystal grows with it.</span></li><li><span><b>Cash out, or shatter.</b> Cash out in time and you keep a crystallized gem worth its price times the multiplier. Wait too long and the cave in shatters it, leaving 40% of its value.</span></li><li><span><b>Set it.</b> Only a crystallized gem can be set in your claim. Every gem standing there is a bet you won.</span></li><li><span><b>Mine it.</b> Set gems shed chips you walk over to collect, the passive income. Four chips make a ticket, and tickets buy pet eggs.</span></li></ol>
+          </div>
+          <figure class="code-card" data-reveal>
+          <div class="code-card__bar"><span class="code-card__file">Crash.server.luau</span><span class="code-card__lang">Luau</span></div>
+          <pre class="code-card__code" tabindex="0"><code><span class="t-k">local</span> RATE = <span class="t-n">0.28</span>			<span class="t-c">-- multiplier(t) = e^(RATE*t) - 1</span>
+<span class="t-c">-- ...</span>
+<span class="t-c">-- Absolute, not incremental: multiplier(t) = e^(RATE*t) - 1 from planting.</span>
+run.mult = math.exp(RATE * (os.clock() - run.started)) - <span class="t-n">1</span>
+<span class="t-c">-- ...</span>
+<span class="t-k">if</span> run.autoAt <span class="t-k">and</span> run.mult &gt;= run.autoAt <span class="t-k">and</span> run.autoAt &lt; run.crashAt <span class="t-k">then</span>
+	run.mult = run.autoAt
+	print(string.format(<span class="t-s">&quot;[Crash] %s auto cashed out at %.2fx&quot;</span>, run.player.Name, run.autoAt))
+	settle(run, <span class="t-k">true</span>)
+	<span class="t-k">continue</span>
+<span class="t-k">end</span>
+<span class="t-c">-- a held run cannot die: that is the whole point of holding it</span>
+<span class="t-k">if</span> <span class="t-k">not</span> holding <span class="t-k">and</span> run.mult &gt;= run.crashAt <span class="t-k">then</span>
+	run.mult = run.crashAt
+	settle(run, <span class="t-k">false</span>)
+	<span class="t-k">continue</span>
+<span class="t-k">end</span></code></pre>
+          <figcaption><b>The climb, and the two ways a run ends.</b> Every frame the server works out each run&#x27;s multiplier from the moment the shard was planted, then checks the player&#x27;s auto cash out and the cave in point.</figcaption>
+        </figure>
+        </div>
       </section>
       <section class="chapter"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">2</span><h2>The Economy</h2></div>
-        <p class="lead">The numbers are built so the gamble feels risky without ever wiping a player out, and so the long game
-        rewards time, not luck.</p>
-        <ol class="findings" data-reveal><li><span><b>A floor that cannot lose.</b> A bare shard&#x27;s cave in never comes before 2.50x, and a crash keeps 40% of the value: 2.50 × 0.40 = 1.00. The worst possible run returns exactly what the shard cost, so greed decides how much more you make, never whether you get wiped out.</span></li><li><span><b>Patience pays.</b> Cash out a fully grown gem, at 7x or better, and it pays 1.4 times its value.</span></li><li><span><b>Two currencies, kept apart.</b> Coins come from the gamble. Tickets come only from mining, and only tickets buy pet eggs, so a lucky run cannot buy the best pet.</span></li><li><span><b>Rebirth is the long game.</b> Six rebirths, from $500 up to 100 quintillion coins. Each one resets your coins but keeps your pets, tickets and claim, grows the claim, and opens something new: the Crusher, the Adoption Center, Wheel Spin, Furniture.</span></li><li><span><b>Rarity you can see before you can afford it.</b> 28 gems across twelve tiers, Common to Godly. Watching a rare one drift past long before you can buy it is what keeps a session going.</span></li></ol>
-        <p class="table-note">The numbers are still being tuned before launch.</p>
+        <div class="split">
+          <div class="split__text">
+            <p class="lead">The numbers are built so the gamble feels risky without ever wiping a player out, and so the long game rewards time, not luck.</p>
+            <ol class="findings" data-reveal><li><span><b>A floor that cannot lose.</b> A bare shard&#x27;s cave in never comes before 2.50x, and a crash keeps 40% of the value: 2.50 × 0.40 = 1.00. The worst possible run returns exactly what the shard cost, so greed decides how much more you make, never whether you get wiped out.</span></li><li><span><b>Patience pays.</b> Cash out a fully grown gem, at 7x or better, and it pays 1.4 times its value.</span></li><li><span><b>Two currencies, kept apart.</b> Coins come from the gamble. Tickets come only from mining, and only tickets buy pet eggs, so a lucky run cannot buy the best pet.</span></li><li><span><b>Rebirth is the long game.</b> Six rebirths, from $500 up to 100 quintillion coins. Each one resets your coins but keeps your pets, tickets and claim, grows the claim, and opens something new: the Crusher, the Adoption Center, Wheel Spin, Furniture.</span></li><li><span><b>Rarity you can see before you can afford it.</b> 28 gems across twelve tiers, Common to Godly. Watching a rare one drift past long before you can buy it is what keeps a session going.</span></li></ol><p class="table-note">The numbers are still being tuned before launch.</p>
+          </div>
+          <figure class="code-card" data-reveal>
+          <div class="code-card__bar"><span class="code-card__file">PowderIndex.luau</span><span class="code-card__lang">Luau</span></div>
+          <pre class="code-card__code" tabindex="0"><code>PowderIndex.CRASH_KEEP = <span class="t-n">0.40</span>
+<span class="t-c">-- ...</span>
+PowderIndex.MATURE_AT = <span class="t-n">7</span>
+PowderIndex.MATURE_BONUS = <span class="t-n">1.4</span>
+<span class="t-c">-- ...</span>
+PowderIndex.BARE_FLOOR = <span class="t-n">2.50</span>
+PowderIndex.BARE_FLOOR_WEIGHT = <span class="t-n">0.25</span>
+<span class="t-c">-- ...</span>
+PowderIndex.TAIL = <span class="t-n">0.9</span>
+<span class="t-c">-- ...</span>
+<span class="t-k">function</span> PowderIndex.drawCrash(id: number, rng: Random): number
+	<span class="t-k">local</span> floor = PowderIndex.floorFor(id)
+	<span class="t-k">local</span> p = PowderIndex.byId(id)
+	<span class="t-k">local</span> floorW = p <span class="t-k">and</span> p.floorW <span class="t-k">or</span> PowderIndex.BARE_FLOOR_WEIGHT
+	<span class="t-k">local</span> secondW = p <span class="t-k">and</span> p.secondW <span class="t-k">or</span> <span class="t-n">0</span>
+	<span class="t-k">local</span> u = rng:NextNumber()
+	<span class="t-k">if</span> u &lt; floorW <span class="t-k">then</span>
+		<span class="t-k">return</span> floor
+	<span class="t-k">end</span>
+	<span class="t-k">if</span> u &lt; floorW + secondW <span class="t-k">then</span>
+		<span class="t-k">return</span> floor + <span class="t-n">2</span>
+	<span class="t-k">end</span>
+	<span class="t-k">local</span> t = math.max(<span class="t-n">1e-9</span>, rng:NextNumber())
+	<span class="t-k">return</span> floor * t ^ (-<span class="t-n">1</span> / PowderIndex.TAIL)
+<span class="t-k">end</span></code></pre>
+          <figcaption><b>Where the cave in lands.</b> A quarter of bare runs stop right on the 2.50x floor, and the rest follow a long tail above it. A crash keeps 40% of the value, so even the floor run returns what the shard cost.</figcaption>
+        </figure>
+        </div>
       </section>
       <section class="chapter"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">3</span><h2>The Systems Behind It</h2></div>
-        <p class="lead">The game runs on 142 Luau scripts, about 88,000 lines, on Roblox's servers and each player's device.</p>
-        <ul class="sys-grid" data-reveal><li><b>The river</b><span>Spawns a gem every five seconds, prices it and sells it as a shard.</span></li><li><b>The crash socket</b><span>Rolls each run&#x27;s cave in point, then pays the cash out or the 40% keep.</span></li><li><b>Claims and chips</b><span>Grows set gems into clusters that shed chips, the passive income.</span></li><li><b>Pets and eggs</b><span>Ticket priced eggs, a hatch scene, and pets that boost your mine.</span></li><li><b>Rebirth</b><span>Six levels that grow your claim and open new parts of the game.</span></li><li><b>The index</b><span>A collection book of every gem and mutation you have found.</span></li><li><b>Wheel Spin and leaderboards</b><span>A prize wheel that rebirth opens, and boards for the top players.</span></li><li><b>Saves</b><span>Every player&#x27;s claim and progress, kept between visits.</span></li></ul>
-      </section>
-      
-      <section class="chapter"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">4</span><h2>Shop Art</h2></div>
-        <figure class="shot" data-reveal><img src="../assets/media/projects/greedy-gems/shop_icons.png" alt="A row of shop icons in the Greedy Gems style" width="1792" height="512" loading="lazy"><figcaption><b>Shop icons.</b> The icons for the in game shop.</figcaption></figure>
+        <div class="split">
+          <div class="split__text">
+            <p class="lead">The game runs on 142 Luau scripts, about 88,000 lines, on Roblox's servers and each player's device.</p>
+            <ul class="sys-grid" data-reveal><li><b>The river</b><span>A new gem every five seconds, priced and sold as a shard, with rare ones promised on a timer.</span></li><li><b>The crash socket</b><span>Rolls each run&#x27;s cave in point, then pays the cash out or the 40% keep.</span></li><li><b>Claims and chips</b><span>Grows set gems into clusters that shed chips, the passive income.</span></li><li><b>Pets and eggs</b><span>Ticket priced eggs, a hatch scene, and pets that boost your mine.</span></li><li><b>Rebirth</b><span>Six levels that grow your claim and open new parts of the game.</span></li><li><b>The index</b><span>A collection book of every gem and mutation you have found.</span></li><li><b>Wheel Spin and leaderboards</b><span>A prize wheel that rebirth opens, and boards for the top players.</span></li><li><b>Saves</b><span>Every player&#x27;s claim and progress, kept between visits.</span></li></ul>
+          </div>
+          <figure class="code-card" data-reveal>
+          <div class="code-card__bar"><span class="code-card__file">GemRiver.server.luau</span><span class="code-card__lang">Luau</span></div>
+          <pre class="code-card__code" tabindex="0"><code><span class="t-k">local</span> SPAWN_EVERY = <span class="t-n">5</span>		<span class="t-c">-- seconds between gems</span>
+<span class="t-k">local</span> FREE_EVERY = <span class="t-n">3</span>		<span class="t-c">-- never more than this many paid gems in a row</span>
+<span class="t-c">-- ...</span>
+<span class="t-k">local</span> <span class="t-k">function</span> spawnGem(forced: any?)
+	<span class="t-k">local</span> now = os.clock()
+	<span class="t-k">local</span> tier
+	<span class="t-c">-- The rarer promise wins a tie, so it is never pushed back by a commoner one.</span>
+	<span class="t-k">if</span> forced <span class="t-k">then</span>
+		tier = forced
+	<span class="t-k">elseif</span> now &gt;= nextSecret <span class="t-k">then</span>
+		tier = pickFrom(SECRET_UP)
+		nextSecret = now + SEC_SECS
+	<span class="t-k">elseif</span> now &gt;= nextCelestial <span class="t-k">then</span>
+		tier = pickFrom(CELESTIAL_UP)
+		nextCelestial = now + CEL_SECS
+	<span class="t-k">elseif</span> now &gt;= nextMythic <span class="t-k">then</span>
+		tier = pickFrom(MYTHIC_UP)
+		nextMythic = now + MYTH_SECS
+	<span class="t-k">elseif</span> now &gt;= nextLegendary <span class="t-k">then</span>
+		tier = pickFrom(LEGENDARY_UP)
+		nextLegendary = now + LEG_SECS
+	<span class="t-k">elseif</span> luckySeamOn() <span class="t-k">then</span>
+		tier = luckyRoll()
+	<span class="t-k">elseif</span> sinceFree &gt;= FREE_EVERY <span class="t-k">then</span>
+		<span class="t-c">-- A player with no coins can do nothing but wait for a free gem, so the</span>
+		<span class="t-c">-- weighted roll is not allowed to make them wait more than this.</span>
+		tier = GemIndex.GEMS[<span class="t-n">1</span>]
+	<span class="t-k">else</span>
+		tier = GemIndex.roll(rng)
+	<span class="t-k">end</span>
+	<span class="t-c">-- ...</span>
+<span class="t-k">end</span>
+<span class="t-c">-- ...</span>
+task.spawn(<span class="t-k">function</span>()
+	<span class="t-k">while</span> <span class="t-k">true</span> <span class="t-k">do</span>
+		spawnGem()
+		task.wait(SPAWN_EVERY)
+	<span class="t-k">end</span>
+<span class="t-k">end</span>)</code></pre>
+          <figcaption><b>The river, and its promises.</b> A new gem every five seconds. By default, timers promise a Legendary or better every 5 minutes, up to a Secret or better every 25, and a player with no coins never waits through more than three paid gems for a free one.</figcaption>
+        </figure>
+        </div>
       </section>
     </div>
   </div>
