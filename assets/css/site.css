@@ -555,5 +555,19 @@ html:not(.js) .copy{display:none}
 @media(prefers-reduced-motion:reduce){.proj-panel{transition:none}.proj-panel:hover{translate:none}}
 .cover--plain::after{display:none}
 .proj-panel__visual:has(img[src*="car-perfume"]){background:#fff}.proj-panel__visual img[src*="car-perfume"]{object-fit:contain}
-.proj-about .link{display:inline}.proj-about .link .arr{margin-left:8px}
+.proj-about .link{display:inline-block;padding:11px 0}.proj-about .link .arr{margin-left:8px}
 .findings+.table-note{margin-top:22px}
+.proj-jump{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 0;padding:0;list-style:none}
+.proj-jump a{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:8px 18px;border:1px solid var(--rule-strong);border-radius:999px;color:var(--ink);font-family:var(--head);font-weight:500;font-size:var(--fs-small);text-decoration:none;transition:border-color .25s,background-color .25s}
+.proj-jump a:hover{border-color:var(--world);background:rgba(250,249,245,.05)}.proj-jump .n{color:var(--world)}
+.proj-row{scroll-margin-top:110px}
+.proj-spec{margin:24px 0 26px;border-top:1px solid var(--rule-strong)}
+.proj-spec>div{display:grid;grid-template-columns:132px minmax(0,1fr);gap:18px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.proj-spec dt{color:var(--ink-faint);font-family:var(--head);font-weight:500;font-size:var(--fs-small);line-height:1.6}
+.proj-spec dd{margin:0;color:var(--ink-soft)}
+.proj-tools{display:flex;flex-wrap:wrap;gap:7px;margin:0;padding:0;list-style:none}
+.proj-tools li{padding:3px 11px;border:1px solid var(--rule-strong);border-radius:999px;color:var(--ink);font-family:var(--head);font-weight:500;font-size:var(--fs-label);line-height:1.6}
+.proj-spec .proj-points{margin:0;border-top:0}
+.proj-spec .proj-points li{padding:0 0 10px;border-bottom:0}.proj-spec .proj-points li:last-child{padding-bottom:0}
+@media(min-width:901px){.proj-row{align-items:start}.proj-panel{position:sticky;top:110px}}
+@media(max-width:560px){.proj-spec>div{grid-template-columns:minmax(0,1fr);gap:6px}}

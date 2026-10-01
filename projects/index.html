@@ -5,10 +5,10 @@
 <style>html{background:#141413;color-scheme:dark}</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>All Projects, George Murad</title>
-<meta name="description" content="Projects by George Murad beyond the practice case studies: his e-commerce business Escentials, free Claude Code skills, and a Roblox game in development.">
+<meta name="description" content="Projects by George Murad beyond the practice case studies: his e-commerce business Escentials, free Claude Code skills, and a Roblox game in development, with his part, the tools, the results and the status of each.">
 <meta name="author" content="George Murad">
 <meta property="og:title" content="All Projects, George Murad">
-<meta property="og:description" content="Projects by George Murad beyond the practice case studies: his e-commerce business Escentials, free Claude Code skills, and a Roblox game in development.">
+<meta property="og:description" content="Projects by George Murad beyond the practice case studies: his e-commerce business Escentials, free Claude Code skills, and a Roblox game in development, with his part, the tools, the results and the status of each.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://gbmurad.github.io/Portfolio/assets/media/og-card.jpg">
 <meta property="og:image:width" content="1200">
@@ -25,7 +25,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400&amp;family=Poppins:wght@400;500;600;700&amp;display=swap">
-<link rel="stylesheet" href="../assets/css/site.css?v=7e987ec3">
+<link rel="stylesheet" href="../assets/css/site.css?v=b54c5209">
 
 </head>
 <body class="page-projects">
@@ -45,10 +45,13 @@
     <div>
       <span class="kicker">All Projects</span>
       <h1>All Projects</h1>
-      <p class="intro">Everything I have built outside the practice case studies: my own business, tools anyone can use, and a game.</p>
+      <p class="intro">Everything I have built outside the practice case studies: my own <span class="nw">e-commerce</span> business, free tools
+      anyone can install, and a Roblox game in development. For each one you will find what it is, my part, the tools
+      and skills it took, the results so far, and where it stands.</p>
+      <ol class="proj-jump" aria-label="Projects on this page"><li class="world-0"><a href="#escentials"><span class="n">01</span> Escentials</a></li><li class="world-1"><a href="#claude-skills"><span class="n">02</span> Claude Skills</a></li><li class="world-2"><a href="#greedy-gems"><span class="n">03</span> Greedy Gems</a></li></ol>
     </div>
   </header>
-  <ol class="proj-rows"><li class="proj-row world-0">
+  <ol class="proj-rows"><li class="proj-row world-0" id="escentials">
   <a class="proj-panel" href="../escentials/">
     <div class="proj-panel__visual"><img src="../assets/media/car-perfume-swing-poster.jpg" alt="A Car Perfume bottle hanging from a rearview mirror" width="800" height="800" loading="lazy"></div>
     <div class="proj-panel__copy">
@@ -60,11 +63,17 @@
   </a>
   <div class="proj-about">
     <span class="proj-about__kicker"><span class="n">01</span> My Business</span>
-    <p class="proj-about__lead">Two lines on one Shopify store: designer fragrance, shipped straight from the supplier, and Car Perfume, a small glass bottle of its own that hangs from a rearview mirror. I set the catalog and the prices, keep the books, and direct the website.</p>
-    <ul class="proj-points"><li><b>5,678</b> <span>active products from 446 brands</span></li><li><b>55</b> <span>variants I found selling below cost, repriced</span></li><li><b>14</b> <span>Car Perfume scents in ten bottle colors, plus refills</span></li><li><b>FY2025</b> <span>books: statements, budget versus actual, SQL and Tableau</span></li></ul>
+    <p class="proj-about__lead">Two lines on one Shopify store: designer fragrance, shipped straight from the supplier, and Car Perfume, a small glass bottle of its own that hangs from a rearview mirror.</p>
+    <dl class="proj-spec">
+      <div><dt>My part</dt><dd>I set the catalog, the prices and the margins, manage supplier stock, keep the books, and direct the website rebuild.</dd></div>
+      <div><dt>Tools and skills</dt><dd><ul class="proj-tools"><li>Shopify</li><li>Excel</li><li>SQL</li><li>Tableau</li><li>Pricing</li><li>Web Design</li></ul></dd></div>
+      <div><dt>Results</dt><dd><ul class="proj-points"><li><b>5,678</b> <span>active products from 446 brands</span></li><li><b>55</b> <span>variants I found selling below cost, repriced</span></li><li><b>0.16 s</b> <span>to build the Brands page, down from 2.9 s, in the next release</span></li><li><b>14</b> <span>Car Perfume scents in ten bottle colors, plus refills</span></li></ul></dd></div>
+      <div><dt>Timeline</dt><dd>Books kept for FY2025. The website rebuild began in September 2026.</dd></div>
+      <div><dt>Status</dt><dd>Live at shopescentials.com, with the next version of the site built and waiting to go live. The books, the website and the 3D bottle each have a page.</dd></div>
+    </dl>
     <a class="link" href="../escentials/">See the books, the website and the 3D bottle <span class="arr" aria-hidden="true">&rarr;</span></a>
   </div>
-</li><li class="proj-row world-1 proj-row--flip">
+</li><li class="proj-row world-1 proj-row--flip" id="claude-skills">
   <a class="proj-panel" href="../claude-skills/">
     <div class="proj-panel__visual"><pre class="proj-code" aria-hidden="true"><code>---
 name: day-to-calendar
@@ -79,11 +88,17 @@ description: Writes a short summary of each day you worked with Claude into its 
   </a>
   <div class="proj-about">
     <span class="proj-about__kicker"><span class="n">02</span> Free Tools</span>
-    <p class="proj-about__lead">A skill teaches Claude Code, Anthropic&#x27;s coding assistant, a new job: written steps it follows, plus scripts that do the parts it cannot. Mine are free. Read every line first, then install it with one command or download the ZIP.</p>
-    <ul class="proj-points"><li><b>day-to-calendar</b> <span>my first skill: a short summary of each day you worked, in its own Apple Calendar</span></li><li><b>100%</b> <span>of the code is on the page, before you install anything</span></li><li><b>1</b> <span>command to install, or a ZIP download</span></li><li><b>MIT</b> <span>license: free to use and change</span></li></ul>
+    <p class="proj-about__lead">A skill teaches Claude Code, Anthropic&#x27;s coding assistant, a new job: written steps it follows, plus scripts that do the parts it cannot.</p>
+    <dl class="proj-spec">
+      <div><dt>My part</dt><dd>I design each skill and build it with Claude Code: the steps it follows, its guardrails, the helper app and the installer. Then I publish it, free.</dd></div>
+      <div><dt>Tools and skills</dt><dd><ul class="proj-tools"><li>Swift</li><li>Shell</li><li>macOS</li><li>Git and GitHub</li><li>Claude Code</li></ul></dd></div>
+      <div><dt>Results</dt><dd><ul class="proj-points"><li><b>1</b> <span>skill published so far: day-to-calendar, a summary of each workday in its own Apple Calendar</span></li><li><b>204</b> <span>lines across 5 files, every one shown on the page</span></li><li><b>1</b> <span>command to install it, or a ZIP download</span></li><li><b>MIT</b> <span>license: free to use and change</span></li></ul></dd></div>
+      <div><dt>Timeline</dt><dd>First skill released September 29, 2026. More are on the way.</dd></div>
+      <div><dt>Status</dt><dd>Public on GitHub, free for anyone to use, change and share.</dd></div>
+    </dl>
     <a class="link" href="../claude-skills/">See what each skill does, and all its code <span class="arr" aria-hidden="true">&rarr;</span></a>
   </div>
-</li><li class="proj-row world-2">
+</li><li class="proj-row world-2" id="greedy-gems">
   <a class="proj-panel" href="../greedy-gems/">
     <div class="proj-panel__visual"><img src="../assets/media/projects/greedy-gems/shop_icons.png" alt="The Greedy Gems shop icons: coins, a pickaxe, a cart of crystals, eggs, a ticket, a VIP pass and the prize wheel" width="1792" height="512" loading="lazy"></div>
     <div class="proj-panel__copy">
@@ -96,7 +111,13 @@ description: Writes a short summary of each day you worked with Claude into its 
   <div class="proj-about">
     <span class="proj-about__kicker"><span class="n">03</span> A Roblox Game</span>
     <p class="proj-about__lead">Gems float down a river with a price tag. Buy one, sink it in your socket and cash out while its value climbs, before the cave in. Only a gem you cash out in time can be set in your claim, where it mines the chips that pay you while you play.</p>
-    <ul class="proj-points"><li><b>28</b> <span>gems to collect, across twelve rarity tiers</span></li><li><b>2.50 × 0.40 = 1</b> <span>the rule that means a bare shard can never lose money</span></li><li><b>142</b> <span>Luau scripts, about 88,000 lines of code</span></li><li><b>Status</b> <span>in development, not yet public on Roblox</span></li></ul>
+    <dl class="proj-spec">
+      <div><dt>My part</dt><dd>Everything: the game design, the Luau scripting, the in game economy and the art.</dd></div>
+      <div><dt>Tools and skills</dt><dd><ul class="proj-tools"><li>Roblox Studio</li><li>Luau</li><li>Game Economy</li><li>Probability</li><li>UI Design</li></ul></dd></div>
+      <div><dt>Results</dt><dd><ul class="proj-points"><li><b>28</b> <span>gems to collect, across twelve rarity tiers</span></li><li><b>142</b> <span>Luau scripts, about 88,000 lines of code</span></li><li><b>2.50 × 0.40 = 1</b> <span>the rule that means a bare shard can never lose money</span></li><li><b>10</b> <span>mutations, each multiplying a gem&#x27;s value, up to 100x</span></li></ul></dd></div>
+      <div><dt>Timeline</dt><dd>Started in September 2026 with a small team.</dd></div>
+      <div><dt>Status</dt><dd>In development, not yet public on Roblox.</dd></div>
+    </dl>
     <a class="link" href="../greedy-gems/">See the loop, the economy and the systems <span class="arr" aria-hidden="true">&rarr;</span></a>
   </div>
 </li></ol>
