@@ -471,20 +471,8 @@ p,li,dd,figcaption{text-wrap:pretty}
 .cases{perspective:none}.cases>li{transform-style:flat}
 
 /* Round 11: All Projects, the Claude Skills page and Greedy Gems, in the card language and the round 9 tokens */
-.proj-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:24px;margin:0 0 40px;padding:0;list-style:none}
-.proj-card{--world:var(--orange);flex:0 1 calc((100% - 48px)/3);min-width:min(100%,300px);display:flex}
-.proj-card a{width:100%;display:flex;flex-direction:column;overflow:hidden;border-radius:32px;border:1px solid rgba(250,249,245,.32);background:linear-gradient(135deg,var(--light-gray) -60%,var(--world) 65%);color:var(--dark);text-decoration:none;box-shadow:inset 0 1px 0 rgba(250,249,245,.35)}
-.proj-card a:focus-visible{outline:3px solid var(--light);outline-offset:3px}
-.proj-card__visual{height:230px;overflow:hidden;background:rgba(20,20,19,.88);border-bottom:1px solid rgba(20,20,19,.2)}
-.proj-card__visual img{display:block;width:100%;height:100%;object-fit:cover}
 .proj-code{margin:0;padding:22px 24px;height:100%;overflow:hidden;color:var(--light-gray,#e8e6dc);font:400 var(--fs-small)/1.6 ui-monospace,"SF Mono",Menlo,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
 .proj-code code{display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden}
-.proj-card__copy{display:flex;flex:1;flex-direction:column;padding:26px 28px 28px}
-.proj-card h2{font-size:var(--fs-h3);line-height:var(--lh-head)}
-.proj-card p{margin-top:10px;color:var(--dark);line-height:1.5}
-.proj-card .s-card__skills{margin-top:16px;gap:7px}
-.proj-card .s-card__skills li{padding:4px 11px;border-radius:999px;border:1px solid rgba(20,20,19,.18);background:rgba(250,249,245,.18);color:var(--dark);font-family:var(--head);font-weight:500;font-size:var(--fs-label)}
-.proj-card .s-card__go{margin-top:auto;padding-top:20px;justify-content:flex-start;gap:14px}
 .skills-stack{display:grid;gap:28px;margin:10px 0 40px}
 .skill{min-width:0;padding:clamp(22px,3vw,38px);border:1px solid var(--rule-strong);border-radius:32px;background:rgba(250,249,245,.045)}
 .skill h2{font-size:var(--fs-h2);line-height:var(--lh-head);letter-spacing:-.02em}
@@ -503,11 +491,69 @@ html:not(.js) .copy{display:none}
 .gems-shots{display:grid;gap:24px;margin:10px 0 40px}
 .gems-shots .shot{min-width:0;margin:0;padding:10px;border-radius:24px}
 .gems-shots .shot img{display:block;width:100%;height:auto;border-radius:16px}
-@media(max-width:1000px){.proj-card{flex-basis:calc((100% - 24px)/2)}}
-@media(max-width:700px){.proj-card{flex-basis:100%}.proj-card__visual{height:190px}.install{flex-direction:column}.copy{padding:13px;border-left:0;border-top:1px solid var(--rule-strong)}}
-.proj-card.world-1{--world:var(--blue)}.proj-card.world-2{--world:var(--green)}
+@media(max-width:700px){.install{flex-direction:column}.copy{padding:13px;border-left:0;border-top:1px solid var(--rule-strong)}}
 .skill__text{max-width:62ch}.copy{min-height:44px}.skill__fold summary{display:flex;align-items:center;min-height:44px}
 .skill__fold summary::before{content:"\25B8";margin-right:10px}.skill__fold[open] summary::before{content:"\25BE"}
 /* Code wraps inside its box instead of running off the right edge (indentation kept); the install line wraps on phones. */
 .skill-code{white-space:pre-wrap;overflow-wrap:anywhere}
 @media(max-width:767px){.install code{white-space:normal;overflow-wrap:anywhere}}
+/* Seven strengths, seven colors (George, 2026-09-30): the brand's orange, blue and green, then purple, teal, gold and
+   rose at the same depth, so each card and the figures that become it have their own color. */
+.world-0{--world:var(--orange)}.world-3{--world:#9a7cc4}.world-4{--world:#4fa39b}.world-5{--world:#c99a3a}.world-6{--world:#cc7a97}
+/* No line above the strength cards: the heading dash on home and the cover rule on the strengths page. */
+.section--strengths .shead__rule{display:none!important}
+.page-strengths .cover::after{display:none}
+/* The figures pulse in size as they drift; --k still damps it all to nothing in the spiral. */
+.number-cell>span{transform:translate3d(calc(var(--wx)*var(--k)*1px),calc(var(--wy)*var(--k)*1px),0) rotate(calc(var(--wr)*var(--k)*1deg)) scale(calc(1 + (var(--ws,1) - 1)*var(--k)))}
+.number-cell{--ws:1}
+.proj-rows{display:grid;gap:clamp(64px,9vw,120px);margin:10px 0 90px;padding:0;list-style:none}
+.proj-row{--world:var(--orange);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,5vw,80px);align-items:center}
+.proj-row--flip{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}.proj-row--flip .proj-panel{order:2}
+.proj-row.world-1{--world:var(--blue)}.proj-row.world-2{--world:var(--green)}
+.proj-panel{display:flex;flex-direction:column;min-width:0;overflow:hidden;border-radius:32px;border:1px solid rgba(250,249,245,.32);background:linear-gradient(135deg,var(--light-gray) -60%,var(--world) 65%);color:var(--dark);text-decoration:none;box-shadow:inset 0 1px 0 rgba(250,249,245,.35);transition:box-shadow .35s ease,translate .35s cubic-bezier(.2,.7,.2,1)}
+.proj-panel:hover{translate:0 -4px;box-shadow:inset 0 1px 0 rgba(250,249,245,.35),0 26px 60px rgba(0,0,0,.38)}
+.proj-panel:focus-visible{outline:3px solid var(--light);outline-offset:3px}
+.proj-panel__visual{height:300px;overflow:hidden;background:rgba(20,20,19,.88);border-bottom:1px solid rgba(20,20,19,.2)}
+.proj-panel__visual img{display:block;width:100%;height:100%;object-fit:cover}
+.proj-panel__visual img.is-sheet{object-fit:contain;padding:18px}
+.proj-panel__copy{display:flex;flex:1;flex-direction:column;padding:26px 28px 28px}
+.proj-panel h2{font-size:var(--fs-h3);line-height:var(--lh-head)}
+.proj-panel p{margin-top:10px;color:var(--dark);line-height:1.5}
+.proj-panel .s-card__skills{margin-top:16px;gap:7px}
+.proj-panel .s-card__skills li{padding:4px 11px;border-radius:999px;border:1px solid rgba(20,20,19,.18);background:rgba(250,249,245,.18);color:var(--dark);font-family:var(--head);font-weight:500;font-size:var(--fs-label)}
+.proj-panel .s-card__go{margin-top:auto;padding-top:20px;justify-content:flex-start;gap:14px}
+.proj-about{min-width:0}
+.proj-about__kicker{display:flex;align-items:center;gap:12px;color:var(--ink-faint);font-family:var(--head);font-weight:500;font-size:var(--fs-small);letter-spacing:.06em;text-transform:uppercase}
+.proj-about__kicker .n{color:var(--world)}
+.proj-about__lead{margin-top:16px;max-width:52ch;color:var(--ink-soft);font-size:var(--fs-lead);line-height:1.55}
+.proj-points{display:grid;grid-template-columns:max-content minmax(0,1fr);margin:26px 0 28px;padding:0;list-style:none;border-top:1px solid var(--rule-strong)}
+.proj-points li{display:grid;grid-column:1/-1;grid-template-columns:subgrid;gap:22px;align-items:baseline;padding:13px 0;border-bottom:1px solid var(--rule)}
+.proj-points b{color:var(--world);font-family:var(--head);font-weight:600;letter-spacing:-.01em;white-space:nowrap}
+.proj-points span{color:var(--ink-soft)}
+.line-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.line-card{min-width:0;padding:clamp(22px,3vw,34px);border:1px solid var(--rule-strong);border-radius:28px;background:rgba(250,249,245,.045)}
+.line-card small{color:var(--orange);font-family:var(--head);font-weight:500;font-size:var(--fs-small)}
+.line-card h3{margin-top:6px;font-size:var(--fs-h3);line-height:var(--lh-head)}
+.line-card p{margin-top:12px;color:var(--ink-soft)}
+.line-card dl{margin:18px 0 0;border-top:1px solid var(--rule)}
+.line-card dl>div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.line-card dt{color:var(--ink-faint)}.line-card dd{margin:0}
+.price-table td{font-variant-numeric:tabular-nums}.price-table th[scope=row]{white-space:normal}
+.sys-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none}
+.sys-grid li{display:grid;align-content:start;gap:6px;padding:20px 22px;border:1px solid var(--rule-strong);border-radius:20px;background:rgba(250,249,245,.035)}
+.sys-grid b{font-family:var(--head);font-weight:600}.sys-grid span{color:var(--ink-soft)}
+.skill__readme p,.skill__readme ul{max-width:62ch;margin-top:12px;color:var(--ink-soft)}
+.skill__readme ul{padding-left:1.2em}.skill__readme li+li{margin-top:6px}
+.skill__readme code{padding:1px 6px;border-radius:6px;background:rgba(250,249,245,.08);font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.92em}
+.skill__readme .fin-wrap{margin-top:14px;padding:0}.md-table th,.md-table td{text-align:left;white-space:normal}
+.skill__readme .skill-code{margin-top:12px;border-radius:14px}.skill__readme .skill-code code{padding:0;background:none}
+.skill__count{margin-top:8px;color:var(--ink-faint)}
+.gem-sheet img{display:block;width:100%;height:auto;border-radius:16px;background:rgba(20,20,19,.6)}
+@media(max-width:900px){.proj-row,.proj-row--flip{grid-template-columns:minmax(0,1fr);gap:28px}.proj-row--flip .proj-panel{order:0}.proj-panel__visual{height:240px}}
+@media(max-width:760px){.line-cards,.sys-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:560px){.proj-points{grid-template-columns:minmax(0,1fr)}.proj-points li{gap:2px}.proj-points b{white-space:normal}.line-card dl>div{grid-template-columns:minmax(0,1fr);gap:2px}}
+@media(prefers-reduced-motion:reduce){.proj-panel{transition:none}.proj-panel:hover{translate:none}}
+.cover--plain::after{display:none}
+.proj-panel__visual:has(img[src*="car-perfume"]){background:#fff}.proj-panel__visual img[src*="car-perfume"]{object-fit:contain}
+.proj-about .link{display:inline}.proj-about .link .arr{margin-left:8px}
+.findings+.table-note{margin-top:22px}

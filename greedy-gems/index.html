@@ -5,10 +5,10 @@
 <style>html{background:#141413;color-scheme:dark}</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Greedy Gems, George Murad</title>
-<meta name="description" content="Greedy Gems, a Roblox mining game George Murad is building with a small team. In development.">
+<meta name="description" content="Greedy Gems, a Roblox mining game George Murad is building with a small team: the loop, the economy and the systems behind it. In development.">
 <meta name="author" content="George Murad">
 <meta property="og:title" content="Greedy Gems, George Murad">
-<meta property="og:description" content="Greedy Gems, a Roblox mining game George Murad is building with a small team. In development.">
+<meta property="og:description" content="Greedy Gems, a Roblox mining game George Murad is building with a small team: the loop, the economy and the systems behind it. In development.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://gbmurad.github.io/Portfolio/assets/media/og-card.jpg">
 <meta property="og:image:width" content="1200">
@@ -46,11 +46,35 @@
       <span class="kicker">A Roblox Game</span>
       <h1>Greedy Gems</h1>
       <p class="status">In development, not yet public on Roblox.</p>
-      <p class="intro">A Roblox mining game I am building with a small team. Gems float down the river with a price tag: buy a shard, set it in your socket, and cash out while its value climbs, before the cave in.</p>
+      <p class="intro">A Roblox mining game I am building with a small team. Gems float down the river with a price tag:
+      buy a shard, set it in your socket, and cash out while its value climbs, before the cave in. Only a gem you cash out
+      in time can be set in your claim, where it mines the chips that pay you while you play.</p>
       <p class="role"><b>My role:</b> everything, from the game design and the Luau scripting to the in game economy and the art.</p>
     </div>
   </header>
-  <div class="gems-shots"><figure class="shot" data-reveal><img src="../assets/media/projects/greedy-gems/gem_sheet.png" alt="Fifty cut gems in a grid" width="1160" height="610" loading="lazy"><figcaption><b>The gem set.</b> Fifty cut gems, each with its own look.</figcaption></figure><figure class="shot" data-reveal><img src="../assets/media/projects/greedy-gems/shop_icons.png" alt="A row of shop icons in the Greedy Gems style" width="1792" height="512" loading="lazy"><figcaption><b>Shop icons.</b> The icons for the in game shop.</figcaption></figure><figure class="shot" data-reveal><img src="../assets/media/projects/greedy-gems/mutation_preview.png" alt="Gems shown with their mutation effects" width="1050" height="344" loading="lazy"><figcaption><b>Mutations.</b> Preview of the rare gem mutations.</figcaption></figure></div>
+  <div class="kpis"><div class="kpi"><b>28</b><span>Gems Across Twelve Rarity Tiers</span></div><div class="kpi"><b>5 s</b><span>Between Gems on the River</span></div><div class="kpi"><b>10</b><span>Mutations, up to 100x Value</span></div><div class="kpi"><b>142</b><span>Luau Scripts, About 88,000 Lines</span></div></div>
+  <div class="report" style="grid-template-columns:minmax(0,1fr)">
+    <div class="content">
+      <section class="chapter"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">1</span><h2>The Loop</h2></div>
+        <p class="lead">The gamble is the only way to supply the mine. You cannot build a claim without winning bets.</p>
+        <ol class="findings" data-reveal><li><span><b>Buy a shard.</b> A new gem floats down the river every five seconds, each with a price tag.</span></li><li><span><b>Sink it.</b> Set it in the crash socket on your plot. The multiplier climbs from zero, and the crystal grows with it.</span></li><li><span><b>Cash out, or shatter.</b> Cash out in time and you keep a crystallized gem worth its price times the multiplier. Wait too long and the cave in shatters it, leaving 40% of its value.</span></li><li><span><b>Set it.</b> Only a crystallized gem can be set in your claim. Every gem standing there is a bet you won.</span></li><li><span><b>Mine it.</b> Set gems shed chips you walk over to collect, the passive income. Four chips make a ticket, and tickets buy pet eggs.</span></li></ol>
+      </section>
+      <section class="chapter"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">2</span><h2>The Economy</h2></div>
+        <p class="lead">The numbers are built so the gamble feels risky without ever wiping a player out, and so the long game
+        rewards time, not luck.</p>
+        <ol class="findings" data-reveal><li><span><b>A floor that cannot lose.</b> A bare shard&#x27;s cave in never comes before 2.50x, and a crash keeps 40% of the value: 2.50 × 0.40 = 1.00. The worst possible run returns exactly what the shard cost, so greed decides how much more you make, never whether you get wiped out.</span></li><li><span><b>Patience pays.</b> Cash out a fully grown gem, at 7x or better, and it pays 1.4 times its value.</span></li><li><span><b>Two currencies, kept apart.</b> Coins come from the gamble. Tickets come only from mining, and only tickets buy pet eggs, so a lucky run cannot buy the best pet.</span></li><li><span><b>Rebirth is the long game.</b> Six rebirths, from $500 up to 100 quintillion coins. Each one resets your coins but keeps your pets, tickets and claim, grows the claim, and opens something new: the Crusher, the Adoption Center, Wheel Spin, Furniture.</span></li><li><span><b>Rarity you can see before you can afford it.</b> 28 gems across twelve tiers, Common to Godly. Watching a rare one drift past long before you can buy it is what keeps a session going.</span></li></ol>
+        <p class="table-note">The numbers are still being tuned before launch.</p>
+      </section>
+      <section class="chapter"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">3</span><h2>The Systems Behind It</h2></div>
+        <p class="lead">The game runs on 142 Luau scripts, about 88,000 lines, on Roblox's servers and each player's device.</p>
+        <ul class="sys-grid" data-reveal><li><b>The river</b><span>Spawns a gem every five seconds, prices it and sells it as a shard.</span></li><li><b>The crash socket</b><span>Rolls each run&#x27;s cave in point, then pays the cash out or the 40% keep.</span></li><li><b>Claims and chips</b><span>Grows set gems into clusters that shed chips, the passive income.</span></li><li><b>Pets and eggs</b><span>Ticket priced eggs, a hatch scene, and pets that boost your mine.</span></li><li><b>Rebirth</b><span>Six levels that grow your claim and open new parts of the game.</span></li><li><b>The index</b><span>A collection book of every gem and mutation you have found.</span></li><li><b>Wheel Spin and leaderboards</b><span>A prize wheel that rebirth opens, and boards for the top players.</span></li><li><b>Saves</b><span>Every player&#x27;s claim and progress, kept between visits.</span></li></ul>
+      </section>
+      
+      <section class="chapter"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">4</span><h2>Shop Art</h2></div>
+        <figure class="shot" data-reveal><img src="../assets/media/projects/greedy-gems/shop_icons.png" alt="A row of shop icons in the Greedy Gems style" width="1792" height="512" loading="lazy"><figcaption><b>Shop icons.</b> The icons for the in game shop.</figcaption></figure>
+      </section>
+    </div>
+  </div>
   <a class="next-case" href="../projects/"><span>Back to</span><b>All Projects &rarr;</b></a>
 </div>
 </main>

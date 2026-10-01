@@ -5,10 +5,10 @@
 <style>html{background:#141413;color-scheme:dark}</style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Claude Skills, George Murad</title>
-<meta name="description" content="Free tools George Murad builds for Claude Code: read the code, download it, or install it with one command.">
+<meta name="description" content="Free tools George Murad builds for Claude Code: how a skill works, what each one does, and its full code to read, download or install with one command.">
 <meta name="author" content="George Murad">
 <meta property="og:title" content="Claude Skills, George Murad">
-<meta property="og:description" content="Free tools George Murad builds for Claude Code: read the code, download it, or install it with one command.">
+<meta property="og:description" content="Free tools George Murad builds for Claude Code: how a skill works, what each one does, and its full code to read, download or install with one command.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://gbmurad.github.io/Portfolio/assets/media/og-card.jpg">
 <meta property="og:image:width" content="1200">
@@ -48,14 +48,32 @@
       <p class="intro">Tools I build for Claude Code, Anthropic's coding assistant. Each one is free: read the code, download it, or install it with one command.</p>
     </div>
   </header>
-  <div class="skills-stack"><article class="skill" data-reveal>
+  <div class="report" style="grid-template-columns:minmax(0,1fr)">
+    <div class="content">
+      <section class="chapter"><div class="shead" data-reveal><span class="shead__rule" aria-hidden="true"></span><span class="n">1</span><h2>How a Skill Works</h2></div>
+        <ol class="findings" data-reveal><li><span><b>Install it.</b> One command copies the skill into Claude Code&#x27;s skills folder, so it works in every project. A ZIP download works too.</span></li><li><span><b>Ask in plain words.</b> Each skill names the requests it answers, so Claude knows when to use it.</span></li><li><span><b>Claude follows the steps.</b> The skill&#x27;s SKILL.md holds the steps, what done means and the guardrails. Its scripts handle what Claude cannot do alone, like asking macOS for permission.</span></li></ol>
+      </section>
+      <div class="skills-stack"><article class="skill" data-reveal>
   <h2>day-to-calendar</h2>
   <p class="skill__text">Writes a short summary of each day you worked with Claude into its own Apple Calendar, so you can look back and see what happened on any date. Use when the user says log today, add my day to the calendar, backfill my calendar, or what did we do on a past day. macOS only.</p>
   <h3>Install</h3>
   <div class="install"><code>git clone https://github.com/gbmurad/claude-skills.git &amp;&amp; cd claude-skills &amp;&amp; sh install.sh day-to-calendar</code><button class="copy" type="button" data-copy="git clone https://github.com/gbmurad/claude-skills.git &amp;&amp; cd claude-skills &amp;&amp; sh install.sh day-to-calendar">Copy</button></div>
   <p class="skill__links"><a class="button" href="https://github.com/gbmurad/claude-skills/archive/refs/heads/main.zip" rel="noopener">Download ZIP</a>
   <a class="link" href="https://github.com/gbmurad/claude-skills/tree/main/skills/day-to-calendar" rel="noopener">View on GitHub <span class="arr" aria-hidden="true">&rarr;</span></a></p>
+  <div class="skill__readme"><p>A Claude Code skill that writes a short summary of each day you worked into its own Apple Calendar, so you can look back and see what happened on any date.</p>
+<p>Ask &quot;log today to my calendar&quot; and Claude drafts a title and a few sentences for the day, shows you, and on your yes adds it as an all day event in a separate calendar called <b>Workday Log</b>. It can also backfill past days from your git history.</p>
+<h3>What you need</h3>
+<ul><li>A Mac on macOS 14 or newer</li><li>Xcode Command Line Tools (<code>xcode-select --install</code>)</li><li>Claude Code</li></ul>
+<h3>Safety</h3>
+<ul><li>Events go only into the &quot;Workday Log&quot; calendar. Your own calendars are never touched.</li><li>Claude shows you every event before writing it.</li><li>Running it twice does not duplicate events.</li><li>To remove everything, delete the &quot;Workday Log&quot; calendar in the Calendar app.</li><li>The calendar syncs to iCloud, so the skill tells Claude to leave out secrets and private details.</li></ul>
+<h3>Setup</h3>
+<p><code>install.sh</code> asks a few quick questions (press Enter to keep the default). If you skip them, Claude asks on first use. Rerun <code>sh ~/.claude/skills/day-to-calendar/scripts/setup.sh</code> any time to change them.</p>
+<div class="fin-wrap"><table class="fin md-table"><thead><tr><th scope="col">Question</th><th scope="col">Default</th><th scope="col">Notes</th></tr></thead><tbody><tr><td>Calendar name</td><td>Workday Log</td><td>The separate calendar events go into</td></tr><tr><td>Color</td><td>teal</td><td>A name (red, orange, yellow, green, teal, blue, purple, pink, brown, gray) or a hex like <code>#1A73E8</code></td></tr><tr><td>Event length</td><td>all day</td><td>Or a number of minutes; then you also pick a start time</td></tr><tr><td>Longest title</td><td>8 words</td><td>Claude keeps titles within this</td></tr><tr><td>Longest note</td><td>4 sentences</td><td>Claude keeps notes within this</td></tr></tbody></table></div>
+<p>Answers are saved in <code>~/.config/day-to-calendar/config.json</code>, which you can also edit by hand. Changing the color updates the existing calendar the next time it runs.</p>
+<h3>Why it ships its own tiny app</h3>
+<p>macOS only shows the calendar permission prompt to an app that declares why it wants access. Claude&#x27;s app does not, so the request fails silently. <code>DayCal.app</code> is built on your Mac from <code>scripts/daycal.swift</code>, carries the declaration, and is the only thing that touches your calendar. Read the source; it is about 80 lines.</p></div>
   <h3>How it is made</h3>
+  <p class="skill__count">5 files, 204 lines in all. Every one is below.</p>
   <details class="skill__fold" open><summary>Show SKILL.md</summary><pre class="skill-code" tabindex="0"><code>---
 name: day-to-calendar
 description: Writes a short summary of each day you worked with Claude into its own Apple Calendar, so you can look back and see what happened on any date. Use when the user says log today, add my day to the calendar, backfill my calendar, or what did we do on a past day. macOS only.
@@ -263,6 +281,8 @@ JSON
 echo &quot;Saved to $dir/config.json&quot; &gt;&amp;2
 </code></pre></details>
 </article></div>
+    </div>
+  </div>
   <a class="next-case" href="../greedy-gems/"><span>Next</span><b>Greedy Gems &rarr;</b></a>
 </div>
 </main>

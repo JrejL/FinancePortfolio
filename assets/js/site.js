@@ -411,11 +411,13 @@
      var range = function (vw, vh) {
       return { "--wx": function (_, el) { return (Math.random() * 2 - 1) * innerWidth * (vw[0] + Math.random() * (vw[1] - vw[0])) / 100 * parseFloat(el.style.getPropertyValue("--near")); },
                "--wy": function (_, el) { return (Math.random() * 2 - 1) * innerHeight * (vh[0] + Math.random() * (vh[1] - vh[0])) / 100 * parseFloat(el.style.getPropertyValue("--near")); },
-               "--wr": function () { return (Math.random() * 2 - 1) * 6; } };
+               "--wr": function () { return (Math.random() * 2 - 1) * 14; },
+               "--ws": function () { return .82 + Math.random() * .4; } };
      };
      cells.forEach(function (cell) {
-      var vars = range([8, 14], [6, 10]);
-      vars.duration = 7 + Math.random() * 5; vars.ease = "sine.inOut"; vars.repeat = -1; vars.repeatRefresh = true; vars.paused = true;
+      // Wider, quicker drift than before (George: "animate them more").
+      var vars = range([12, 20], [9, 15]);
+      vars.duration = 4.5 + Math.random() * 3.5; vars.ease = "sine.inOut"; vars.repeat = -1; vars.repeatRefresh = true; vars.paused = true;
       var tween = gsap.to(cell, vars); tween.progress(Math.random() * .5);
       wanders.push(tween);
      });
@@ -467,7 +469,8 @@
       .to(sHead, { opacity: 1, y: 0, duration: .5, ease: "power2.out" }, 1.45)
       .to(cards, { opacity: 1, scale: 1, x: 0, y: 0, duration: 1.2, stagger: { each: .07, from: "start" }, ease: "power3.out" }, 1.2)
       .to(q(".scene-pause", hero), { autoAlpha: 0, duration: .15 }, .8)
-      .set(cards, { pointerEvents: "auto" }, 2.9)
+      // Clickable once they have landed, not at the very end of the pin (George: "arent clickable as they open").
+      .set(cards, { pointerEvents: "auto" }, 1.4)
       .to({}, { duration: .3 }, 2.94);
      var trigger = assembly.scrollTrigger;
      syncWander();
@@ -509,7 +512,7 @@
       ["wheel", "touchstart", "keydown"].forEach(function (name) { window.removeEventListener(name, stopGlide); });
       document.removeEventListener("visibilitychange", onVisible);
       wanders.forEach(function (tween) { tween.kill(); });
-      cells.forEach(function (cell) { ["transform", "opacity", "--k", "--wx", "--wy", "--wr"].forEach(function (name) { cell.style.removeProperty(name); }); });
+      cells.forEach(function (cell) { ["transform", "opacity", "--k", "--wx", "--wy", "--wr", "--ws"].forEach(function (name) { cell.style.removeProperty(name); }); });
      });
      var pause = q(".scene-pause", hero);
      var pauseDrift = function () { var off = hero.classList.toggle("drift-paused"); syncWander(); pause.textContent = off ? "Play" : "Pause"; pause.setAttribute("aria-pressed", String(off)); };
@@ -660,6 +663,13 @@
      gsap.from(qa(".letter", heading), { yPercent: 110, opacity: 0, duration: 1.3, stagger: { amount: 1.0 }, ease: "power3.out" });
      rise(qa(".intro,.magnetic-mail", close), { y: 24, duration: 1.3 });
      var line = q(".contact__line", close); if (line) gsap.from(line, { scaleX: 0, duration: 1.5, delay: .7 });
+    });
+   });
+   // All Projects: each row rises as one piece, the panel first and its explanation just after.
+   batch(qa(".proj-row"), "top 84%", function (rows) {
+    rows.forEach(function (row, i) {
+     rise([q(".proj-panel", row)], { y: 48, scale: .97, duration: .95, delay: i * .12 });
+     rise(qa(".proj-about > *", row), { y: 22, duration: .9, delay: i * .12 + .15, stagger: .07 });
     });
    });
    var generic = qa("[data-reveal]").filter(function (el) {
